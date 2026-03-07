@@ -62,7 +62,9 @@
       (str/replace #"\\text\{([^}]*)\}"          "$1")
       (str/replace #"\\begin\{(enumerate|itemize)\}" "")
       (str/replace #"\\end\{(enumerate|itemize)\}"   "")
-      (str/replace #"\\item\s*"                  "• ")))
+      (str/replace #"\\item\s*"                  "• ")
+      (str/replace #"\\label\{[^}]*\}"           "")
+      (str/replace #"\\(?:ref|eqref|autoref|cref)\{[^}]*\}" "")))
 
 (defn render-body
   "HTML-escape raw LaTeX then convert common text-mode commands to HTML.
