@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><meta content="width=device-width, initial-scale=1" name="viewport"><title>All Objects — MathAtlas</title><link href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"></head><body><nav><a class="brand" href="index.html">Math<span>Atlas</span></a><div style="flex:1"></div><div class="nav-links"><a href="objects.html">Objects</a><a href="areas.html">Areas</a></div></nav><main class="container"><h1>All Objects</h1><p class="subtitle">9 objects across all areas</p><div class="filters"><button class="filter-btn active" data-color="#1c1c2e" data-type="all" onclick="filterCards(&apos;all&apos;)">All</button><button class="filter-btn" data-color="#10B981" data-type="definition" onclick="filterCards(&apos;definition&apos;)">Definition</button><button class="filter-btn" data-color="#3B82F6" data-type="theorem" onclick="filterCards(&apos;theorem&apos;)">Theorem</button><button class="filter-btn" data-color="#F59E0B" data-type="example" onclick="filterCards(&apos;example&apos;)">Example</button><button class="filter-btn" data-color="#6B7280" data-type="remark" onclick="filterCards(&apos;remark&apos;)">Remark</button><button class="filter-btn" data-color="#EC4899" data-type="corollary" onclick="filterCards(&apos;corollary&apos;)">Corollary</button><button class="filter-btn" data-color="#EF4444" data-type="problem" onclick="filterCards(&apos;problem&apos;)">Problem</button></div><div class="card" data-type="definition" style="border-left-color:#10B981"><a href="objects/4e94b0c3.html"><div class="card-header"><span class="type-badge" style="background:#10B981">Definition</span><span class="card-title">Group Representation</span></div><div class="card-meta"><a class="area-link" href="areas/representation-theory.html">Representation Theory</a> · example.tex</div><div class="card-body">A representation of a group $G$ on a vector space $V$ over a field $k$
+is a group homomorphism
+\[
+  \rho : G \to GL(V).
+\]
+The dimension $\dim_k V$ is called the degree of the representation.</div></a></div><div class="card" data-type="definition" style="border-left-color:#10B981"><a href="objects/3fe2b240.html"><div class="card-header"><span class="type-badge" style="background:#10B981">Definition</span><span class="card-title">Subrepresentation</span></div><div class="card-meta"><a class="area-link" href="areas/representation-theory.html">Representation Theory</a> · example.tex</div><div class="card-body">A subspace $W \subseteq V$ is a subrepresentation (or $G$-invariant
+subspace) if $\rho(g)(W) \subseteq W$ for all $g \in G$.</div></a></div><div class="card" data-type="definition" style="border-left-color:#10B981"><a href="objects/a8ec3e23.html"><div class="card-header"><span class="type-badge" style="background:#10B981">Definition</span><span class="card-title">Irreducible Representation</span></div><div class="card-meta"><a class="area-link" href="areas/representation-theory.html">Representation Theory</a> · example.tex</div><div class="card-body">A representation $(\rho, V)$ is irreducible (or simple) if
+$V \neq 0$ and the only subrepresentations of $V$ are $\{0\}$ and $V$ itself.</div></a></div><div class="card" data-type="theorem" style="border-left-color:#3B82F6"><a href="objects/ce9df6b9.html"><div class="card-header"><span class="type-badge" style="background:#3B82F6">Theorem</span><span class="card-title">Schur's Lemma</span></div><div class="card-meta"><a class="area-link" href="areas/representation-theory.html">Representation Theory</a> · example.tex</div><div class="card-body">Let $(\rho, V)$ and $(\sigma, W)$ be irreducible representations of $G$ over an
+algebraically closed field $k$.
+
+  • Any $G$-module homomorphism $\phi : V \to W$ is either zero or an
+        isomorphism.
+  • $\mathrm{End…</div></a></div><div class="card" data-type="theorem" style="border-left-color:#3B82F6"><a href="objects/f1efa483.html"><div class="card-header"><span class="type-badge" style="background:#3B82F6">Theorem</span><span class="card-title">Maschke's Theorem</span></div><div class="card-meta"><a class="area-link" href="areas/representation-theory.html">Representation Theory</a> · example.tex</div><div class="card-body">Let $G$ be a finite group and $k$ a field with $\mathrm{char}(k) \nmid |G|$.
+Then every representation of $G$ over $k$ is completely reducible.</div></a></div><div class="card" data-type="example" style="border-left-color:#F59E0B"><a href="objects/59a974c0.html"><div class="card-header"><span class="type-badge" style="background:#F59E0B">Example</span><span class="card-title">Regular Representation</span></div><div class="card-meta"><a class="area-link" href="areas/representation-theory.html">Representation Theory</a> · example.tex</div><div class="card-body">The regular representation of $G$ is the action of $G$ on the group
+algebra $k[G]$ by left multiplication:
+\[
+  \rho(g) \cdot \sum_{h \in G} a_h \, h \;=\; \sum_{h \in G} a_h \, (gh).
+\]
+Over an algebraically closed fiel…</div></a></div><div class="card" data-type="remark" style="border-left-color:#6B7280"><a href="objects/b96526a2.html"><div class="card-header"><span class="type-badge" style="background:#6B7280">Remark</span></div><div class="card-meta"><a class="area-link" href="areas/representation-theory.html">Representation Theory</a> · example.tex</div><div class="card-body">Over $\mathbb{C}$, the number of (isomorphism classes of) irreducible
+representations of $G$ equals the number of conjugacy classes of $G$.</div></a></div><div class="card" data-type="corollary" style="border-left-color:#EC4899"><a href="objects/3b157f10.html"><div class="card-header"><span class="type-badge" style="background:#EC4899">Corollary</span><span class="card-title">Dimension Formula</span></div><div class="card-meta"><a class="area-link" href="areas/representation-theory.html">Representation Theory</a> · example.tex</div><div class="card-body">For a finite group $G$ over $\mathbb{C}$,
+\[
+  \sum_{\chi \in \hat{G}} (\dim V_\chi)^2 = |G|.
+\]</div></a></div><div class="card" data-type="problem" style="border-left-color:#EF4444"><a href="objects/1b852777.html"><div class="card-header"><span class="type-badge" style="background:#EF4444">Problem</span><span class="card-title">Character Table of $S_3$</span></div><div class="card-meta"><a class="area-link" href="areas/representation-theory.html">Representation Theory</a> · example.tex</div><div class="card-body">Compute the complete character table of the symmetric group $S_3$.
+Verify the column orthogonality relations:
+\[
+  \sum_{\chi \in \hat{G}} \chi(g)\,\overline{\chi(h)}
+  \;=\; |C_G(g)| \cdot \delta_{[g],[h]}.
+\]</div></a></div><script>function filterCards(type) {
+  document.querySelectorAll('.card').forEach(function (c) {
+    c.style.display = (type === 'all' || c.dataset.type === type) ? '' : 'none';
+  });
+  document.querySelectorAll('.filter-btn').forEach(function (b) {
+    var active = b.dataset.type === type;
+    b.classList.toggle('active', active);
+    b.style.background  = active ? (b.dataset.color || '#1c1c2e') : '';
+    b.style.borderColor = active ? (b.dataset.color || '#1c1c2e') : '';
+    b.style.color       = active ? 'white' : '';
+  });
+}</script></main><script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script><script>document.addEventListener('DOMContentLoaded', function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      {left: '$$',              right: '$$',              display: true},
+      {left: '$',               right: '$',               display: false},
+      {left: '\\(',           right: '\\)',           display: false},
+      {left: '\\[',           right: '\\]',           display: true},
+      {left: '\\begin{align}',  right: '\\end{align}',  display: true},
+      {left: '\\begin{align*}', right: '\\end{align*}', display: true}
+    ],
+    throwOnError: false
+  });
+});</script></body></html>

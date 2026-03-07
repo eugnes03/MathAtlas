@@ -12,7 +12,7 @@
 
 (defn -main [& args]
   (let [notes-dir  (or (first args)  "notes")
-        output-dir (or (second args) "public")]
+        output-dir (or (second args) "docs")]
     (println (str "Loading .tex files from '" notes-dir "'..."))
     (let [objects (load-notes notes-dir)]
       (println (str "Parsed " (count objects) " objects."))
