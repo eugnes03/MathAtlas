@@ -1,5 +1,86 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta content="width=device-width, initial-scale=1" name="viewport"><title>All Objects — MathAtlas</title><link href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"></head><body><nav><a class="brand" href="index.html">Math<span>Atlas</span></a><div style="flex:1"></div><div class="nav-links"><a href="objects.html">Objects</a><a href="areas.html">Areas</a></div></nav><main class="container"><h1>All Objects</h1><p class="subtitle">9 objects across all areas</p><div class="filters"><button class="filter-btn active" data-color="#1c1c2e" data-type="all" onclick="filterCards(&apos;all&apos;)">All</button><button class="filter-btn" data-color="#10B981" data-type="definition" onclick="filterCards(&apos;definition&apos;)">Definition</button><button class="filter-btn" data-color="#3B82F6" data-type="theorem" onclick="filterCards(&apos;theorem&apos;)">Theorem</button><button class="filter-btn" data-color="#F59E0B" data-type="example" onclick="filterCards(&apos;example&apos;)">Example</button><button class="filter-btn" data-color="#6B7280" data-type="remark" onclick="filterCards(&apos;remark&apos;)">Remark</button><button class="filter-btn" data-color="#EC4899" data-type="corollary" onclick="filterCards(&apos;corollary&apos;)">Corollary</button><button class="filter-btn" data-color="#EF4444" data-type="problem" onclick="filterCards(&apos;problem&apos;)">Problem</button></div><div class="card" data-type="definition" style="border-left-color:#10B981"><a href="objects/4e94b0c3.html"><div class="card-header"><span class="type-badge" style="background:#10B981">Definition</span><span class="card-title">Group Representation</span></div><div class="card-meta"><a class="area-link" href="areas/representation-theory.html">Representation Theory</a> · example.tex</div><div class="card-body">
+<html><head><meta charset="UTF-8"><meta content="width=device-width, initial-scale=1" name="viewport"><title>All Objects — MathAtlas</title><link href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"></head><body><nav><a class="brand" href="index.html">Math<span>Atlas</span></a><div style="flex:1"></div><div class="nav-links"><a href="objects.html">Objects</a><a href="areas.html">Areas</a></div></nav><main class="container"><h1>All Objects</h1><p class="subtitle">17 objects across all areas</p><div class="filters"><button class="filter-btn active" data-color="#1c1c2e" data-type="all" onclick="filterCards(&apos;all&apos;)">All</button><button class="filter-btn" data-color="#10B981" data-type="definition" onclick="filterCards(&apos;definition&apos;)">Definition</button><button class="filter-btn" data-color="#6B7280" data-type="remark" onclick="filterCards(&apos;remark&apos;)">Remark</button><button class="filter-btn" data-color="#6366F1" data-type="proposition" onclick="filterCards(&apos;proposition&apos;)">Proposition</button><button class="filter-btn" data-color="#EC4899" data-type="corollary" onclick="filterCards(&apos;corollary&apos;)">Corollary</button><button class="filter-btn" data-color="#3B82F6" data-type="theorem" onclick="filterCards(&apos;theorem&apos;)">Theorem</button><button class="filter-btn" data-color="#F59E0B" data-type="example" onclick="filterCards(&apos;example&apos;)">Example</button><button class="filter-btn" data-color="#EF4444" data-type="problem" onclick="filterCards(&apos;problem&apos;)">Problem</button></div><div class="card" data-type="definition" style="border-left-color:#10B981"><a href="objects/f2c6bdf5.html"><div class="card-header"><span class="type-badge" style="background:#10B981">Definition</span><span class="card-title">Category</span></div><div class="card-meta"><a class="area-link" href="areas/category-theory.html">Category Theory</a> · category.tex</div><div class="card-body"> 
+A category $\mathcal{C}$ consists of the following data:
+ 
+  • A collection of objects, denoted $\operatorname{Ob}(\mathcal{C})$. 
+  • For every pair of objects $X,Y \in \operatorname{Ob}(\mathcal{C})$, a set $$ \opera…</div></a></div><div class="card" data-type="remark" style="border-left-color:#6B7280"><a href="objects/d14b7e1d.html"><div class="card-header"><span class="type-badge" style="background:#6B7280">Remark</span><span class="card-title">Notation for Morphisms</span></div><div class="card-meta"><a class="area-link" href="areas/category-theory.html">Category Theory</a> · category.tex</div><div class="card-body">
+
+Let $\mathcal{C}$ be a category as in Definition~.  
+If $f \in \Hom_{\mathcal{C}}(X,Y)$ we write
+$$
+f : X \to Y.
+$$
+
+The object $X$ is called the domain of $f$ and $Y$ the codomain.
+
+Composition of morphisms is written…</div></a></div><div class="card" data-type="definition" style="border-left-color:#10B981"><a href="objects/136199b7.html"><div class="card-header"><span class="type-badge" style="background:#10B981">Definition</span><span class="card-title">Isomorphism</span></div><div class="card-meta"><a class="area-link" href="areas/category-theory.html">Category Theory</a> · category.tex</div><div class="card-body">
+
+Let $\mathcal{C}$ be a category (Definition~).  
+
+A morphism
+$$
+f : X \to Y
+$$
+is called an isomorphism if there exists a morphism
+$$
+g : Y \to X
+$$
+such that
+$$
+g \circ f = \operatorname{id}_X
+\qquad
+f \circ g = \oper…</div></a></div><div class="card" data-type="proposition" style="border-left-color:#6366F1"><a href="objects/45ea5662.html"><div class="card-header"><span class="type-badge" style="background:#6366F1">Proposition</span><span class="card-title">Uniqueness of Inverses</span></div><div class="card-meta"><a class="area-link" href="areas/category-theory.html">Category Theory</a> · category.tex</div><div class="card-body">
+
+Let $\mathcal{C}$ be a category (Definition~).  
+If a morphism $f : X \to Y$ is an isomorphism (Definition~),
+then its inverse is unique.</div></a></div><div class="card" data-type="corollary" style="border-left-color:#EC4899"><a href="objects/30fdee11.html"><div class="card-header"><span class="type-badge" style="background:#EC4899">Corollary</span></div><div class="card-meta"><a class="area-link" href="areas/category-theory.html">Category Theory</a> · category.tex</div><div class="card-body">
+
+Let $\mathcal{C}$ be a category (Definition~).  
+The relation
+$$
+X \cong Y
+$$
+defined via isomorphisms (Definition~)
+is an equivalence relation on $\operatorname{Ob}(\mathcal{C})$.</div></a></div><div class="card" data-type="definition" style="border-left-color:#10B981"><a href="objects/a02613f0.html"><div class="card-header"><span class="type-badge" style="background:#10B981">Definition</span><span class="card-title">Subcategory</span></div><div class="card-meta"><a class="area-link" href="areas/category-theory.html">Category Theory</a> · category.tex</div><div class="card-body">
+
+Let $\mathcal{C}$ be a category (Definition~).  
+A subcategory $\mathcal{D}$ of $\mathcal{C}$ consists of
+
+
+
+• a collection of objects
+$$
+\operatorname{Ob}(\mathcal{D}) \subseteq \operatorname{Ob}(\mathcal{C})
+$$
+
+• fo…</div></a></div><div class="card" data-type="definition" style="border-left-color:#10B981"><a href="objects/310ab4af.html"><div class="card-header"><span class="type-badge" style="background:#10B981">Definition</span><span class="card-title">Opposite Category</span></div><div class="card-meta"><a class="area-link" href="areas/category-theory.html">Category Theory</a> · category.tex</div><div class="card-body">
+
+Let $\mathcal{C}$ be a category (Definition~).  
+The opposite category $\mathcal{C}^{op}$ is defined as follows.
+
+
+
+• Objects:
+$$
+\operatorname{Ob}(\mathcal{C}^{op}) = \operatorname{Ob}(\mathcal{C})
+$$
+
+• Morphisms:
+$$…</div></a></div><div class="card" data-type="remark" style="border-left-color:#6B7280"><a href="objects/f3e709f9.html"><div class="card-header"><span class="type-badge" style="background:#6B7280">Remark</span><span class="card-title">Duality Principle</span></div><div class="card-meta"><a class="area-link" href="areas/category-theory.html">Category Theory</a> · category.tex</div><div class="card-body">
+
+Let $\mathcal{C}$ be a category (Definition~).  
+Any statement about $\mathcal{C}$ has a dual statement
+obtained by replacing
+
+
+
+• morphisms $f : X \to Y$ by $f : Y \to X$
+
+• compositions $g \circ f$ by $f \circ g$
+
+
+
+…</div></a></div><div class="card" data-type="definition" style="border-left-color:#10B981"><a href="objects/4e94b0c3.html"><div class="card-header"><span class="type-badge" style="background:#10B981">Definition</span><span class="card-title">Group Representation</span></div><div class="card-meta"><a class="area-link" href="areas/representation-theory.html">Representation Theory</a> · example.tex</div><div class="card-body">
 A representation of a group $G$ on a vector space $V$ over a field $k$
 is a group homomorphism
 \[
@@ -62,6 +143,9 @@ Verify the column orthogonality relations:
       {left: '\\begin{align}',  right: '\\end{align}',  display: true},
       {left: '\\begin{align*}', right: '\\end{align*}', display: true}
     ],
+    macros: {
+      '\\Hom': '\\operatorname{Hom}'
+    },
     throwOnError: false
   });
 });</script><script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script><script>mermaid.initialize({startOnLoad:true, theme:'neutral', securityLevel:'loose'});</script><script src="https://cdn.jsdelivr.net/npm/dagre@0.8.5/dist/dagre.min.js"></script><script src="https://cdn.jsdelivr.net/npm/cytoscape@3/dist/cytoscape.min.js"></script><script src="https://cdn.jsdelivr.net/npm/cytoscape-dagre@2/cytoscape-dagre.js"></script></body></html>

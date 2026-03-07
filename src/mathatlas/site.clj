@@ -108,6 +108,9 @@
       {left: '\\\\begin{align}',  right: '\\\\end{align}',  display: true},
       {left: '\\\\begin{align*}', right: '\\\\end{align*}', display: true}
     ],
+    macros: {
+      '\\\\Hom': '\\\\operatorname{Hom}'
+    },
     throwOnError: false
   });
 });"])
