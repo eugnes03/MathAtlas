@@ -213,6 +213,38 @@ a:hover { color: #4f46e5; }
   margin-bottom: 0.4rem;
 }
 
+/* --- Dependency graph --- */
+.dep-graph {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.25rem 1.75rem;
+  margin-top: 1rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+  border: 1px solid #e5e7eb;
+  overflow-x: auto;
+}
+.dep-graph .mermaid { margin-top: 0.75rem; }
+
+/* --- Relations (depends-on / used-in) --- */
+.relation-section { margin-top: 1rem; }
+.relation-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: #9ca3af;
+  margin-bottom: 0.4rem;
+}
+.relation-list { list-style: none; padding: 0; }
+.relation-list li { margin-bottom: 0.3rem; }
+.relation-list a {
+  font-size: 0.88rem;
+  color: #6366f1;
+  text-decoration: none;
+}
+.relation-list a:hover { text-decoration: underline; }
+.relation-list li::before { content: "→ "; color: #d1d5db; }
+
 /* --- Areas index grid --- */
 .areas-grid {
   display: grid;
@@ -284,4 +316,69 @@ a:hover { color: #4f46e5; }
   color: #9ca3af;
   padding: 3rem;
   font-style: italic;
+}
+
+/* --- Area knowledge graph --- */
+.area-graph-section { margin-bottom: 1.5rem; }
+.area-graph-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: #9ca3af;
+  margin-bottom: 0.5rem;
+}
+#area-graph {
+  width: 100%;
+  height: 480px;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+  cursor: pointer;
+}
+#graph-tooltip {
+  position: fixed;
+  background: #111827;
+  color: #fff;
+  font-size: 0.78rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  pointer-events: none;
+  display: none;
+  z-index: 1000;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+}
+.gtt-type {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  opacity: 0.65;
+  margin-right: 0.35rem;
+}
+.graph-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.6rem;
+  margin-bottom: 0.25rem;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+.legend-item::before {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--dot, #888);
 }

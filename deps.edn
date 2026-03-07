@@ -3,4 +3,5 @@
          hiccup/hiccup       {:mvn/version "1.0.5"}
          babashka/fs         {:mvn/version "0.5.20"}}
  :aliases
- {:run {:main-opts ["-m" "mathatlas.core"]}}}
+ {:run   {:main-opts ["-m" "mathatlas.core"]}
+  :build {:main-opts ["-m" "mathatlas.core" "--build"]}}}

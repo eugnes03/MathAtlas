@@ -23,21 +23,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 21
-
-      - uses: DeLaGuardo/setup-clojure@12
-        with:
-          cli: latest
-
-      - name: Generate site
-        run: clj -M:run notes public
-
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: public/
+          path: docs/
 
       - uses: actions/deploy-pages@v4
         id: deployment

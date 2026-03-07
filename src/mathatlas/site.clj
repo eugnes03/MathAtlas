@@ -1,7 +1,8 @@
 (ns mathatlas.site
   (:require [hiccup.core :refer [html]]
             [hiccup.page :refer [html5]]
-            [clojure.string :as str]))
+            [clojure.string :as str]
+            [mathatlas.graph :as graph]))
 
 ;; ---------------------------------------------------------------------------
 ;; Data
@@ -76,6 +77,8 @@
       (str/replace #"\\emph\{([^}]*)\}"    "<em>$1</em>")
       (str/replace #"\\texttt\{([^}]*)\}"  "<code>$1</code>")
       (str/replace #"\\text\{([^}]*)\}"    "$1")
+      (str/replace #"\\label\{[^}]*\}"     "")
+      (str/replace #"\\(?:ref|eqref|autoref|cref)\{[^}]*\}" "")
       (str/replace #"(?s)\\begin\{enumerate\}(.*?)\\end\{enumerate\}"
                    (fn [[_ items]]
                      (str "<ol class=\"latex-list\">"
@@ -136,7 +139,12 @@
      [:main.container body]
      [:script {:src "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"}]
      [:script {:src "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"}]
-     (katex-script)]))
+     (katex-script)
+     [:script {:src "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"}]
+     [:script "mermaid.initialize({startOnLoad:true, theme:'neutral', securityLevel:'loose'});"]
+     [:script {:src "https://cdn.jsdelivr.net/npm/dagre@0.8.5/dist/dagre.min.js"}]
+     [:script {:src "https://cdn.jsdelivr.net/npm/cytoscape@3/dist/cytoscape.min.js"}]
+     [:script {:src "https://cdn.jsdelivr.net/npm/cytoscape-dagre@2/cytoscape-dagre.js"}]]))
 
 ;; ---------------------------------------------------------------------------
 ;; Shared components
@@ -230,7 +238,94 @@
                    (str n " object" (when (not= 1 n) "s"))]]]))
             all-areas)])))
 
-(defn area-detail-page [area objects root]
+(defn- json-str [s]
+  (-> (or s "")
+      (str/replace "\\" "\\\\")
+      (str/replace "\"" "\\\"")
+      (str/replace "\n" "\\n")
+      (str/replace "\r" "")))
+
+(defn- area-graph [area-objects gr root]
+  (when (seq area-objects)
+    (let [area-ids (set (map :id area-objects))
+          nodes-js (str/join ","
+                    (map (fn [obj]
+                           (str "{\"id\":\"" (:id obj)
+                                "\",\"label\":\"" (json-str (or (not-empty (:title obj)) (type-label (:type obj))))
+                                "\",\"type\":\"" (name (:type obj))
+                                "\",\"color\":\"" (get type-colors (:type obj) "#888")
+                                "\",\"href\":\"" root "objects/" (:id obj) ".html\"}"))
+                         area-objects))
+          edges-js (str/join ","
+                    (map (fn [{:keys [from to]}]
+                           (str "{\"source\":\"" to "\",\"target\":\"" from "\"}"))
+                         (filter (fn [{:keys [from to]}]
+                                   (and (area-ids from) (area-ids to)))
+                                 (:edges gr))))
+          present-types (->> area-objects (map :type) distinct
+                             (filter #(contains? type-colors %)))]
+      [:div.area-graph-section
+       [:div.area-graph-label "Knowledge Graph"]
+       [:div#area-graph]
+       [:div#graph-tooltip]
+       [:div.graph-legend
+        (map (fn [t]
+               [:span.legend-item
+                {:style (str "--dot:" (get type-colors t))}
+                (type-label t)])
+             present-types)]
+       [:script
+        (str "(function(){
+  var nodes=[" nodes-js "];
+  var edges=[" edges-js "];
+  function init(){
+    if(typeof cytoscape==='undefined'||typeof cytoscapeDagre==='undefined'){setTimeout(init,100);return;}
+    cytoscape.use(cytoscapeDagre);
+    var cy=cytoscape({
+      container:document.getElementById('area-graph'),
+      elements:{
+        nodes:nodes.map(function(n){return{data:n};}),
+        edges:edges.map(function(e){return{data:e};})
+      },
+      layout:{name:'dagre',rankDir:'LR',nodeSep:60,rankSep:100,padding:40,edgeSep:20},
+      style:[
+        {selector:'node',style:{
+          'background-color':'data(color)',
+          'width':20,'height':20,
+          'border-width':2,'border-color':'data(color)','border-opacity':0.3
+        }},
+        {selector:'edge',style:{
+          'width':1.5,'line-color':'#d1d5db',
+          'target-arrow-color':'#d1d5db','target-arrow-shape':'triangle',
+          'curve-style':'bezier','arrow-scale':0.8,'opacity':0.8
+        }},
+        {selector:'edge:hover',style:{
+          'line-color':'#9ca3af','target-arrow-color':'#9ca3af','width':2.5,'opacity':1
+        }}
+      ]
+    });
+    var tooltip=document.getElementById('graph-tooltip');
+    cy.on('mouseover','node',function(e){
+      var d=e.target.data();
+      tooltip.innerHTML='<span class=\"gtt-type\">'+d.type+'</span>'+d.label;
+      tooltip.style.display='block';
+      e.target.animate({'style':{'width':28,'height':28,'border-opacity':1}},{duration:120});
+    });
+    cy.on('mousemove','node',function(e){
+      var oe=e.originalEvent;
+      tooltip.style.left=(oe.clientX+14)+'px';
+      tooltip.style.top=(oe.clientY-12)+'px';
+    });
+    cy.on('mouseout','node',function(e){
+      tooltip.style.display='none';
+      e.target.animate({'style':{'width':20,'height':20,'border-opacity':0.3}},{duration:120});
+    });
+    cy.on('tap','node',function(e){window.location.href=e.target.data('href');});
+  }
+  init();
+})();")]])))
+
+(defn area-detail-page [area objects gr root]
   (let [color (area-color area)
         desc  (get-in area-meta [area :desc] "")]
     (page-shell area root
@@ -242,24 +337,66 @@
         (str (count objects) " object" (when (not= 1 (count objects)) "s"))]]
       (if (empty? objects)
         [:p.empty-state "No objects in this area yet."]
-        (map #(obj-card % root) objects)))))
+        (list
+          (area-graph objects gr root)
+          [:h2 "Objects"]
+          (map #(obj-card % root) objects))))))
 
-(defn object-page [obj root]
-  (let [color  (obj-color obj)
-        title  (not-empty (:title obj))
-        ph     "___MATHATLAS_BODY___"
-        ph2    "___MATHATLAS_PROOF___"
-        shell  (page-shell (or title (type-label (:type obj))) root
-                 [:a.back {:href (str root "objects.html")} "← All Objects"]
-                 [:div.obj-header
-                  [:div.obj-type {:style (str "color:" color)} (type-label (:type obj))]
-                  (when title [:h1.obj-title title])
-                  [:div.obj-meta (:area obj) " · " (:source-file obj)]]
-                 [:div.obj-body ph]
-                 (when (:proof-latex obj)
-                   [:div.proof-section
-                    [:div.proof-label "Proof"]
-                    [:div.obj-body ph2]]))]
+(defn- mermaid-safe [s]
+  (str/replace (or s "") #"\"" "'"))
+
+(defn- mermaid-graph [obj deps dependents root]
+  (when (or (seq deps) (seq dependents))
+    (let [nid      #(str "n" (:id %))
+          nlabel   #(str (nid %) "[\"" (mermaid-safe (or (not-empty (:title %)) (type-label (:type %)))) "\"]")
+          all-nodes (->> (concat deps [obj] dependents)
+                         (group-by :id) vals (map first))
+          lines (concat
+                  (map #(str "  " (nlabel %) (when (= (:id %) (:id obj)) ":::current")) all-nodes)
+                  (map #(str "  " (nid obj) " --> " (nid %)) deps)
+                  (map #(str "  " (nid %) " --> " (nid obj)) dependents)
+                  (keep #(when-not (= (:id %) (:id obj))
+                           (str "  click " (nid %) " \"" root "objects/" (:id %) ".html\" \"_self\""))
+                        all-nodes))
+          diagram (str/join "\n"
+                    (concat ["flowchart LR"
+                             "  classDef current fill:#6366f1,color:#fff,stroke:#4f46e5"]
+                            lines))]
+      [:div.dep-graph
+       [:div.relation-label "Dependency Graph"]
+       [:div.mermaid diagram]])))
+
+(defn- relation-list [label items root]
+  (when (seq items)
+    [:div.relation-section
+     [:div.relation-label label]
+     [:ul.relation-list
+      (map (fn [obj]
+             [:li [:a {:href (str root "objects/" (:id obj) ".html")}
+                   (or (not-empty (:title obj)) (type-label (:type obj)))]])
+           items)]]))
+
+(defn object-page [obj gr objects-by-id root]
+  (let [color      (obj-color obj)
+        title      (not-empty (:title obj))
+        deps       (keep objects-by-id (graph/find-dependencies gr (:id obj)))
+        dependents (keep objects-by-id (graph/find-dependents   gr (:id obj)))
+        ph         "___MATHATLAS_BODY___"
+        ph2        "___MATHATLAS_PROOF___"
+        shell      (page-shell (or title (type-label (:type obj))) root
+                    [:a.back {:href (str root "objects.html")} "← All Objects"]
+                    [:div.obj-header
+                     [:div.obj-type {:style (str "color:" color)} (type-label (:type obj))]
+                     (when title [:h1.obj-title title])
+                     [:div.obj-meta (:area obj) " · " (:source-file obj)]]
+                    [:div.obj-body ph]
+                    (when (:proof-latex obj)
+                      [:div.proof-section
+                       [:div.proof-label "Proof"]
+                       [:div.obj-body ph2]])
+                    (relation-list "Depends on" deps       root)
+                    (relation-list "Used in"    dependents root)
+                    (mermaid-graph obj deps dependents root))]
     (-> shell
         (str/replace ph  (render-body (:latex obj)))
         (str/replace ph2 (render-body (or (:proof-latex obj) ""))))))
@@ -484,6 +621,38 @@ a:hover { color: #4f46e5; }
   margin-bottom: 0.4rem;
 }
 
+/* --- Dependency graph --- */
+.dep-graph {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.25rem 1.75rem;
+  margin-top: 1rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+  border: 1px solid #e5e7eb;
+  overflow-x: auto;
+}
+.dep-graph .mermaid { margin-top: 0.75rem; }
+
+/* --- Relations (depends-on / used-in) --- */
+.relation-section { margin-top: 1rem; }
+.relation-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: #9ca3af;
+  margin-bottom: 0.4rem;
+}
+.relation-list { list-style: none; padding: 0; }
+.relation-list li { margin-bottom: 0.3rem; }
+.relation-list a {
+  font-size: 0.88rem;
+  color: #6366f1;
+  text-decoration: none;
+}
+.relation-list a:hover { text-decoration: underline; }
+.relation-list li::before { content: \"→ \"; color: #d1d5db; }
+
 /* --- Areas index grid --- */
 .areas-grid {
   display: grid;
@@ -556,6 +725,71 @@ a:hover { color: #4f46e5; }
   padding: 3rem;
   font-style: italic;
 }
+
+/* --- Area knowledge graph --- */
+.area-graph-section { margin-bottom: 1.5rem; }
+.area-graph-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: #9ca3af;
+  margin-bottom: 0.5rem;
+}
+#area-graph {
+  width: 100%;
+  height: 480px;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+  cursor: pointer;
+}
+#graph-tooltip {
+  position: fixed;
+  background: #111827;
+  color: #fff;
+  font-size: 0.78rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  pointer-events: none;
+  display: none;
+  z-index: 1000;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+}
+.gtt-type {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  opacity: 0.65;
+  margin-right: 0.35rem;
+}
+.graph-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.6rem;
+  margin-bottom: 0.25rem;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+.legend-item::before {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--dot, #888);
+}
 ")
 
 ;; ---------------------------------------------------------------------------
@@ -567,17 +801,18 @@ a:hover { color: #4f46e5; }
     (.mkdirs (.getParentFile f))
     (spit f content)))
 
-(defn generate-site [objects output-dir]
-  (let [by-area   (group-by :area objects)
-        all-areas (distinct (concat (keys area-meta) (keys by-area)))]
+(defn generate-site [objects gr output-dir]
+  (let [by-area      (group-by :area objects)
+        all-areas    (distinct (concat (keys area-meta) (keys by-area)))
+        objects-by-id (into {} (map (juxt :id identity) objects))]
     (write-page (str output-dir "/style.css")    stylesheet)
     (write-page (str output-dir "/index.html")   (index-page        objects ""))
     (write-page (str output-dir "/objects.html") (objects-page      objects ""))
     (write-page (str output-dir "/areas.html")   (areas-index-page  objects ""))
     (doseq [area all-areas]
       (write-page (str output-dir "/areas/" (area-slug area) ".html")
-                  (area-detail-page area (get by-area area []) "../")))
+                  (area-detail-page area (get by-area area []) gr "../")))
     (doseq [obj objects]
       (write-page (str output-dir "/objects/" (:id obj) ".html")
-                  (object-page obj "../")))
+                  (object-page obj gr objects-by-id "../")))
     (println (str "  Wrote " (+ 3 (count all-areas) (count objects) 1) " files."))))

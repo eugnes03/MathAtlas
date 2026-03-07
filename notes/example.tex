@@ -1,6 +1,7 @@
 % area: Representation Theory
 
 \begin{definition}[Group Representation]
+\label{def:representation}
 A \textit{representation} of a group $G$ on a vector space $V$ over a field $k$
 is a group homomorphism
 \[
@@ -10,18 +11,24 @@ The dimension $\dim_k V$ is called the \textit{degree} of the representation.
 \end{definition}
 
 \begin{definition}[Subrepresentation]
+\label{def:subrepresentation}
 A subspace $W \subseteq V$ is a \textit{subrepresentation} (or $G$-invariant
 subspace) if $\rho(g)(W) \subseteq W$ for all $g \in G$.
+This notion relies on the setup of \ref{def:representation}.
 \end{definition}
 
 \begin{definition}[Irreducible Representation]
-A representation $(\rho, V)$ is \textit{irreducible} (or \textit{simple}) if
-$V \neq 0$ and the only subrepresentations of $V$ are $\{0\}$ and $V$ itself.
+\label{def:irreducible}
+A representation $(\rho, V)$ (in the sense of \ref{def:representation}) is
+\textit{irreducible} (or \textit{simple}) if $V \neq 0$ and the only
+subrepresentations (see \ref{def:subrepresentation}) of $V$ are $\{0\}$ and
+$V$ itself.
 \end{definition}
 
 \begin{theorem}[Schur's Lemma]
-Let $(\rho, V)$ and $(\sigma, W)$ be irreducible representations of $G$ over an
-algebraically closed field $k$.
+\label{thm:schur}
+Let $(\rho, V)$ and $(\sigma, W)$ be irreducible representations
+(\ref{def:irreducible}) of $G$ over an algebraically closed field $k$.
 \begin{enumerate}
   \item Any $G$-module homomorphism $\phi : V \to W$ is either zero or an
         isomorphism.
@@ -42,34 +49,44 @@ nontrivial kernel. By (1) it must be identically zero, so $\phi = \lambda_0
 \end{proof}
 
 \begin{theorem}[Maschke's Theorem]
+\label{thm:maschke}
 Let $G$ be a finite group and $k$ a field with $\mathrm{char}(k) \nmid |G|$.
-Then every representation of $G$ over $k$ is completely reducible.
+Then every representation (\ref{def:representation}) of $G$ over $k$ is
+completely reducible, i.e.\ decomposes into irreducibles (\ref{def:irreducible}).
 \end{theorem}
 
 \begin{example}[Regular Representation]
+\label{ex:regular}
 The \textit{regular representation} of $G$ is the action of $G$ on the group
-algebra $k[G]$ by left multiplication:
+algebra $k[G]$ by left multiplication (a special case of \ref{def:representation}):
 \[
   \rho(g) \cdot \sum_{h \in G} a_h \, h \;=\; \sum_{h \in G} a_h \, (gh).
 \]
-Over an algebraically closed field of characteristic zero, every irreducible
-representation appears in $k[G]$ with multiplicity equal to its degree.
+By \ref{thm:maschke}, over an algebraically closed field of characteristic zero,
+every irreducible representation appears in $k[G]$ with multiplicity equal to
+its degree.
 \end{example}
 
 \begin{remark}
+\label{rem:conj-classes}
 Over $\mathbb{C}$, the number of (isomorphism classes of) irreducible
 representations of $G$ equals the number of conjugacy classes of $G$.
+This follows from \ref{thm:maschke} and \ref{thm:schur}.
 \end{remark}
 
 \begin{corollary}[Dimension Formula]
-For a finite group $G$ over $\mathbb{C}$,
+\label{cor:dimension}
+For a finite group $G$ over $\mathbb{C}$, combining \ref{thm:maschke} and
+\ref{rem:conj-classes},
 \[
   \sum_{\chi \in \hat{G}} (\dim V_\chi)^2 = |G|.
 \]
 \end{corollary}
 
 \begin{problem}[Character Table of $S_3$]
-Compute the complete character table of the symmetric group $S_3$.
+\label{prob:s3}
+Using \ref{cor:dimension} and \ref{thm:schur}, compute the complete character
+table of the symmetric group $S_3$.
 Verify the column orthogonality relations:
 \[
   \sum_{\chi \in \hat{G}} \chi(g)\,\overline{\chi(h)}

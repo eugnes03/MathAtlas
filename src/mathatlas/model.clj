@@ -19,4 +19,9 @@
    :source-file source-file
    :area        area
    :proof-latex nil
-   :concepts    []})
+   :label       nil
+   :refs        []
+   :concepts    []
+   :depends-on  []
+   :tags        []
+   :created-at  (str (java.time.LocalDate/now))})
