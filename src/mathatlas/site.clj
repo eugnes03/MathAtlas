@@ -352,8 +352,8 @@
                          (group-by :id) vals (map first))
           lines (concat
                   (map #(str "  " (nlabel %) (when (= (:id %) (:id obj)) ":::current")) all-nodes)
-                  (map #(str "  " (nid obj) " --> " (nid %)) deps)
-                  (map #(str "  " (nid %) " --> " (nid obj)) dependents)
+                  (map #(str "  " (nid %) " --> " (nid obj)) deps)
+                  (map #(str "  " (nid obj) " --> " (nid %)) dependents)
                   (keep #(when-not (= (:id %) (:id obj))
                            (str "  click " (nid %) " \"" root "objects/" (:id %) ".html\" \"_self\""))
                         all-nodes))
