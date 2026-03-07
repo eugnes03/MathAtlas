@@ -77,8 +77,7 @@
       (str/replace #"\\emph\{([^}]*)\}"    "<em>$1</em>")
       (str/replace #"\\texttt\{([^}]*)\}"  "<code>$1</code>")
       (str/replace #"\\text\{([^}]*)\}"    "$1")
-      (str/replace #"\\label\{[^}]*\}"     "")
-      (str/replace #"\\(?:ref|eqref|autoref|cref)\{[^}]*\}" "")
+      (str/replace #"\\label\{[^}]*\}" "")
       (str/replace #"(?s)\\begin\{enumerate\}(.*?)\\end\{enumerate\}"
                    (fn [[_ items]]
                      (str "<ol class=\"latex-list\">"
@@ -366,6 +365,18 @@
        [:div.relation-label "Dependency Graph"]
        [:div.mermaid diagram]])))
 
+(defn- resolve-refs
+  "Replace \\ref{label} with the title of the referenced object, or strip if not found."
+  [latex objects-by-id]
+  (let [label->obj (->> (vals objects-by-id)
+                        (keep #(when-let [l (:label %)] [l %]))
+                        (into {}))]
+    (str/replace latex #"\\(?:ref|eqref|autoref|cref)\{([^}]+)\}"
+                 (fn [[_ lbl]]
+                   (if-let [obj (get label->obj lbl)]
+                     (or (not-empty (:title obj)) (type-label (:type obj)))
+                     "")))))
+
 (defn- relation-list [label items root]
   (when (seq items)
     [:div.relation-section
@@ -398,8 +409,8 @@
                     (relation-list "Used in"    dependents root)
                     (mermaid-graph obj deps dependents root))]
     (-> shell
-        (str/replace ph  (render-body (:latex obj)))
-        (str/replace ph2 (render-body (or (:proof-latex obj) ""))))))
+        (str/replace ph  (render-body (resolve-refs (:latex obj) objects-by-id)))
+        (str/replace ph2 (render-body (resolve-refs (or (:proof-latex obj) "") objects-by-id))))))
 
 ;; ---------------------------------------------------------------------------
 ;; CSS
