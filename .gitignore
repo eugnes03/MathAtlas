@@ -1,0 +1,7 @@
+.cpcache/
+.clj-kondo/
+.lsp/
+target/
+*.class
+.nrepl-port
+.DS_Store

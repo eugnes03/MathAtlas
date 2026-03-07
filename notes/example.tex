@@ -1,0 +1,78 @@
+% area: Representation Theory
+
+\begin{definition}[Group Representation]
+A \textit{representation} of a group $G$ on a vector space $V$ over a field $k$
+is a group homomorphism
+\[
+  \rho : G \to GL(V).
+\]
+The dimension $\dim_k V$ is called the \textit{degree} of the representation.
+\end{definition}
+
+\begin{definition}[Subrepresentation]
+A subspace $W \subseteq V$ is a \textit{subrepresentation} (or $G$-invariant
+subspace) if $\rho(g)(W) \subseteq W$ for all $g \in G$.
+\end{definition}
+
+\begin{definition}[Irreducible Representation]
+A representation $(\rho, V)$ is \textit{irreducible} (or \textit{simple}) if
+$V \neq 0$ and the only subrepresentations of $V$ are $\{0\}$ and $V$ itself.
+\end{definition}
+
+\begin{theorem}[Schur's Lemma]
+Let $(\rho, V)$ and $(\sigma, W)$ be irreducible representations of $G$ over an
+algebraically closed field $k$.
+\begin{enumerate}
+  \item Any $G$-module homomorphism $\phi : V \to W$ is either zero or an
+        isomorphism.
+  \item $\mathrm{End}_G(V) \cong k$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(1) Since $\ker(\phi)$ and $\mathrm{Im}(\phi)$ are subrepresentations of $V$
+and $W$ respectively, irreducibility forces each to be $\{0\}$ or the whole
+space. The non-trivial cases give an isomorphism.
+
+(2) For any $\lambda \in k$, the map $\phi - \lambda \cdot \mathrm{id}_V$ is
+again a $G$-endomorphism. Since $k$ is algebraically closed, $\phi$ has some
+eigenvalue $\lambda_0$, and $\phi - \lambda_0 \cdot \mathrm{id}_V$ has a
+nontrivial kernel. By (1) it must be identically zero, so $\phi = \lambda_0
+\cdot \mathrm{id}_V$.
+\end{proof}
+
+\begin{theorem}[Maschke's Theorem]
+Let $G$ be a finite group and $k$ a field with $\mathrm{char}(k) \nmid |G|$.
+Then every representation of $G$ over $k$ is completely reducible.
+\end{theorem}
+
+\begin{example}[Regular Representation]
+The \textit{regular representation} of $G$ is the action of $G$ on the group
+algebra $k[G]$ by left multiplication:
+\[
+  \rho(g) \cdot \sum_{h \in G} a_h \, h \;=\; \sum_{h \in G} a_h \, (gh).
+\]
+Over an algebraically closed field of characteristic zero, every irreducible
+representation appears in $k[G]$ with multiplicity equal to its degree.
+\end{example}
+
+\begin{remark}
+Over $\mathbb{C}$, the number of (isomorphism classes of) irreducible
+representations of $G$ equals the number of conjugacy classes of $G$.
+\end{remark}
+
+\begin{corollary}[Dimension Formula]
+For a finite group $G$ over $\mathbb{C}$,
+\[
+  \sum_{\chi \in \hat{G}} (\dim V_\chi)^2 = |G|.
+\]
+\end{corollary}
+
+\begin{problem}[Character Table of $S_3$]
+Compute the complete character table of the symmetric group $S_3$.
+Verify the column orthogonality relations:
+\[
+  \sum_{\chi \in \hat{G}} \chi(g)\,\overline{\chi(h)}
+  \;=\; |C_G(g)| \cdot \delta_{[g],[h]}.
+\]
+\end{problem}
