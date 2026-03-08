@@ -1,39 +1,58 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta content="width=device-width, initial-scale=1" name="viewport"><title>Definition — MathAtlas</title><link href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" rel="stylesheet"><link href="../style.css" rel="stylesheet"></head><body><nav><a class="brand" href="../index.html">Math<span>Atlas</span></a><div style="flex:1"></div><div class="nav-links"><a href="../objects.html">Objects</a><a href="../areas.html">Areas</a></div></nav><main class="container"><a class="back" href="../objects.html">← All Objects</a><div class="obj-header"><div class="obj-type" style="color:#10B981">Definition</div><div class="obj-meta">Category Theory · category.tex</div></div><div class="obj-body"> 
-A <em>category</em> $\mathcal{C}$ consists of the following data:
-<ol class="latex-list"> 
-  <li>A collection of objects, denoted $\operatorname{Ob}(\mathcal{C})$. 
-  <li>For every pair of objects $X,Y \in \operatorname{Ob}(\mathcal{C})$, a set $$ \operatorname{Hom}_{\mathcal{C}}(X,Y) $$ whose elements are called <em>morphisms</em> (or arrows) from $X$ to $Y$. 
-  <li>For every triple of objects $X,Y,Z$, a composition map $$ \operatorname{Hom}_{\mathcal{C}}(Y,Z) \times \operatorname{Hom}_{\mathcal{C}}(X,Y) \to \operatorname{Hom}_{\mathcal{C}}(X,Z), $$ written $$ (g,f) \mapsto g \circ f . $$ 
-  <li>For every object $X$, an identity morphism $$ \operatorname{id}_X \in \operatorname{Hom}_{\mathcal{C}}(X,X). $$ 
-  </ol> 
-These data satisfy the following axioms: 
-<ol class="latex-list"> 
-<li><strong>Associativity:</strong> For morphisms $$ X \xrightarrow{f} Y \xrightarrow{g} Z \xrightarrow{h} W $$ we have $$ h \circ (g \circ f) = (h \circ g) \circ f . $$ 
-<li><strong>Identity:</strong> For every morphism $f : X \to Y$, $$ f \circ \operatorname{id}_X = f \qquadand\qquad \operatorname{id}_Y \circ f = f . $$ </ol></div><div class="relation-section"><div class="relation-label">Used in</div><ul class="relation-list"><li><a href="../objects/d14b7e1d.html">Notation for Morphisms</a></li><li><a href="../objects/136199b7.html">Isomorphism</a></li><li><a href="../objects/45ea5662.html">Uniqueness of Inverses</a></li><li><a href="../objects/30fdee11.html">Corollary</a></li><li><a href="../objects/a02613f0.html">Subcategory</a></li><li><a href="../objects/310ab4af.html">Opposite Category</a></li><li><a href="../objects/f3e709f9.html">Duality Principle</a></li></ul></div><div class="dep-graph"><div class="relation-label">Dependency Graph</div><div class="mermaid">flowchart LR
+<html><head><meta charset="UTF-8"><meta content="width=device-width, initial-scale=1" name="viewport"><title>Definition — MathAtlas</title><link href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" rel="stylesheet"><link href="../style.css" rel="stylesheet"></head><body><nav><a class="brand" href="../index.html">Math<span>Atlas</span></a><div style="flex:1"></div><div class="nav-links"><a href="../objects.html">Objects</a><a href="../areas.html">Areas</a></div></nav><main class="container"><a class="back" href="../objects.html">← All Objects</a><div class="obj-header"><div class="obj-type" style="color:#10B981">Definition</div><div class="obj-meta">Category Theory · category.tex</div></div><div class="obj-body">
+
+Let
+
+$$
+F,G : \mathcal{C} \to \mathcal{D}
+$$
+
+be functors (Definition~Functor).
+
+A <em>natural transformation</em>
+
+$$
+\eta : F \Rightarrow G
+$$
+
+consists of morphisms
+
+$$
+\eta_X : F(X) \to G(X)
+$$
+
+for every object $X$ of $\mathcal{C}$ such that for every morphism
+
+$$
+f : X \to Y
+$$
+
+the following diagram commutes:
+
+$$
+\begin{tikzcd}
+F(X) \arrow[r,"\eta_X"] \arrow[d,"F(f)"']
+&amp;
+G(X) \arrow[d,"G(f)"]
+\\
+F(Y) \arrow[r,"\eta_Y"]
+&amp;
+G(Y)
+\end{tikzcd}
+$$</div><div class="relation-section"><div class="relation-label">Depends on</div><ul class="relation-list"><li><a href="../objects/39e872fb.html">Functor</a></li><li><a href="../objects/39e872fb.html">Functor</a></li></ul></div><div class="relation-section"><div class="relation-label">Used in</div><ul class="relation-list"><li><a href="../objects/76f014fe.html">Lemma</a></li><li><a href="../objects/76f014fe.html">Lemma</a></li><li><a href="../objects/56d6b291.html">Proposition</a></li></ul></div><div class="dep-graph"><div class="relation-label">Dependency Graph</div><div class="mermaid">flowchart LR
   classDef current fill:#6366f1,color:#fff,stroke:#4f46e5
+  n39e872fb["Functor"]
   n297b3591["Definition"]:::current
-  nd14b7e1d["Notation for Morphisms"]
-  n136199b7["Isomorphism"]
-  n45ea5662["Uniqueness of Inverses"]
-  n30fdee11["Corollary"]
-  na02613f0["Subcategory"]
-  n310ab4af["Opposite Category"]
-  nf3e709f9["Duality Principle"]
-  n297b3591 --> nd14b7e1d
-  n297b3591 --> n136199b7
-  n297b3591 --> n45ea5662
-  n297b3591 --> n30fdee11
-  n297b3591 --> na02613f0
-  n297b3591 --> n310ab4af
-  n297b3591 --> nf3e709f9
-  click nd14b7e1d "../objects/d14b7e1d.html" "_self"
-  click n136199b7 "../objects/136199b7.html" "_self"
-  click n45ea5662 "../objects/45ea5662.html" "_self"
-  click n30fdee11 "../objects/30fdee11.html" "_self"
-  click na02613f0 "../objects/a02613f0.html" "_self"
-  click n310ab4af "../objects/310ab4af.html" "_self"
-  click nf3e709f9 "../objects/f3e709f9.html" "_self"</div></div></main><script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script><script>document.addEventListener('DOMContentLoaded', function () {
+  n76f014fe["Lemma"]
+  n56d6b291["Proposition"]
+  n39e872fb --> n297b3591
+  n39e872fb --> n297b3591
+  n297b3591 --> n76f014fe
+  n297b3591 --> n76f014fe
+  n297b3591 --> n56d6b291
+  click n39e872fb "../objects/39e872fb.html" "_self"
+  click n76f014fe "../objects/76f014fe.html" "_self"
+  click n56d6b291 "../objects/56d6b291.html" "_self"</div></div></main><script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script><script>document.addEventListener('DOMContentLoaded', function () {
   renderMathInElement(document.body, {
     delimiters: [
       {left: '$$',              right: '$$',              display: true},
@@ -43,6 +62,9 @@ These data satisfy the following axioms:
       {left: '\\begin{align}',  right: '\\end{align}',  display: true},
       {left: '\\begin{align*}', right: '\\end{align*}', display: true}
     ],
+    macros: {
+      '\\Hom': '\\operatorname{Hom}'
+    },
     throwOnError: false
   });
 });</script><script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script><script>mermaid.initialize({startOnLoad:true, theme:'neutral', securityLevel:'loose'});</script><script src="https://cdn.jsdelivr.net/npm/dagre@0.8.5/dist/dagre.min.js"></script><script src="https://cdn.jsdelivr.net/npm/cytoscape@3/dist/cytoscape.min.js"></script><script src="https://cdn.jsdelivr.net/npm/cytoscape-dagre@2/cytoscape-dagre.js"></script></body></html>

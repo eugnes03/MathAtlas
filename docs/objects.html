@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta content="width=device-width, initial-scale=1" name="viewport"><title>All Objects — MathAtlas</title><link href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"></head><body><nav><a class="brand" href="index.html">Math<span>Atlas</span></a><div style="flex:1"></div><div class="nav-links"><a href="objects.html">Objects</a><a href="areas.html">Areas</a></div></nav><main class="container"><h1>All Objects</h1><p class="subtitle">17 objects across all areas</p><div class="filters"><button class="filter-btn active" data-color="#1c1c2e" data-type="all" onclick="filterCards(&apos;all&apos;)">All</button><button class="filter-btn" data-color="#10B981" data-type="definition" onclick="filterCards(&apos;definition&apos;)">Definition</button><button class="filter-btn" data-color="#6B7280" data-type="remark" onclick="filterCards(&apos;remark&apos;)">Remark</button><button class="filter-btn" data-color="#6366F1" data-type="proposition" onclick="filterCards(&apos;proposition&apos;)">Proposition</button><button class="filter-btn" data-color="#EC4899" data-type="corollary" onclick="filterCards(&apos;corollary&apos;)">Corollary</button><button class="filter-btn" data-color="#3B82F6" data-type="theorem" onclick="filterCards(&apos;theorem&apos;)">Theorem</button><button class="filter-btn" data-color="#F59E0B" data-type="example" onclick="filterCards(&apos;example&apos;)">Example</button><button class="filter-btn" data-color="#EF4444" data-type="problem" onclick="filterCards(&apos;problem&apos;)">Problem</button></div><div class="card" data-type="definition" style="border-left-color:#10B981"><a href="objects/f2c6bdf5.html"><div class="card-header"><span class="type-badge" style="background:#10B981">Definition</span><span class="card-title">Category</span></div><div class="card-meta"><a class="area-link" href="areas/category-theory.html">Category Theory</a> · category.tex</div><div class="card-body"> 
+<html><head><meta charset="UTF-8"><meta content="width=device-width, initial-scale=1" name="viewport"><title>All Objects — MathAtlas</title><link href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" rel="stylesheet"><link href="style.css" rel="stylesheet"></head><body><nav><a class="brand" href="index.html">Math<span>Atlas</span></a><div style="flex:1"></div><div class="nav-links"><a href="objects.html">Objects</a><a href="areas.html">Areas</a></div></nav><main class="container"><h1>All Objects</h1><p class="subtitle">26 objects across all areas</p><div class="filters"><button class="filter-btn active" data-color="#1c1c2e" data-type="all" onclick="filterCards(&apos;all&apos;)">All</button><button class="filter-btn" data-color="#10B981" data-type="definition" onclick="filterCards(&apos;definition&apos;)">Definition</button><button class="filter-btn" data-color="#6B7280" data-type="remark" onclick="filterCards(&apos;remark&apos;)">Remark</button><button class="filter-btn" data-color="#6366F1" data-type="proposition" onclick="filterCards(&apos;proposition&apos;)">Proposition</button><button class="filter-btn" data-color="#EC4899" data-type="corollary" onclick="filterCards(&apos;corollary&apos;)">Corollary</button><button class="filter-btn" data-color="#8B5CF6" data-type="lemma" onclick="filterCards(&apos;lemma&apos;)">Lemma</button><button class="filter-btn" data-color="#F59E0B" data-type="example" onclick="filterCards(&apos;example&apos;)">Example</button><button class="filter-btn" data-color="#3B82F6" data-type="theorem" onclick="filterCards(&apos;theorem&apos;)">Theorem</button><button class="filter-btn" data-color="#EF4444" data-type="problem" onclick="filterCards(&apos;problem&apos;)">Problem</button></div><div class="card" data-type="definition" style="border-left-color:#10B981"><a href="objects/f2c6bdf5.html"><div class="card-header"><span class="type-badge" style="background:#10B981">Definition</span><span class="card-title">Category</span></div><div class="card-meta"><a class="area-link" href="areas/category-theory.html">Category Theory</a> · category.tex</div><div class="card-body"> 
 A category $\mathcal{C}$ consists of the following data:
  
   • A collection of objects, denoted $\operatorname{Ob}(\mathcal{C})$. 
@@ -80,7 +80,126 @@ obtained by replacing
 
 
 
-…</div></a></div><div class="card" data-type="definition" style="border-left-color:#10B981"><a href="objects/4e94b0c3.html"><div class="card-header"><span class="type-badge" style="background:#10B981">Definition</span><span class="card-title">Group Representation</span></div><div class="card-meta"><a class="area-link" href="areas/representation-theory.html">Representation Theory</a> · example.tex</div><div class="card-body">
+…</div></a></div><div class="card" data-type="definition" style="border-left-color:#10B981"><a href="objects/39e872fb.html"><div class="card-header"><span class="type-badge" style="background:#10B981">Definition</span><span class="card-title">Functor</span></div><div class="card-meta"><a class="area-link" href="areas/category-theory.html">Category Theory</a> · category.tex</div><div class="card-body">
+  A functor $F$ is a map of categories that preserves commutative diagrams. In particular, given two categories,  $\mathcal{C}$, $\mathcal{D}$, a functor 
+ $F : \mathcal{C} \to \mathcal{D}$ satisfies the following prope…</div></a></div><div class="card" data-type="lemma" style="border-left-color:#8B5CF6"><a href="objects/384e2b5d.html"><div class="card-header"><span class="type-badge" style="background:#8B5CF6">Lemma</span><span class="card-title">Functors Preserve Isomorphisms</span></div><div class="card-meta"><a class="area-link" href="areas/category-theory.html">Category Theory</a> · category.tex</div><div class="card-body">
+
+Let 
+$$
+F : \mathcal{C} \to \mathcal{D}
+$$
+be a functor (Definition~).  
+
+If
+$$
+f : X \to Y
+$$
+is an isomorphism in $\mathcal{C}$ (Definition~),
+then
+$$
+F(f) : F(X) \to F(Y)
+$$
+is an isomorphism in $\mathcal{D}$.
+
+Refe…</div></a></div><div class="card" data-type="definition" style="border-left-color:#10B981"><a href="objects/297b3591.html"><div class="card-header"><span class="type-badge" style="background:#10B981">Definition</span></div><div class="card-meta"><a class="area-link" href="areas/category-theory.html">Category Theory</a> · category.tex</div><div class="card-body">
+
+Let
+$$
+F : \mathcal{C} \to \mathcal{D},
+\qquad
+G : \mathcal{D} \to \mathcal{E}
+$$
+be functors (Definition~).
+
+The composition of functors
+$$
+G \circ F : \mathcal{C} \to \mathcal{E}
+$$
+is defined as follows.
+
+On objects…</div></a></div><div class="card" data-type="lemma" style="border-left-color:#8B5CF6"><a href="objects/76f014fe.html"><div class="card-header"><span class="type-badge" style="background:#8B5CF6">Lemma</span></div><div class="card-meta"><a class="area-link" href="areas/category-theory.html">Category Theory</a> · category.tex</div><div class="card-body">
+
+The composition of functors is a functor.
+
+References: Definition~, Definition~.</div></a></div><div class="card" data-type="definition" style="border-left-color:#10B981"><a href="objects/297b3591.html"><div class="card-header"><span class="type-badge" style="background:#10B981">Definition</span></div><div class="card-meta"><a class="area-link" href="areas/category-theory.html">Category Theory</a> · category.tex</div><div class="card-body">
+
+Let $\mathcal{C}$ be a category.
+
+The identity functor
+
+$$
+\operatorname{Id}_{\mathcal{C}} : \mathcal{C} \to \mathcal{C}
+$$
+
+is defined by
+
+Objects
+
+$$
+\operatorname{Id}_{\mathcal{C}}(X) = X
+$$
+
+Morphisms
+
+$$
+\operator…</div></a></div><div class="card" data-type="lemma" style="border-left-color:#8B5CF6"><a href="objects/76f014fe.html"><div class="card-header"><span class="type-badge" style="background:#8B5CF6">Lemma</span></div><div class="card-meta"><a class="area-link" href="areas/category-theory.html">Category Theory</a> · category.tex</div><div class="card-body">
+
+The identity functor is a functor.
+
+References: Definition~, Definition~.</div></a></div><div class="card" data-type="proposition" style="border-left-color:#6366F1"><a href="objects/56d6b291.html"><div class="card-header"><span class="type-badge" style="background:#6366F1">Proposition</span></div><div class="card-meta"><a class="area-link" href="areas/category-theory.html">Category Theory</a> · category.tex</div><div class="card-body">
+
+Functor composition is associative.
+
+References: Definition~.</div></a></div><div class="card" data-type="example" style="border-left-color:#F59E0B"><a href="objects/9b51865d.html"><div class="card-header"><span class="type-badge" style="background:#F59E0B">Example</span></div><div class="card-meta"><a class="area-link" href="areas/category-theory.html">Category Theory</a> · category.tex</div><div class="card-body">
+
+Let
+
+$$
+\mathbf{Grp}
+$$
+
+be the category of groups and group homomorphisms, and
+
+$$
+\mathbf{Set}
+$$
+
+the category of sets.
+
+Define a functor
+
+$$
+U : \mathbf{Grp} \to \mathbf{Set}
+$$
+
+as follows.
+
+Objects
+
+$$
+U(G) = the…</div></a></div><div class="card" data-type="definition" style="border-left-color:#10B981"><a href="objects/297b3591.html"><div class="card-header"><span class="type-badge" style="background:#10B981">Definition</span></div><div class="card-meta"><a class="area-link" href="areas/category-theory.html">Category Theory</a> · category.tex</div><div class="card-body">
+
+Let
+
+$$
+F,G : \mathcal{C} \to \mathcal{D}
+$$
+
+be functors (Definition~).
+
+A natural transformation
+
+$$
+\eta : F \Rightarrow G
+$$
+
+consists of morphisms
+
+$$
+\eta_X : F(X) \to G(X)
+$$
+
+for every object $X$ of $\mathcal{C…</div></a></div><div class="card" data-type="definition" style="border-left-color:#10B981"><a href="objects/4e94b0c3.html"><div class="card-header"><span class="type-badge" style="background:#10B981">Definition</span><span class="card-title">Group Representation</span></div><div class="card-meta"><a class="area-link" href="areas/representation-theory.html">Representation Theory</a> · example.tex</div><div class="card-body">
 A representation of a group $G$ on a vector space $V$ over a field $k$
 is a group homomorphism
 \[

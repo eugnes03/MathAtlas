@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><meta content="width=device-width, initial-scale=1" name="viewport"><title>Proposition — MathAtlas</title><link href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" rel="stylesheet"><link href="../style.css" rel="stylesheet"></head><body><nav><a class="brand" href="../index.html">Math<span>Atlas</span></a><div style="flex:1"></div><div class="nav-links"><a href="../objects.html">Objects</a><a href="../areas.html">Areas</a></div></nav><main class="container"><a class="back" href="../objects.html">← All Objects</a><div class="obj-header"><div class="obj-type" style="color:#6366F1">Proposition</div><div class="obj-meta">Category Theory · category.tex</div></div><div class="obj-body">
+
+Functor composition is associative.
+
+References: Definition~.</div><div class="proof-section"><div class="proof-label">Proof</div><div class="obj-body">Let
+
+$$
+F : \mathcal{C} \to \mathcal{D},
+\qquad
+G : \mathcal{D} \to \mathcal{E},
+\qquad
+H : \mathcal{E} \to \mathcal{F}.
+$$
+
+For an object $X$,
+
+$$
+H \circ (G \circ F)(X)
+=
+H(G(F(X))).
+$$
+
+Also
+
+$$
+(H \circ G) \circ F (X)
+=
+H(G(F(X))).
+$$
+
+Thus the two functors agree on objects.
+
+For a morphism $f : X \to Y$,
+
+$$
+H \circ (G \circ F)(f)
+=
+H(G(F(f))).
+$$
+
+Similarly,
+
+$$
+(H \circ G) \circ F (f)
+=
+H(G(F(f))).
+$$
+
+Thus the functors agree on morphisms.</div></div><div class="relation-section"><div class="relation-label">Depends on</div><ul class="relation-list"><li><a href="../objects/297b3591.html">Definition</a></li></ul></div><div class="dep-graph"><div class="relation-label">Dependency Graph</div><div class="mermaid">flowchart LR
+  classDef current fill:#6366f1,color:#fff,stroke:#4f46e5
+  n297b3591["Definition"]
+  n56d6b291["Proposition"]:::current
+  n297b3591 --> n56d6b291
+  click n297b3591 "../objects/297b3591.html" "_self"</div></div></main><script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script><script>document.addEventListener('DOMContentLoaded', function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      {left: '$$',              right: '$$',              display: true},
+      {left: '$',               right: '$',               display: false},
+      {left: '\\(',           right: '\\)',           display: false},
+      {left: '\\[',           right: '\\]',           display: true},
+      {left: '\\begin{align}',  right: '\\end{align}',  display: true},
+      {left: '\\begin{align*}', right: '\\end{align*}', display: true}
+    ],
+    macros: {
+      '\\Hom': '\\operatorname{Hom}'
+    },
+    throwOnError: false
+  });
+});</script><script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script><script>mermaid.initialize({startOnLoad:true, theme:'neutral', securityLevel:'loose'});</script><script src="https://cdn.jsdelivr.net/npm/dagre@0.8.5/dist/dagre.min.js"></script><script src="https://cdn.jsdelivr.net/npm/cytoscape@3/dist/cytoscape.min.js"></script><script src="https://cdn.jsdelivr.net/npm/cytoscape-dagre@2/cytoscape-dagre.js"></script></body></html>

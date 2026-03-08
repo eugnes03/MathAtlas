@@ -10,16 +10,17 @@ A <em>category</em> $\mathcal{C}$ consists of the following data:
 These data satisfy the following axioms: 
 <ol class="latex-list"> 
 <li><strong>Associativity:</strong> For morphisms $$ X \xrightarrow{f} Y \xrightarrow{g} Z \xrightarrow{h} W $$ we have $$ h \circ (g \circ f) = (h \circ g) \circ f . $$ 
-<li><strong>Identity:</strong> For every morphism $f : X \to Y$, $$ f \circ \operatorname{id}_X = f \qquadand\qquad \operatorname{id}_Y \circ f = f . $$ </ol></div><div class="relation-section"><div class="relation-label">Used in</div><ul class="relation-list"><li><a href="../objects/d14b7e1d.html">Notation for Morphisms</a></li><li><a href="../objects/136199b7.html">Isomorphism</a></li><li><a href="../objects/45ea5662.html">Uniqueness of Inverses</a></li><li><a href="../objects/30fdee11.html">Corollary</a></li><li><a href="../objects/a02613f0.html">Subcategory</a></li><li><a href="../objects/310ab4af.html">Opposite Category</a></li><li><a href="../objects/f3e709f9.html">Duality Principle</a></li></ul></div><div class="dep-graph"><div class="relation-label">Dependency Graph</div><div class="mermaid">flowchart LR
+<li><strong>Identity:</strong> For every morphism $f : X \to Y$, $$ f \circ \operatorname{id}_X = f \qquadand\qquad \operatorname{id}_Y \circ f = f . $$ </ol></div><div class="relation-section"><div class="relation-label">Used in</div><ul class="relation-list"><li><a href="../objects/d14b7e1d.html">Notation for Morphisms</a></li><li><a href="../objects/136199b7.html">Isomorphism</a></li><li><a href="../objects/45ea5662.html">Uniqueness of Inverses</a></li><li><a href="../objects/30fdee11.html">Corollary</a></li><li><a href="../objects/a02613f0.html">Subcategory</a></li><li><a href="../objects/310ab4af.html">Opposite Category</a></li><li><a href="../objects/f3e709f9.html">Duality Principle</a></li><li><a href="../objects/39e872fb.html">Functor</a></li></ul></div><div class="dep-graph"><div class="relation-label">Dependency Graph</div><div class="mermaid">flowchart LR
   classDef current fill:#6366f1,color:#fff,stroke:#4f46e5
-  nf2c6bdf5["Category"]:::current
-  nd14b7e1d["Notation for Morphisms"]
-  n136199b7["Isomorphism"]
   n45ea5662["Uniqueness of Inverses"]
-  n30fdee11["Corollary"]
-  na02613f0["Subcategory"]
-  n310ab4af["Opposite Category"]
+  nf2c6bdf5["Category"]:::current
+  n136199b7["Isomorphism"]
+  nd14b7e1d["Notation for Morphisms"]
   nf3e709f9["Duality Principle"]
+  na02613f0["Subcategory"]
+  n39e872fb["Functor"]
+  n310ab4af["Opposite Category"]
+  n30fdee11["Corollary"]
   nf2c6bdf5 --> nd14b7e1d
   nf2c6bdf5 --> n136199b7
   nf2c6bdf5 --> n45ea5662
@@ -27,13 +28,15 @@ These data satisfy the following axioms:
   nf2c6bdf5 --> na02613f0
   nf2c6bdf5 --> n310ab4af
   nf2c6bdf5 --> nf3e709f9
-  click nd14b7e1d "../objects/d14b7e1d.html" "_self"
-  click n136199b7 "../objects/136199b7.html" "_self"
+  nf2c6bdf5 --> n39e872fb
   click n45ea5662 "../objects/45ea5662.html" "_self"
-  click n30fdee11 "../objects/30fdee11.html" "_self"
+  click n136199b7 "../objects/136199b7.html" "_self"
+  click nd14b7e1d "../objects/d14b7e1d.html" "_self"
+  click nf3e709f9 "../objects/f3e709f9.html" "_self"
   click na02613f0 "../objects/a02613f0.html" "_self"
+  click n39e872fb "../objects/39e872fb.html" "_self"
   click n310ab4af "../objects/310ab4af.html" "_self"
-  click nf3e709f9 "../objects/f3e709f9.html" "_self"</div></div></main><script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script><script>document.addEventListener('DOMContentLoaded', function () {
+  click n30fdee11 "../objects/30fdee11.html" "_self"</div></div></main><script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script><script>document.addEventListener('DOMContentLoaded', function () {
   renderMathInElement(document.body, {
     delimiters: [
       {left: '$$',              right: '$$',              display: true},

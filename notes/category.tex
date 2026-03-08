@@ -247,3 +247,419 @@ $\mathcal{C}^{op}$ defined in Definition~\ref{def:opposite-category}.
 
 This observation is called the \emph{principle of duality}.
 \end{remark}
+
+
+\begin{definition}[Functor]
+\label{def:functor}
+  A functor $F$ is a map of categories that preserves commutative diagrams. In particular, given two categories, \ref{def:category} $\mathcal{C}$, $\mathcal{D}$, a functor 
+ $F : \mathcal{C} \to \mathcal{D}$ satisfies the following properties:
+
+\begin{enumerate}
+  \item Associates each object $X \in \operatorname{Ob}(\mathcal{C})$ to an object $F(X) \in \operatorname{Ob}(\mathcal{D})$ 
+  \item Associates each morphism $f : X \to Y$ in $\mathcal{C}$ in $\mathcal{C}$ to a morphism $F(f) : F(X) \to F(Y)$ in $\mathcal{D}$ such that the following conditions hold: 
+    \begin{enumerate}
+      \item $F(\operatorname{id}_X) = \operatorname{id}_{F(X)}$
+      \item $F(g \circ f) = F(g) \circ F(f)$ for all morphisms $f : X \to Y$ and $g : Y \to Z$ in $\mathcal{C}$.  
+    \end{enumerate}
+\end{enumerate}
+That is, functors must preserve identity morphisms and composition of morphisms.
+\end{definition}
+
+\begin{lemma}[Functors Preserve Isomorphisms]
+\label{lem:functor-preserve-iso}
+
+Let 
+$$
+F : \mathcal{C} \to \mathcal{D}
+$$
+be a functor (Definition~\ref{def:functor}).  
+
+If
+$$
+f : X \to Y
+$$
+is an isomorphism in $\mathcal{C}$ (Definition~\ref{def:isomorphism}),
+then
+$$
+F(f) : F(X) \to F(Y)
+$$
+is an isomorphism in $\mathcal{D}$.
+
+References: Definition~\ref{def:functor}, Definition~\ref{def:isomorphism}.
+\end{lemma}
+
+\begin{proof}
+
+Since $f$ is an isomorphism, there exists a morphism
+$$
+f^{-1} : Y \to X
+$$
+such that
+$$
+f^{-1} \circ f = \operatorname{id}_X,
+\qquad
+f \circ f^{-1} = \operatorname{id}_Y .
+$$
+
+Apply the functor $F$ to the first equality:
+
+$$
+F(f^{-1} \circ f) = F(\operatorname{id}_X).
+$$
+
+By functoriality of composition and identities this becomes
+
+$$
+F(f^{-1}) \circ F(f) = \operatorname{id}_{F(X)}.
+$$
+
+Applying $F$ to the second equality gives
+
+$$
+F(f) \circ F(f^{-1}) = \operatorname{id}_{F(Y)}.
+$$
+
+Thus $F(f^{-1})$ is an inverse of $F(f)$, and therefore $F(f)$ is an isomorphism.
+\end{proof}
+
+\begin{definition}
+\label{def:functor-composition}
+
+Let
+$$
+F : \mathcal{C} \to \mathcal{D},
+\qquad
+G : \mathcal{D} \to \mathcal{E}
+$$
+be functors (Definition~\ref{def:functor}).
+
+The \emph{composition of functors}
+$$
+G \circ F : \mathcal{C} \to \mathcal{E}
+$$
+is defined as follows.
+
+\textbf{On objects}
+$$
+(G \circ F)(X) = G(F(X)).
+$$
+
+\textbf{On morphisms}
+
+For
+$$
+f : X \to Y
+$$
+
+define
+
+$$
+(G \circ F)(f) = G(F(f)).
+$$
+
+\end{definition}
+
+\begin{lemma}
+\label{lem:functor-composition}
+
+The composition of functors is a functor.
+
+References: Definition~\ref{def:functor}, Definition~\ref{def:functor-composition}.
+\end{lemma}
+
+\begin{proof}
+
+Let
+
+$$
+F : \mathcal{C} \to \mathcal{D},
+\qquad
+G : \mathcal{D} \to \mathcal{E}.
+$$
+
+First we check preservation of identities.
+
+For an object $X$,
+
+$$
+(G \circ F)(\operatorname{id}_X)
+=
+G(F(\operatorname{id}_X)).
+$$
+
+Since $F$ preserves identities,
+
+$$
+F(\operatorname{id}_X) = \operatorname{id}_{F(X)}.
+$$
+
+Thus
+
+$$
+(G \circ F)(\operatorname{id}_X)
+=
+G(\operatorname{id}_{F(X)})
+=
+\operatorname{id}_{G(F(X))}.
+$$
+
+Next we check preservation of composition.
+
+Let
+
+$$
+f : X \to Y,
+\qquad
+g : Y \to Z.
+$$
+
+Then
+
+$$
+(G \circ F)(g \circ f)
+=
+G(F(g \circ f)).
+$$
+
+Since $F$ preserves composition,
+
+$$
+F(g \circ f) = F(g) \circ F(f).
+$$
+
+Applying $G$ gives
+
+$$
+G(F(g) \circ F(f))
+=
+G(F(g)) \circ G(F(f)).
+$$
+
+Thus
+
+$$
+(G \circ F)(g \circ f)
+=
+(G \circ F)(g) \circ (G \circ F)(f).
+$$
+
+Therefore $G \circ F$ is a functor.
+
+\end{proof}
+
+\begin{definition}
+\label{def:identity-functor}
+
+Let $\mathcal{C}$ be a category.
+
+The \emph{identity functor}
+
+$$
+\operatorname{Id}_{\mathcal{C}} : \mathcal{C} \to \mathcal{C}
+$$
+
+is defined by
+
+\textbf{Objects}
+
+$$
+\operatorname{Id}_{\mathcal{C}}(X) = X
+$$
+
+\textbf{Morphisms}
+
+$$
+\operatorname{Id}_{\mathcal{C}}(f) = f.
+$$
+
+\end{definition}
+
+\begin{lemma}
+\label{lem:identity-functor}
+
+The identity functor is a functor.
+
+References: Definition~\ref{def:functor}, Definition~\ref{def:identity-functor}.
+\end{lemma}
+
+\begin{proof}
+
+Let $f : X \to Y$ and $g : Y \to Z$.
+
+Then
+
+$$
+\operatorname{Id}_{\mathcal{C}}(g \circ f)
+=
+g \circ f
+=
+\operatorname{Id}_{\mathcal{C}}(g) \circ \operatorname{Id}_{\mathcal{C}}(f).
+$$
+
+Also
+
+$$
+\operatorname{Id}_{\mathcal{C}}(\operatorname{id}_X)
+=
+\operatorname{id}_X.
+$$
+
+Thus the functor axioms hold.
+
+\end{proof}
+
+
+\begin{proposition}
+\label{prop:functor-associative}
+
+Functor composition is associative.
+
+References: Definition~\ref{def:functor-composition}.
+\end{proposition}
+
+\begin{proof}
+
+Let
+
+$$
+F : \mathcal{C} \to \mathcal{D},
+\qquad
+G : \mathcal{D} \to \mathcal{E},
+\qquad
+H : \mathcal{E} \to \mathcal{F}.
+$$
+
+For an object $X$,
+
+$$
+H \circ (G \circ F)(X)
+=
+H(G(F(X))).
+$$
+
+Also
+
+$$
+(H \circ G) \circ F (X)
+=
+H(G(F(X))).
+$$
+
+Thus the two functors agree on objects.
+
+For a morphism $f : X \to Y$,
+
+$$
+H \circ (G \circ F)(f)
+=
+H(G(F(f))).
+$$
+
+Similarly,
+
+$$
+(H \circ G) \circ F (f)
+=
+H(G(F(f))).
+$$
+
+Thus the functors agree on morphisms.
+
+\end{proof}
+
+
+\begin{example}
+\label{ex:forgetful}
+
+Let
+
+$$
+\mathbf{Grp}
+$$
+
+be the category of groups and group homomorphisms, and
+
+$$
+\mathbf{Set}
+$$
+
+the category of sets.
+
+Define a functor
+
+$$
+U : \mathbf{Grp} \to \mathbf{Set}
+$$
+
+as follows.
+
+\textbf{Objects}
+
+$$
+U(G) = \text{the underlying set of } G.
+$$
+
+\textbf{Morphisms}
+
+For a group homomorphism
+
+$$
+f : G \to H
+$$
+
+define
+
+$$
+U(f) = f
+$$
+
+viewed as a function between sets.
+
+This functor is called the \emph{forgetful functor}.
+
+\end{example}
+
+\begin{definition}
+\label{def:natural-transformation}
+
+Let
+
+$$
+F,G : \mathcal{C} \to \mathcal{D}
+$$
+
+be functors (Definition~\ref{def:functor}).
+
+A \emph{natural transformation}
+
+$$
+\eta : F \Rightarrow G
+$$
+
+consists of morphisms
+
+$$
+\eta_X : F(X) \to G(X)
+$$
+
+for every object $X$ of $\mathcal{C}$ such that for every morphism
+
+$$
+f : X \to Y
+$$
+
+the following diagram commutes:
+
+$$
+\begin{tikzcd}
+F(X) \arrow[r,"\eta_X"] \arrow[d,"F(f)"']
+&
+G(X) \arrow[d,"G(f)"]
+\\
+F(Y) \arrow[r,"\eta_Y"]
+&
+G(Y)
+\end{tikzcd}
+$$
+
+\end{definition}
