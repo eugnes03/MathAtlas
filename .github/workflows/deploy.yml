@@ -33,8 +33,18 @@ jobs:
         with:
           cli: latest
 
+      - name: Cache Maven dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.m2/repository
+            .cpcache
+          key: ${{ runner.os }}-clojure-${{ hashFiles('deps.edn') }}
+          restore-keys: |
+            ${{ runner.os }}-clojure-
+
       - name: Generate site
-        run: clj -M:run notes docs
+        run: clojure -M:run notes docs
 
       - uses: actions/upload-pages-artifact@v3
         with:
