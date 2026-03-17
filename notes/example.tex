@@ -93,3 +93,102 @@ Verify the column orthogonality relations:
   \;=\; |C_G(g)| \cdot \delta_{[g],[h]}.
 \]
 \end{problem}
+
+\begin{theorem}[Equivalent Categories kG-Mod & Rep G]
+\label{thm:equivcatrep}
+\ref{def:representation}
+The category of $kG$-modules and the category of representations over a group $G$ $Rep_k (G)$ are equivalent.
+\end{theorem}
+
+\begin{proof}
+
+    Let $G$ be a group and $k$ a field.
+    
+    \medskip
+    
+    \emph{Step 1: From representations to $kG$-modules.}
+    
+    Let $\rho : G \to \operatorname{GL}(V)$ be a representation of $G$ over $k$.  
+    We define a $kG$-module structure on $V$ as follows.
+    
+    Recall that $kG$ consists of finite sums $\sum_{g \in G} a_g g$ with $a_g \in k$.  
+    For $v \in V$, define
+    $$
+    \left( \sum_{g \in G} a_g g \right)\cdot v
+    \;:=\;
+    \sum_{g \in G} a_g \, \rho(g)(v).
+    $$
+    
+    We verify this defines a $kG$-module structure.
+    
+    Linearity in $v$ and in the coefficients $a_g$ is immediate from linearity of each $\rho(g)$.  
+    
+    For multiplicativity, let
+    $$
+    x = \sum_g a_g g, 
+    \qquad
+    y = \sum_h b_h h.
+    $$
+    Then
+    $$
+    xy = \sum_{g,h} a_g b_h \, gh.
+    $$
+    Hence
+$$ 
+    (xy) \cdot v
+    =
+    \sum_{g,h} a_g b_h \, \rho(gh)(v)
+    $$
+    $$
+    =
+    \sum_{g,h} a_g b_h \, \rho(g)\rho(h)(v) 
+$$
+$$
+    =
+    \sum_g a_g \rho(g)\!\left( \sum_h b_h \rho(h)(v) \right) \\
+    =
+    x \cdot (y \cdot v).
+    $$
+    Thus $V$ becomes a left $kG$-module.
+    
+    
+    \emph{Step 2: From $kG$-modules to representations.}
+    
+    Conversely, let $V$ be a $kG$-module.
+    
+    For $g \in G$, define
+    $$
+    \rho(g) : V \to V
+    \qquad \text{by} \qquad
+    \rho(g)(v) := g \cdot v.
+    $$
+    Since the $kG$-action is $k$-linear, each $\rho(g)$ is a $k$-linear map.
+    
+    We check that $\rho$ is a group homomorphism. For $g,h \in G$,
+    $$
+    \rho(g)\rho(h)(v)
+    =
+    g \cdot (h \cdot v)
+    =
+    (gh) \cdot v
+    =
+    \rho(gh)(v),
+    $$
+    where the middle equality uses associativity of the module action. Also,
+    $$
+    \rho(1)(v) = 1 \cdot v = v.
+    $$
+    Thus $\rho : G \to \operatorname{GL}(V)$ is a representation.
+    
+    
+    \emph{Step 3: The constructions are inverse to each other.}
+    
+    Starting with a representation $\rho$, constructing the associated $kG$-module, and then restricting the action back to $G$, clearly recovers the original $\rho$.
+    
+    Conversely, starting with a $kG$-module $V$, defining $\rho(g)=g\cdot$, and then extending linearly to $kG$, recovers the original module structure.
+    
+    Thus the two constructions are mutually inverse.
+    
+    
+    Therefore there is a one-to-one correspondence between representations of $G$ over $k$ and left $kG$-modules.
+\end{proof}

@@ -11,7 +11,7 @@
   :source-file "topology.tex",
   :area "Topology",
   :depends-on [],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -25,7 +25,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on [],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -39,7 +39,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on [],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -53,7 +53,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on [],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:category"],
@@ -67,7 +67,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5"],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:category"],
@@ -81,7 +81,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5"],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex
   "Suppose\n$$\ng,h : Y \\to X\n$$\nare both inverses of $f$. Then\n\n$$\ng \\circ f = \\operatorname{id}_X,\n\\qquad\nf \\circ g = \\operatorname{id}_Y,\n$$\n\nand\n\n$$\nh \\circ f = \\operatorname{id}_X,\n\\qquad\nf \\circ h = \\operatorname{id}_Y.\n$$\n\nUsing associativity of composition from Definition~\\ref{def:category} we obtain\n\n$$\ng\n=\ng \\circ \\operatorname{id}_Y\n=\ng \\circ (f \\circ h)\n=\n(g \\circ f) \\circ h\n=\n\\operatorname{id}_X \\circ h\n=\nh.\n$$\n\nThus the inverse is unique.",
@@ -96,7 +96,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5" "136199b7"],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex
   "\\textbf{Reflexivity.}  \nFor every object $X$, the identity morphism $\\operatorname{id}_X$ from\nDefinition~\\ref{def:category} satisfies\n\n$$\n\\operatorname{id}_X \\circ \\operatorname{id}_X = \\operatorname{id}_X.\n$$\n\nThus $\\operatorname{id}_X$ is an isomorphism.\n\n\\textbf{Symmetry.}  \nIf $f : X \\to Y$ is an isomorphism, Definition~\\ref{def:isomorphism}\nprovides an inverse $f^{-1} : Y \\to X$.\n\n\\textbf{Transitivity.}  \nIf $f : X \\to Y$ and $g : Y \\to Z$ are isomorphisms, then\n\n$$\n(g \\circ f)^{-1} = f^{-1} \\circ g^{-1}\n$$\n\nby associativity of composition in Definition~\\ref{def:category}.",
@@ -111,7 +111,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5" "136199b7"],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:category"],
@@ -125,7 +125,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5"],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:category"],
@@ -139,7 +139,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5"],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:category" "def:opposite-category"],
@@ -153,7 +153,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5" "310ab4af"],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:category"],
@@ -167,7 +167,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5"],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex
   "Since $f$ is an isomorphism, there exists a morphism\n$$\nf^{-1} : Y \\to X\n$$\nsuch that\n$$\nf^{-1} \\circ f = \\operatorname{id}_X,\n\\qquad\nf \\circ f^{-1} = \\operatorname{id}_Y .\n$$\n\nApply the functor $F$ to the first equality:\n\n$$\nF(f^{-1} \\circ f) = F(\\operatorname{id}_X).\n$$\n\nBy functoriality of composition and identities this becomes\n\n$$\nF(f^{-1}) \\circ F(f) = \\operatorname{id}_{F(X)}.\n$$\n\nApplying $F$ to the second equality gives\n\n$$\nF(f) \\circ F(f^{-1}) = \\operatorname{id}_{F(Y)}.\n$$\n\nThus $F(f^{-1})$ is an inverse of $F(f)$, and therefore $F(f)$ is an isomorphism.",
@@ -182,7 +182,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["39e872fb" "136199b7"],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:functor"],
@@ -196,7 +196,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["39e872fb"],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex
   "Let\n\n$$\nF : \\mathcal{C} \\to \\mathcal{D},\n\\qquad\nG : \\mathcal{D} \\to \\mathcal{E}.\n$$\n\nFirst we check preservation of identities.\n\nFor an object $X$,\n\n$$\n(G \\circ F)(\\operatorname{id}_X)\n=\nG(F(\\operatorname{id}_X)).\n$$\n\nSince $F$ preserves identities,\n\n$$\nF(\\operatorname{id}_X) = \\operatorname{id}_{F(X)}.\n$$\n\nThus\n\n$$\n(G \\circ F)(\\operatorname{id}_X)\n=\nG(\\operatorname{id}_{F(X)})\n=\n\\operatorname{id}_{G(F(X))}.\n$$\n\nNext we check preservation of composition.\n\nLet\n\n$$\nf : X \\to Y,\n\\qquad\ng : Y \\to Z.\n$$\n\nThen\n\n$$\n(G \\circ F)(g \\circ f)\n=\nG(F(g \\circ f)).\n$$\n\nSince $F$ preserves composition,\n\n$$\nF(g \\circ f) = F(g) \\circ F(f).\n$$\n\nApplying $G$ gives\n\n$$\nG(F(g) \\circ F(f))\n=\nG(F(g)) \\circ G(F(f)).\n$$\n\nThus\n\n$$\n(G \\circ F)(g \\circ f)\n=\n(G \\circ F)(g) \\circ (G \\circ F)(f).\n$$\n\nTherefore $G \\circ F$ is a functor.",
@@ -211,7 +211,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["39e872fb" "297b3591"],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -225,7 +225,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on [],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex
   "Let $f : X \\to Y$ and $g : Y \\to Z$.\n\nThen\n\n$$\n\\operatorname{Id}_{\\mathcal{C}}(g \\circ f)\n=\ng \\circ f\n=\n\\operatorname{Id}_{\\mathcal{C}}(g) \\circ \\operatorname{Id}_{\\mathcal{C}}(f).\n$$\n\nAlso\n\n$$\n\\operatorname{Id}_{\\mathcal{C}}(\\operatorname{id}_X)\n=\n\\operatorname{id}_X.\n$$\n\nThus the functor axioms hold.",
@@ -240,7 +240,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["39e872fb" "297b3591"],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex
   "Let\n\n$$\nF : \\mathcal{C} \\to \\mathcal{D},\n\\qquad\nG : \\mathcal{D} \\to \\mathcal{E},\n\\qquad\nH : \\mathcal{E} \\to \\mathcal{F}.\n$$\n\nFor an object $X$,\n\n$$\nH \\circ (G \\circ F)(X)\n=\nH(G(F(X))).\n$$\n\nAlso\n\n$$\n(H \\circ G) \\circ F (X)\n=\nH(G(F(X))).\n$$\n\nThus the two functors agree on objects.\n\nFor a morphism $f : X \\to Y$,\n\n$$\nH \\circ (G \\circ F)(f)\n=\nH(G(F(f))).\n$$\n\nSimilarly,\n\n$$\n(H \\circ G) \\circ F (f)\n=\nH(G(F(f))).\n$$\n\nThus the functors agree on morphisms.",
@@ -255,7 +255,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["297b3591"],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -269,7 +269,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on [],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:functor"],
@@ -283,7 +283,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["39e872fb"],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -297,7 +297,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on [],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:representation"],
@@ -311,7 +311,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["4e94b0c3"],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:representation" "def:subrepresentation"],
@@ -325,7 +325,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["4e94b0c3" "3fe2b240"],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex
   "(1) Since $\\ker(\\phi)$ and $\\mathrm{Im}(\\phi)$ are subrepresentations of $V$\nand $W$ respectively, irreducibility forces each to be $\\{0\\}$ or the whole\nspace. The non-trivial cases give an isomorphism.\n\n(2) For any $\\lambda \\in k$, the map $\\phi - \\lambda \\cdot \\mathrm{id}_V$ is\nagain a $G$-endomorphism. Since $k$ is algebraically closed, $\\phi$ has some\neigenvalue $\\lambda_0$, and $\\phi - \\lambda_0 \\cdot \\mathrm{id}_V$ has a\nnontrivial kernel. By (1) it must be identically zero, so $\\phi = \\lambda_0\n\\cdot \\mathrm{id}_V$.",
@@ -340,7 +340,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["a8ec3e23"],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:representation" "def:irreducible"],
@@ -354,7 +354,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["4e94b0c3" "a8ec3e23"],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:representation" "thm:maschke"],
@@ -368,7 +368,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["4e94b0c3" "f1efa483"],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex nil,
   :refs ["thm:maschke" "thm:schur"],
@@ -382,7 +382,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["f1efa483" "ce9df6b9"],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex nil,
   :refs ["thm:maschke" "rem:conj-classes"],
@@ -396,7 +396,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["f1efa483" "b96526a2"],
-  :created-at "2026-03-09"}
+  :created-at "2026-03-17"}
  {:tags [],
   :proof-latex nil,
   :refs ["cor:dimension" "thm:schur"],
@@ -410,4 +410,19 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["3b157f10" "ce9df6b9"],
-  :created-at "2026-03-09"}]
+  :created-at "2026-03-17"}
+ {:tags [],
+  :proof-latex
+  "Let $G$ be a group and $k$ a field.\n    \n    \\medskip\n    \n    \\emph{Step 1: From representations to $kG$-modules.}\n    \n    Let $\\rho : G \\to \\operatorname{GL}(V)$ be a representation of $G$ over $k$.  \n    We define a $kG$-module structure on $V$ as follows.\n    \n    Recall that $kG$ consists of finite sums $\\sum_{g \\in G} a_g g$ with $a_g \\in k$.  \n    For $v \\in V$, define\n    $$\n    \\left( \\sum_{g \\in G} a_g g \\right)\\cdot v\n    \\;:=\\;\n    \\sum_{g \\in G} a_g \\, \\rho(g)(v).\n    $$\n    \n    We verify this defines a $kG$-module structure.\n    \n    Linearity in $v$ and in the coefficients $a_g$ is immediate from linearity of each $\\rho(g)$.  \n    \n    For multiplicativity, let\n    $$\n    x = \\sum_g a_g g, \n    \\qquad\n    y = \\sum_h b_h h.\n    $$\n    Then\n    $$\n    xy = \\sum_{g,h} a_g b_h \\, gh.\n    $$\n    Hence\n$$ \n    (xy) \\cdot v\n    =\n    \\sum_{g,h} a_g b_h \\, \\rho(gh)(v)\n    $$\n    $$\n    =\n    \\sum_{g,h} a_g b_h \\, \\rho(g)\\rho(h)(v) \n$$\n$$\n    =\n    \\sum_g a_g \\rho(g)\\!\\left( \\sum_h b_h \\rho(h)(v) \\right) \\\\\n    =\n    x \\cdot (y \\cdot v).\n    $$\n    Thus $V$ becomes a left $kG$-module.\n    \n    \n    \\emph{Step 2: From $kG$-modules to representations.}\n    \n    Conversely, let $V$ be a $kG$-module.\n    \n    For $g \\in G$, define\n    $$\n    \\rho(g) : V \\to V\n    \\qquad \\text{by} \\qquad\n    \\rho(g)(v) := g \\cdot v.\n    $$\n    Since the $kG$-action is $k$-linear, each $\\rho(g)$ is a $k$-linear map.\n    \n    We check that $\\rho$ is a group homomorphism. For $g,h \\in G$,\n    $$\n    \\rho(g)\\rho(h)(v)\n    =\n    g \\cdot (h \\cdot v)\n    =\n    (gh) \\cdot v\n    =\n    \\rho(gh)(v),\n    $$\n    where the middle equality uses associativity of the module action. Also,\n    $$\n    \\rho(1)(v) = 1 \\cdot v = v.\n    $$\n    Thus $\\rho : G \\to \\operatorname{GL}(V)$ is a representation.\n    \n    \n    \\emph{Step 3: The constructions are inverse to each other.}\n    \n    Starting with a representation $\\rho$, constructing the associated $kG$-module, and then restricting the action back to $G$, clearly recovers the original $\\rho$.\n    \n    Conversely, starting with a $kG$-module $V$, defining $\\rho(g)=g\\cdot$, and then extending linearly to $kG$, recovers the original module structure.\n    \n    Thus the two constructions are mutually inverse.\n    \n    \n    Therefore there is a one-to-one correspondence between representations of $G$ over $k$ and left $kG$-modules.",
+  :refs ["def:representation"],
+  :latex
+  "\\label{thm:equivcatrep}\n\\ref{def:representation}\nThe category of $kG$-modules and the category of representations over a group $G$ $Rep_k (G)$ are equivalent.",
+  :type :theorem,
+  :title "Equivalent Categories kG-Mod & Rep G",
+  :concepts [],
+  :label "thm:equivcatrep",
+  :id "b23c4395",
+  :source-file "example.tex",
+  :area "Representation Theory",
+  :depends-on ["4e94b0c3"],
+  :created-at "2026-03-17"}]
