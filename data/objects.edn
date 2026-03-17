@@ -2,6 +2,48 @@
   :proof-latex nil,
   :refs [],
   :latex
+  "\\label{def:metricspaces}\n  A \\emph{metric space} is a set $X$ together with a function \n  $$ \\operatorname{dist}: X \\times X \\to \\R $$ \n  called a \\emph{metric} such that the following laws are satisfied: \n\n  \\begin{enumerate}\n    \\item (Positivity) $\\operatorname{dist}(x,x) \\ge 0$ with equality $x = y$\n    \\item (Symmetric) $\\operatorname{dist}(x,y) = \\operatorname{dist}(y,x)$\n    \\item (Triangle Inequality) $\\operatorname{dist}(x,z) \\le \\operatorname{dist}(x,y) + \\operatorname{dist}(y,z)$ \n  \\end{enumerate}",
+  :type :definition,
+  :title "Metric Spaces",
+  :concepts [],
+  :label "def:metricspaces",
+  :id "e64cf2ba",
+  :source-file "topology.tex",
+  :area "Topology",
+  :depends-on [],
+  :created-at "2026-03-09"}
+ {:tags [],
+  :proof-latex nil,
+  :refs [],
+  :latex
+  "\\label{def:probspace}\n  The triple $(\\Omega, \\mathcal{F}, P)$ is a probability space if \n  \\begin{enumerate}\n    \\item $\\Omega$ is the sample space, that is some possibly abstract set. \n    \\item $\\mathcal{F}$ is a $\\sigma$-algebra of sets - the measurable subsets of $\\Omega$. \n    \\item $P$ is a probability measure. \n  \\end{enumerate}\n\n  that is, $P$ follows the Kolmogorov Axioms : \n\n  \\begin{enumerate}\n    \\item For any $A \\in \\mathcal{F}$, there exists a number $P(A) \\ge 0$, the probability of $A$. \n    \\item $P(\\Omega) = 1$\n    \\item Let $\\{A_n , n \\ge 1\\}$ be disjoint. Then \n      $$ P\\left(\\bigcup_{n=1}^\\infty A_n \\right) = \\sum_{n=1}^\\infty P(A_n)\n  \\end{enumerate}",
+  :type :definition,
+  :title "Probability Space",
+  :concepts [],
+  :label "def:probspace",
+  :id "6af26769",
+  :source-file "probability.tex",
+  :area "Probability Theory",
+  :depends-on [],
+  :created-at "2026-03-09"}
+ {:tags [],
+  :proof-latex nil,
+  :refs [],
+  :latex
+  "\\label{def:rv}\nA random variable $X$ is a measurable function from the sample space $\\Omega$ to $\\R$ \n\n$$ X : \\Omega \\to \\R $$ \n\nthat is, the inverse of any Borel Set in $\\R$ is $\\mathcal{F}$-measurable: \n$$ X^{-1} (A) = \\{\\omega : X(\\omega) \\in A \\} \\in \\mathcal{F} \\quad \\forall A \\in \\R $$",
+  :type :definition,
+  :title "Random Variable",
+  :concepts [],
+  :label "def:rv",
+  :id "e7ca7604",
+  :source-file "probability.tex",
+  :area "Probability Theory",
+  :depends-on [],
+  :created-at "2026-03-09"}
+ {:tags [],
+  :proof-latex nil,
+  :refs [],
+  :latex
   "\\label{def:category} \nA \\emph{category} $\\mathcal{C}$ consists of the following data:\n\\begin{enumerate} \n  \\item A collection of objects, denoted $\\operatorname{Ob}(\\mathcal{C})$. \n  \\item For every pair of objects $X,Y \\in \\operatorname{Ob}(\\mathcal{C})$, a set $$ \\operatorname{Hom}_{\\mathcal{C}}(X,Y) $$ whose elements are called \\emph{morphisms} (or arrows) from $X$ to $Y$. \n  \\item For every triple of objects $X,Y,Z$, a composition map $$ \\operatorname{Hom}_{\\mathcal{C}}(Y,Z) \\times \\operatorname{Hom}_{\\mathcal{C}}(X,Y) \\to \\operatorname{Hom}_{\\mathcal{C}}(X,Z), $$ written $$ (g,f) \\mapsto g \\circ f . $$ \n  \\item For every object $X$, an identity morphism $$ \\operatorname{id}_X \\in \\operatorname{Hom}_{\\mathcal{C}}(X,X). $$ \n  \\end{enumerate} \nThese data satisfy the following axioms: \n\\begin{enumerate} \n\\item \\textbf{Associativity:} For morphisms $$ X \\xrightarrow{f} Y \\xrightarrow{g} Z \\xrightarrow{h} W $$ we have $$ h \\circ (g \\circ f) = (h \\circ g) \\circ f . $$ \n\\item \\textbf{Identity:} For every morphism $f : X \\to Y$, $$ f \\circ \\operatorname{id}_X = f \\qquad\\text{and}\\qquad \\operatorname{id}_Y \\circ f = f . $$ \\end{enumerate}",
   :type :definition,
   :title "Category",
@@ -11,7 +53,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on [],
-  :created-at "2026-03-07"}
+  :created-at "2026-03-09"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:category"],
@@ -25,7 +67,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5"],
-  :created-at "2026-03-07"}
+  :created-at "2026-03-09"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:category"],
@@ -39,7 +81,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5"],
-  :created-at "2026-03-07"}
+  :created-at "2026-03-09"}
  {:tags [],
   :proof-latex
   "Suppose\n$$\ng,h : Y \\to X\n$$\nare both inverses of $f$. Then\n\n$$\ng \\circ f = \\operatorname{id}_X,\n\\qquad\nf \\circ g = \\operatorname{id}_Y,\n$$\n\nand\n\n$$\nh \\circ f = \\operatorname{id}_X,\n\\qquad\nf \\circ h = \\operatorname{id}_Y.\n$$\n\nUsing associativity of composition from Definition~\\ref{def:category} we obtain\n\n$$\ng\n=\ng \\circ \\operatorname{id}_Y\n=\ng \\circ (f \\circ h)\n=\n(g \\circ f) \\circ h\n=\n\\operatorname{id}_X \\circ h\n=\nh.\n$$\n\nThus the inverse is unique.",
@@ -54,7 +96,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5" "136199b7"],
-  :created-at "2026-03-07"}
+  :created-at "2026-03-09"}
  {:tags [],
   :proof-latex
   "\\textbf{Reflexivity.}  \nFor every object $X$, the identity morphism $\\operatorname{id}_X$ from\nDefinition~\\ref{def:category} satisfies\n\n$$\n\\operatorname{id}_X \\circ \\operatorname{id}_X = \\operatorname{id}_X.\n$$\n\nThus $\\operatorname{id}_X$ is an isomorphism.\n\n\\textbf{Symmetry.}  \nIf $f : X \\to Y$ is an isomorphism, Definition~\\ref{def:isomorphism}\nprovides an inverse $f^{-1} : Y \\to X$.\n\n\\textbf{Transitivity.}  \nIf $f : X \\to Y$ and $g : Y \\to Z$ are isomorphisms, then\n\n$$\n(g \\circ f)^{-1} = f^{-1} \\circ g^{-1}\n$$\n\nby associativity of composition in Definition~\\ref{def:category}.",
@@ -69,7 +111,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5" "136199b7"],
-  :created-at "2026-03-07"}
+  :created-at "2026-03-09"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:category"],
@@ -83,7 +125,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5"],
-  :created-at "2026-03-07"}
+  :created-at "2026-03-09"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:category"],
@@ -97,7 +139,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5"],
-  :created-at "2026-03-07"}
+  :created-at "2026-03-09"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:category" "def:opposite-category"],
@@ -111,7 +153,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5" "310ab4af"],
-  :created-at "2026-03-07"}
+  :created-at "2026-03-09"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:category"],
@@ -125,7 +167,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5"],
-  :created-at "2026-03-07"}
+  :created-at "2026-03-09"}
  {:tags [],
   :proof-latex
   "Since $f$ is an isomorphism, there exists a morphism\n$$\nf^{-1} : Y \\to X\n$$\nsuch that\n$$\nf^{-1} \\circ f = \\operatorname{id}_X,\n\\qquad\nf \\circ f^{-1} = \\operatorname{id}_Y .\n$$\n\nApply the functor $F$ to the first equality:\n\n$$\nF(f^{-1} \\circ f) = F(\\operatorname{id}_X).\n$$\n\nBy functoriality of composition and identities this becomes\n\n$$\nF(f^{-1}) \\circ F(f) = \\operatorname{id}_{F(X)}.\n$$\n\nApplying $F$ to the second equality gives\n\n$$\nF(f) \\circ F(f^{-1}) = \\operatorname{id}_{F(Y)}.\n$$\n\nThus $F(f^{-1})$ is an inverse of $F(f)$, and therefore $F(f)$ is an isomorphism.",
@@ -140,7 +182,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["39e872fb" "136199b7"],
-  :created-at "2026-03-07"}
+  :created-at "2026-03-09"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:functor"],
@@ -154,7 +196,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["39e872fb"],
-  :created-at "2026-03-07"}
+  :created-at "2026-03-09"}
  {:tags [],
   :proof-latex
   "Let\n\n$$\nF : \\mathcal{C} \\to \\mathcal{D},\n\\qquad\nG : \\mathcal{D} \\to \\mathcal{E}.\n$$\n\nFirst we check preservation of identities.\n\nFor an object $X$,\n\n$$\n(G \\circ F)(\\operatorname{id}_X)\n=\nG(F(\\operatorname{id}_X)).\n$$\n\nSince $F$ preserves identities,\n\n$$\nF(\\operatorname{id}_X) = \\operatorname{id}_{F(X)}.\n$$\n\nThus\n\n$$\n(G \\circ F)(\\operatorname{id}_X)\n=\nG(\\operatorname{id}_{F(X)})\n=\n\\operatorname{id}_{G(F(X))}.\n$$\n\nNext we check preservation of composition.\n\nLet\n\n$$\nf : X \\to Y,\n\\qquad\ng : Y \\to Z.\n$$\n\nThen\n\n$$\n(G \\circ F)(g \\circ f)\n=\nG(F(g \\circ f)).\n$$\n\nSince $F$ preserves composition,\n\n$$\nF(g \\circ f) = F(g) \\circ F(f).\n$$\n\nApplying $G$ gives\n\n$$\nG(F(g) \\circ F(f))\n=\nG(F(g)) \\circ G(F(f)).\n$$\n\nThus\n\n$$\n(G \\circ F)(g \\circ f)\n=\n(G \\circ F)(g) \\circ (G \\circ F)(f).\n$$\n\nTherefore $G \\circ F$ is a functor.",
@@ -169,7 +211,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["39e872fb" "297b3591"],
-  :created-at "2026-03-07"}
+  :created-at "2026-03-09"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -183,7 +225,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on [],
-  :created-at "2026-03-07"}
+  :created-at "2026-03-09"}
  {:tags [],
   :proof-latex
   "Let $f : X \\to Y$ and $g : Y \\to Z$.\n\nThen\n\n$$\n\\operatorname{Id}_{\\mathcal{C}}(g \\circ f)\n=\ng \\circ f\n=\n\\operatorname{Id}_{\\mathcal{C}}(g) \\circ \\operatorname{Id}_{\\mathcal{C}}(f).\n$$\n\nAlso\n\n$$\n\\operatorname{Id}_{\\mathcal{C}}(\\operatorname{id}_X)\n=\n\\operatorname{id}_X.\n$$\n\nThus the functor axioms hold.",
@@ -198,7 +240,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["39e872fb" "297b3591"],
-  :created-at "2026-03-07"}
+  :created-at "2026-03-09"}
  {:tags [],
   :proof-latex
   "Let\n\n$$\nF : \\mathcal{C} \\to \\mathcal{D},\n\\qquad\nG : \\mathcal{D} \\to \\mathcal{E},\n\\qquad\nH : \\mathcal{E} \\to \\mathcal{F}.\n$$\n\nFor an object $X$,\n\n$$\nH \\circ (G \\circ F)(X)\n=\nH(G(F(X))).\n$$\n\nAlso\n\n$$\n(H \\circ G) \\circ F (X)\n=\nH(G(F(X))).\n$$\n\nThus the two functors agree on objects.\n\nFor a morphism $f : X \\to Y$,\n\n$$\nH \\circ (G \\circ F)(f)\n=\nH(G(F(f))).\n$$\n\nSimilarly,\n\n$$\n(H \\circ G) \\circ F (f)\n=\nH(G(F(f))).\n$$\n\nThus the functors agree on morphisms.",
@@ -213,7 +255,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["297b3591"],
-  :created-at "2026-03-07"}
+  :created-at "2026-03-09"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -227,7 +269,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on [],
-  :created-at "2026-03-07"}
+  :created-at "2026-03-09"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:functor"],
@@ -241,7 +283,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["39e872fb"],
-  :created-at "2026-03-07"}
+  :created-at "2026-03-09"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -255,7 +297,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on [],
-  :created-at "2026-03-07"}
+  :created-at "2026-03-09"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:representation"],
@@ -269,7 +311,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["4e94b0c3"],
-  :created-at "2026-03-07"}
+  :created-at "2026-03-09"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:representation" "def:subrepresentation"],
@@ -283,7 +325,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["4e94b0c3" "3fe2b240"],
-  :created-at "2026-03-07"}
+  :created-at "2026-03-09"}
  {:tags [],
   :proof-latex
   "(1) Since $\\ker(\\phi)$ and $\\mathrm{Im}(\\phi)$ are subrepresentations of $V$\nand $W$ respectively, irreducibility forces each to be $\\{0\\}$ or the whole\nspace. The non-trivial cases give an isomorphism.\n\n(2) For any $\\lambda \\in k$, the map $\\phi - \\lambda \\cdot \\mathrm{id}_V$ is\nagain a $G$-endomorphism. Since $k$ is algebraically closed, $\\phi$ has some\neigenvalue $\\lambda_0$, and $\\phi - \\lambda_0 \\cdot \\mathrm{id}_V$ has a\nnontrivial kernel. By (1) it must be identically zero, so $\\phi = \\lambda_0\n\\cdot \\mathrm{id}_V$.",
@@ -298,7 +340,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["a8ec3e23"],
-  :created-at "2026-03-07"}
+  :created-at "2026-03-09"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:representation" "def:irreducible"],
@@ -312,7 +354,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["4e94b0c3" "a8ec3e23"],
-  :created-at "2026-03-07"}
+  :created-at "2026-03-09"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:representation" "thm:maschke"],
@@ -326,7 +368,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["4e94b0c3" "f1efa483"],
-  :created-at "2026-03-07"}
+  :created-at "2026-03-09"}
  {:tags [],
   :proof-latex nil,
   :refs ["thm:maschke" "thm:schur"],
@@ -340,7 +382,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["f1efa483" "ce9df6b9"],
-  :created-at "2026-03-07"}
+  :created-at "2026-03-09"}
  {:tags [],
   :proof-latex nil,
   :refs ["thm:maschke" "rem:conj-classes"],
@@ -354,7 +396,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["f1efa483" "b96526a2"],
-  :created-at "2026-03-07"}
+  :created-at "2026-03-09"}
  {:tags [],
   :proof-latex nil,
   :refs ["cor:dimension" "thm:schur"],
@@ -368,4 +410,4 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["3b157f10" "ce9df6b9"],
-  :created-at "2026-03-07"}]
+  :created-at "2026-03-09"}]

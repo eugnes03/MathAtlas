@@ -1,0 +1,15 @@
+% area: Topology
+
+
+\begin{definition}[Metric Spaces]
+  \label{def:metricspaces}
+  A \emph{metric space} is a set $X$ together with a function 
+  $$ \operatorname{dist}: X \times X \to \R $$ 
+  called a \emph{metric} such that the following laws are satisfied: 
+
+  \begin{enumerate}
+    \item (Positivity) $\operatorname{dist}(x,x) \ge 0$ with equality $x = y$
+    \item (Symmetric) $\operatorname{dist}(x,y) = \operatorname{dist}(y,x)$
+    \item (Triangle Inequality) $\operatorname{dist}(x,z) \le \operatorname{dist}(x,y) + \operatorname{dist}(y,z)$ 
+  \end{enumerate}
+\end{definition}

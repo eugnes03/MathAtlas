@@ -1,0 +1,32 @@
+% area: Probability Theory
+
+\begin{definition}[Probability Space ]
+  \label{def:probspace}
+  The triple $(\Omega, \mathcal{F}, P)$ is a probability space if 
+  \begin{enumerate}
+    \item $\Omega$ is the sample space, that is some possibly abstract set. 
+    \item $\mathcal{F}$ is a $\sigma$-algebra of sets - the measurable subsets of $\Omega$. 
+    \item $P$ is a probability measure. 
+  \end{enumerate}
+
+  that is, $P$ follows the Kolmogorov Axioms : 
+
+  \begin{enumerate}
+    \item For any $A \in \mathcal{F}$, there exists a number $P(A) \ge 0$, the probability of $A$. 
+    \item $P(\Omega) = 1$
+    \item Let $\{A_n , n \ge 1\}$ be disjoint. Then 
+      $$ P\left(\bigcup_{n=1}^\infty A_n \right) = \sum_{n=1}^\infty P(A_n)
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}[Random Variable]
+  \label{def:rv}
+A random variable $X$ is a measurable function from the sample space $\Omega$ to $\R$ 
+
+$$ X : \Omega \to \R $$ 
+
+that is, the inverse of any Borel Set in $\R$ is $\mathcal{F}$-measurable: 
+$$ X^{-1} (A) = \{\omega : X(\omega) \in A \} \in \mathcal{F} \quad \forall A \in \R $$ 
+\end{definition}
+
+
