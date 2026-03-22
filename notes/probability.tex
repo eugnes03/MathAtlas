@@ -29,4 +29,247 @@ that is, the inverse of any Borel Set in $\R$ is $\mathcal{F}$-measurable:
 $$ X^{-1} (A) = \{\omega : X(\omega) \in A \} \in \mathcal{F} \quad \forall A \in \R $$ 
 \end{definition}
 
+\begin{definition}[Seperating Class]
+  \label{def:sepclass}
+  Fill in here
+\end{definition}
 
+\begin{definition}[Metric on the Space of Probability Measures]
+  \label{def:metprobmeasure}
+  Given a seperating class $\mathcal{H}$ \ref{def:sepclass} 
+
+  \[
+    d_\mathcal{H}(F,G) = \operatorname{sup}_{h \in \mathcal{H}} | \mathbb{E}(h(F)) - \mathbb{E}(h(G)) |
+  \]
+\end{definition}
+
+\begin{lemma}[Stein's Lemma]
+  \label{lemma:steinslemma}
+  \ref{def:metprobmeasure}
+  A real valued random variable $N$ has the standard Gaussian distribution if and only if for every test function 
+  $f : \mathbb{R} \to \mathbb{R}$ that is differentiable with $f' \in \mathcal{L}'(\gamma)$, the expectations 
+  $\mathbb{E}(Nf(N))$ and $\mathbb{E}(f'(N)) = \mathbb{E}(Nf(N))$.
+\end{lemma}
+
+\begin{proof}
+  $\implies$
+  If $N \sim N(0,1)$, then 
+  \[
+    \mathbb{E}(f'(N)) = \mathbb{E}(Nf(N))
+  \]
+  implies 
+  \[
+    \int_\mathbb{R} f'(x) \frac{1}{\sqrt{2\pi}}dx = \int_\mathbb{R} x f(x) \frac{1}{\sqrt{2\pi}}dx 
+  \]
+  which if we translate into the Gaussian measure 
+  \[
+    \int_\mathbb{R} f'(x) \gamma(dx) = \int_\mathbb{R} xf(x) \gamma(dx)
+  \]
+  which is just a representation of integration by parts.
+
+  Other direction is HW : TODO
+
+  For some distributions, they are characterized by their moments. Necessarily this means the distribution has to be characterized by this. 
+  Distribution needs moments of all moments. If you figure it out what the moments, we can take $f$ to be a monomial then we get moments of higher order, since $\mathcal{H}$ is a seperating class.
+\end{proof}
+
+\begin{remark}[Stein's Heuristic]
+  \label{rmk:steinsheuristic}
+  Let $F$ be a random variable such that 
+  \[
+    \mathbb{E}(f'(F)-Ff(f)) \approx 0
+  \]
+  for a large class of test functions $f$ we want to say that this is close to the standard Gaussian.
+
+  \[
+    L(F) \approx N(0,1)
+  \]
+where $L$ denotes the Law of a random variable (cdf).
+\end{remark}
+\begin{theorem}[Stein's Method]
+  \label{thm:steins}
+  Let $\gamma$ be the standard Gaussian Measure 
+  \[
+    \gamma(dx) = \frac{1}{}
+  \]
+\end{theorem}
+
+\begin{definition}[Stein's Equation]
+  \label{def:steinsequation}
+  \ref{rmk:steinsheuristic}
+  Let $N \sim N(0,1)$. Let $h : \mathbb{R} \to \mathbb{R}$ be a Borel function such that 
+  \[
+    \mathbb{E}(|h(N)|) < \infty 
+  \]
+  or in other words 
+  \[
+    h \in \mathcal{L}(\gamma)
+  \]
+  The Stein Equation associated to $h$ is the ODE 
+  \[
+    f'(x) -xf(x) = h(x) - \mathbb{E}(h(N))
+  \]
+\end{definition}
+
+\begin{lemma}[Proposition]
+  \label{lemma:ODEsolutions}
+  \ref{def:steinsequation}
+
+  All solutions of Stein's Equation are of the form 
+
+  \[
+    f(x) = Ce^{x^2/2} + e^{x^2/2}\int_{-\infty}^x [h(y)-\mathbb{E}(h(N))]e^{y^2/2} dy 
+  \]
+  In particular, denote by 
+  \[
+    f_h(x) = e^{x^2/2}\int_{-\infty}^x [h(y)-\mathbb{E}(h(N))]e^{y^2/2} dy
+  \]
+
+  In particular, $f_h$ is he only solution such that 
+
+  \[
+    \lim_{x \to \infty} e^{x^2/2} f_h(x) = 0
+  \]
+\end{lemma}
+
+\begin{proof}
+ $ \sqrt{2\pi}\int_{-\infty}^x h(y) \frac{e^{y^2/2}}{\sqrt{2\pi}} - \mathbb{E}(h(N))\int_{-/infty}^\infty \gamma(dx) = 0$
+\end{proof}
+
+\begin{theorem}[Stein's Lemma and Metrics via Stein's Eq]
+  \label{thm:steinsmetrics}
+  \ref{lemma:steinslemma}
+  \ref{def:steinsequation}
+  Let $\mathcal{H}$ be a seperating class and let $h \in \mathcal{H}$. 
+
+  Let $f_h$ be the solution to the Stein Equation associated with $h$. Then 
+
+  \[
+    f'_h(x)-xf_h(x) = h(x)-\mathbb{E}(h(N))
+  \]
+
+  Let $F$ be a real valued random variable, then 
+  \[
+    f'_h(F)-Ff_h(F) = h(F)-\mathbb{E}(h(N))
+  \]
+
+  Taking expectations on both sides 
+  \[
+    \mathbb{E}(h(F))-\mathbb{E}(h(N)) = \mathbb{E}(f'_h(F)-Ff_h(F))
+  \]
+
+  Taking absolute values 
+
+  \[
+   | \mathbb{E}(h(F))-\mathbb{E}(h(N))| = |\mathbb{E}(f'_h(F)-Ff_h(F))|
+  \]
+
+  Taking a $\sup$ over $\mathcal{H}$, 
+
+  \[
+    d_{\mathcal{H}}(F,N)= \sup_{h \in \mathcal{H}}  | \mathbb{E}(h(F))-\mathbb{E}(h(N))| = \sup_{h \in \mathcal{H}} |\mathbb{E}(f'_h(F)-Ff_h(F))| 
+  \]
+  \ref{def:metprobmeasure}
+\end{theorem}
+
+\begin{definition}[TV Metric]
+  \label{def:tvmetric}
+Add this*******8
+\end{definition}
+
+\begin{definition}[Kolmogorov Metric]
+  \label{def:kolmetric}
+
+\end{definition}
+
+\begin{lemma}[Stein Bounds for TV Metric]
+  \label{lemma:propertiesoffh}
+  \ref{lemma:steinslemma}
+  \ref{def:steinsequation}
+  \ref{thm:steins}
+  \ref{def:tvmetric}
+  \ref{lemma:ODEsolutions}
+   We take the seperating class that defined the total variation metric : 
+
+   \[
+   \mathcal{H}_{TV} = \{\mathbb{1}_B : B \in \mathcal{B}(\mathbb{R})\}
+   \]
+   The proposition is as follows: 
+
+   Let $h : \mathbb{R} \to [0,1]$ (a bigger subset than of indicator functions), be a Borel function. Then 
+Then if we denote $f_h$ the solution to the Stein equation associated with $h$ then we have 
+\[
+  ||f_h||< \sqrt{\pi/2} \text{ and } ||f'_h||_\infty \le 2
+\]
+
+\end{lemma}
+
+\begin{proof}
+Recall 
+
+\[
+    f_h(x) = e^{x^2/2}\int_{-\infty}^x [h(y)-\mathbb{E}(h(N))]e^{y^2/2} dy
+\]
+
+Note that 
+\[
+  |h(y)-\mathbb{E}(h(N))|\le 1
+\]
+
+Note that :
+
+\[
+  \int_{-\infty}^x = \int_{-\infty}^\infty - \int_x^{\infty} = - \int_x^{\infty}
+\]
+So, 
+\[
+  
+    |f_h(x)| \le e^{x^2/2}\int_{-\infty}^x e^{y^2/2} dy
+\]
+But also 
+
+\[
+  
+    |f_h(x)| \le e^{x^2/2}\int_{x}^\infty e^{y^2/2} dy
+\]
+
+If $x>0$, then 
+\[
+  
+    |f_h(x)| \le e^{x^2/2}\int_{|x|}^\infty e^{y^2/2} dy
+\]
+
+If $x<0$, then 
+\[
+  
+  |f_h(x)| \le e^{x^2/2}\int_{-\infty}^{|x|} e^{y^2/2} dy = e^{x^2/2}\int_{|x|}^{\infty} e^{y^2/2}  
+\]
+
+We have obtained that 
+
+\[
+  
+  |f_h(x)| \le e^{x^2/2}\int_{-\infty}^{|x|} e^{y^2/2} dy = e^{x^2/2}\int_{|x|}^{\infty} e^{-y^2/2} dy \quad \forall x  
+\]
+
+The function $x \mapsto e^{x^2/2}\int_{|x|}^{\infty} e^{-y^2/2} dy$ attins its maximum at $x=0$. and 
+
+\[
+  \int_0^\infty e^{y^2/2}dy = \sqrt{\pi/2}
+\]
+
+Which proves the result by taking the $\sup$.
+
+For the derivative, 
+
+\[
+  f_h'(x) = x e^{x^2/2}\int_{-\infty}^x [h(y)-\mathbb{E}(h(N))]e^{-y^2/2}dy 
+  + 0 = h(x)-\mathbb{E}(h(N))+xe^{x^2/2}\int ... dy 
+\]
+Now we take bounds 
+\[
+  |f'_h(x)| \le 1 + |x|e^{x^2/2}\int_{-\infty}^x e^{-y^2/2}
+\]
+
+Finish the argument at home.
+\end{proof}
