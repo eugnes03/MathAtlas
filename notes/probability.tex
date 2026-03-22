@@ -31,12 +31,12 @@ $$ X^{-1} (A) = \{\omega : X(\omega) \in A \} \in \mathcal{F} \quad \forall A \i
 
 \begin{definition}[Seperating Class]
   \label{def:sepclass}
-  Fill in here
+ Fill in HERE % TODO
 \end{definition}
 
 \begin{definition}[Metric on the Space of Probability Measures]
   \label{def:metprobmeasure}
-  Given a seperating class $\mathcal{H}$ \ref{def:sepclass} 
+  Given a seperating class $\mathcal{H}$ \ref{def:sepclass}: 
 
   \[
     d_\mathcal{H}(F,G) = \operatorname{sup}_{h \in \mathcal{H}} | \mathbb{E}(h(F)) - \mathbb{E}(h(G)) |
@@ -174,12 +174,21 @@ where $L$ denotes the Law of a random variable (cdf).
 
 \begin{definition}[TV Metric]
   \label{def:tvmetric}
-Add this*******8
+  \ref{def:metprobmeasure}
+The total variation metric is is defined as follows: 
+\[
+  d_\operatorname{TV}(F,G) = \sup_{B \in \mathcal{B}(\mathbb{R})} | \mathbb{P}(F \in B) - \mathbb{P}(G \in B)
+\]
+where $\mathcal{B}(\mathbb{R})$ are the Borel sets over the real numbers. 
 \end{definition}
 
 \begin{definition}[Kolmogorov Metric]
   \label{def:kolmetric}
-
+  \ref{def:metprobmeasure}
+  The Kolmogorow Metric metrizes the space of probability distributions given the following definition: 
+  \[
+    d_{\operatorname{Kol}}(F,G) = \sup | P(F \le z) - P(G\le z) |
+  \]
 \end{definition}
 
 \begin{lemma}[Stein Bounds for TV Metric]
@@ -271,5 +280,10 @@ Now we take bounds
   |f'_h(x)| \le 1 + |x|e^{x^2/2}\int_{-\infty}^x e^{-y^2/2}
 \]
 
-Finish the argument at home.
+\begin{lemma}[Kol Topology > Cvg Cdf Topology]
+  \label{lemma:koltopcdftop}
+  \ref{def:kolmetric}
+  The topology induced by the Kolmogorov metric is strictly stronger than the topology induced by convergence of CDFs of random variables.
+\end{lemma}
+
 \end{proof}
