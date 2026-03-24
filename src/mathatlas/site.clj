@@ -29,7 +29,9 @@
    "Neural Networks"       {:color "#059669"
                              :desc  "Architectures, optimization, generalization, and learning theory."}
    "Probability Theory"    {:color "#D97706"
-                             :desc  "Measure-theoretic probability, distributions, and stochastic processes."}})
+                             :desc  "Measure-theoretic probability, distributions, and stochastic processes."}
+   "Geometric Deep Learning" {:color "#42f587"
+                              :desc "Deep learning through the lens of geometry and algebra"}})
 
 ;; ---------------------------------------------------------------------------
 ;; Helpers
