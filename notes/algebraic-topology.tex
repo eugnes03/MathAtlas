@@ -1,1 +1,254 @@
-% area : Algebraic Topology
+% area: Algebraic Topology
+
+\begin{definition}[Homotopy]
+  \label{def:homotopy}
+  A homotopy $h : p \simeq q$ between maps $p,q : X \to Y$ is a continuous map 
+  \[
+    h: X \times I \to Y 
+  \]
+  such that 
+  \[
+    h(x,0) = p(x),  h(x,1) = q(x)
+  \]
+  where $I = [0,1]$ the unit interval.
+\end{definition}
+
+\begin{definition}[Equivalence Class/Relation]
+  \label{def:eqclass}
+An equivalence class is a subset of a larger set containing elements that are considered 
+"equivalent" to eachother in the context of a equivalence relation. 
+
+An equivalence relation is a binary operation denoted $a \sim b$ that satisfies three fundamental properties: 
+
+- (Reflexivity) $a \sim a$ 
+
+- (Symmetry) If $a \sim b$, then $b \sim a$ 
+
+- (Transitivity) If $a \sim b$ and $b \sim c$, then $a \sim c$ 
+
+\end{definition}
+
+\begin{example}[An Example of a Homotopy]
+  \label{ex:homotopy}
+  \ref{def:homotopy}
+Let
+$$
+\gamma_0(t) = (t,0), \quad \gamma_1(t) = (t,t), \quad t \in [0,1].
+$$
+
+Both paths go from $(0,0)$ to $(1,1)$.
+
+Define a homotopy $H : [0,1] \times [0,1] \to \mathbb{R}^2$ by
+$$
+H(t,s) = (t, s t).
+$$
+
+
+Proof that this is infact a homotopy: 
+
+
+\textbf{Initial path:}
+$$
+H(t,0) = (t,0) = \gamma_0(t).
+$$
+
+\textbf{Final path:}
+$$
+H(t,1) = (t,t) = \gamma_1(t).
+$$
+
+\textbf{Endpoints:}
+$$
+H(0,s) = (0,0), \quad H(1,s) = (1,s).
+$$
+
+Thus, $H$ defines a homotopy between $\gamma_0$ and $\gamma_1$.
+\end{example}
+
+\begin{definition}[Loops]
+  \label{def:loops}
+  A loop is a path 
+
+  \[
+    f : I \to X 
+  \]
+  such that $f(0)=f(1)$
+  
+\end{definition}
+
+\begin{lemma}[Homotopy Equivalence Class]
+  \label{lemma:homeqclass}
+  Paths being homotopic defines an equivalence class. Depends on \ref{def:eqclass} and \ref{def:homotopy}
+\end{lemma}
+
+\begin{proof}
+  \textbf{Reflexivity}
+  
+Let $\gamma : [0,1] \to X$ be a path. Define
+$$
+H(t,s) = \gamma(t).
+$$
+Then $H$ is continuous and satisfies
+$$
+H(t,0) = \gamma(t), \quad H(t,1) = \gamma(t),
+$$
+and
+$$
+H(0,s) = \gamma(0), \quad H(1,s) = \gamma(1).
+$$
+Thus $\gamma \sim \gamma$.
+
+\textbf{Symmetry}
+
+Suppose $\gamma_0 \sim \gamma_1$ via a homotopy $H(t,s)$. Define
+$$
+G(t,s) = H(t, 1 - s).
+$$
+Then $G$ is continuous and satisfies
+$$
+G(t,0) = H(t,1) = \gamma_1(t), \quad G(t,1) = H(t,0) = \gamma_0(t),
+$$
+and
+$$
+G(0,s) = \gamma_0(0), \quad G(1,s) = \gamma_0(1).
+$$
+Thus $\gamma_1 \sim \gamma_0$.
+
+\textbf{Transitivity}
+
+Suppose $\gamma_0 \sim \gamma_1$ via $H$ and $\gamma_1 \sim \gamma_2$ via $K$. Define
+$$
+G(t,s) =
+\begin{cases}
+H(t, 2s) & \text{if } 0 \le s \le \tfrac{1}{2}, \\
+K(t, 2s - 1) & \text{if } \tfrac{1}{2} \le s \le 1.
+\end{cases}
+$$
+Then $G$ is continuous (by the pasting lemma), since at $s = \tfrac{1}{2}$ we have
+$$
+H(t,1) = \gamma_1(t) = K(t,0).
+$$
+Moreover,
+$$
+G(t,0) = H(t,0) = \gamma_0(t), \quad G(t,1) = K(t,1) = \gamma_2(t),
+$$
+and
+$$
+G(0,s) = \gamma_0(0), \quad G(1,s) = \gamma_0(1).
+$$
+Thus $\gamma_0 \sim \gamma_2$.
+\end{proof}
+
+
+\begin{definition}[Fundamental Group]
+  \label{def:fundgrp}
+  \ref{def:loops}
+  \ref{def:homotopy}
+
+  \ref{lemma:homeqclass}
+  Let $f$ be a loop. 
+  Let $[f]$ denote the equivalence class under homotopy for $f$.
+  
+  We define $\pi_1(X,x)$ to be the set of equivalence classes of loops that start and end at $x$. 
+
+  We will show that this is a group. This is the \textbf{fundamental group} of $X$.
+\end{definition}
+
+\begin{lemma}[Fundamental Group Axiom Verification]
+
+  \ref{def:fundgrp}
+  The Fundamental Group is indeed a group.
+
+\end{lemma}
+
+
+\begin{proof}
+
+Let $X$ be a topological space and $x \in X$. The fundamental group $\pi_1(X,x)$ is defined as the set of homotopy classes (relative to endpoints) of loops based at $x$, i.e.
+$$
+\pi_1(X,x) = \{ [\gamma] \mid \gamma : [0,1] \to X, \ \gamma(0)=\gamma(1)=x \}.
+$$
+
+We define a binary operation on $\pi_1(X,x)$ by concatenation:
+for loops $\gamma_1, \gamma_2$, define
+$$
+(\gamma_1 * \gamma_2)(t) =
+\begin{cases}
+\gamma_1(2t) & 0 \le t \le \tfrac{1}{2}, \\
+\gamma_2(2t - 1) & \tfrac{1}{2} \le t \le 1.
+\end{cases}
+$$
+Then define
+$$
+[\gamma_1] \cdot [\gamma_2] := [\gamma_1 * \gamma_2].
+$$
+
+We show this makes $\pi_1(X,x)$ a group.
+
+
+
+
+Suppose $\gamma_1 \sim \gamma_1'$ and $\gamma_2 \sim \gamma_2'$ (homotopy relative endpoints). Then there exist homotopies $H$ and $K$ between them. One constructs a homotopy between $\gamma_1 * \gamma_2$ and $\gamma_1' * \gamma_2'$ by concatenating $H$ and $K$ in the same way:
+$$
+F(t,s) =
+\begin{cases}
+H(2t,s) & 0 \le t \le \tfrac{1}{2}, \\
+K(2t-1,s) & \tfrac{1}{2} \le t \le 1.
+\end{cases}
+$$
+Thus $[\gamma_1 * \gamma_2] = [\gamma_1' * \gamma_2']$, so the operation is well-defined.
+
+Let $\gamma_1, \gamma_2, \gamma_3$ be loops at $x$. Then
+$$
+(\gamma_1 * \gamma_2) * \gamma_3 \sim \gamma_1 * (\gamma_2 * \gamma_3),
+$$
+since both paths traverse $\gamma_1$, $\gamma_2$, and $\gamma_3$ in order, differing only by a reparametrization of $[0,1]$. This reparametrization yields a homotopy relative endpoints. Hence
+$$
+([\gamma_1] \cdot [\gamma_2]) \cdot [\gamma_3]
+= [\gamma_1] \cdot ([\gamma_2] \cdot [\gamma_3]).
+$$
+
+
+Let $e : [0,1] \to X$ be the constant loop at $x$, defined by $e(t)=x$. Then for any loop $\gamma$,
+$$
+e * \gamma \sim \gamma, \quad \gamma * e \sim \gamma,
+$$
+by a simple reparametrization homotopy. Hence $[e]$ is the identity element.
+
+
+Let $\gamma$ be a loop at $x$. Define the reverse path
+$$
+\gamma^{-1}(t) = \gamma(1 - t).
+$$
+Then
+$$
+\gamma * \gamma^{-1} \sim e, \quad \gamma^{-1} * \gamma \sim e,
+$$
+since the path goes out along $\gamma$ and returns along the same path, which can be contracted to the constant loop. Thus $[\gamma^{-1}]$ is the inverse of $[\gamma]$.
+
+Therefore, the fundamental group is indeed a group.
+\end{proof}
+
+\begin{remark}[Dependence on the Base Point]
+  \label{rmk:deponbasepoint}
+  \ref{def:fundgrp}
+  For a path $a : x \to y$, define 
+  \[
+    \gamma[a] : \pi_1(X,x) \to \pi_1(X,y)
+  \]
+
+  by 
+  \[
+    \gamma[a][f] = [a \cdot f \cdot a^{-1}]
+  \]
+
+  This is a homorphism of groups.
+\end{remark}
+
+
+\begin{problem}
+  Prove that the map $\gamma[a]$ as defined in \ref{rmk:deponbasepoint} is indeed a group homorphism.
+\end{problem}
+
+
+
