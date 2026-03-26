@@ -29,7 +29,9 @@
    "Neural Networks"       {:color "#059669"
                              :desc  "Architectures, optimization, generalization, and learning theory."}
    "Probability Theory"    {:color "#D97706"
-                             :desc  "Measure-theoretic probability, distributions, and stochastic processes."}})
+                             :desc  "Measure-theoretic probability, distributions, and stochastic processes."}
+   "Algebraic Topology"     {:color "#F54927"
+                             :desc "Homotopy theory, Fundamental group, homology"}})
 
 ;; ---------------------------------------------------------------------------
 ;; Helpers
