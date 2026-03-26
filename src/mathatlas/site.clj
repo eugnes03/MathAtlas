@@ -29,7 +29,10 @@
    "Neural Networks"       {:color "#059669"
                              :desc  "Architectures, optimization, generalization, and learning theory."}
    "Probability Theory"    {:color "#D97706"
-                             :desc  "Measure-theoretic probability, distributions, and stochastic processes."}})
+                             :desc  "Measure-theoretic probability, distributions, and stochastic processes."}
+   "Complex Analysis"     {:color "#27BEF5"
+                           :desc "Holomorphic functions, Cauchy Residue theorems, topology"}})
+   
 
 ;; ---------------------------------------------------------------------------
 ;; Helpers
