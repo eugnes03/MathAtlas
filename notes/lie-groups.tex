@@ -1,0 +1,360 @@
+% area: Lie Groups and Lie Algebras
+
+\begin{definition}[Group (Classical)]
+\label{def:group-classical}
+A \emph{group} is a pair $(G,\cdot)$ consisting of a set $G$ together with a binary operation
+\[
+\cdot : G \times G \to G
+\]
+such that:
+\begin{enumerate}
+    \item \textbf{Associativity:} For all $a,b,c \in G$,
+    $(a \cdot b)\cdot c = a \cdot (b \cdot c)$.
+
+    \item \textbf{Identity:} There exists an element $e \in G$ such that for all $a \in G$,
+    $e \cdot a = a \cdot e = a$.
+
+    \item \textbf{Inverses:} For every $a \in G$, there exists $a^{-1} \in G$ such that
+    $a \cdot a^{-1} = a^{-1} \cdot a = e$.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Group (Categorical)]
+\label{def:group-categorical}
+A \emph{group} is a group object in the category $\mathbf{Set}$.
+
+That is, a set $G$ equipped with morphisms:
+\[
+m : G \times G \to G, \quad
+e : 1 \to G, \quad
+i : G \to G
+\]
+such that the following identities hold:
+
+\begin{enumerate}
+    \item \textbf{Associativity:}
+    $m \circ (m \times \mathrm{id}_G) = m \circ (\mathrm{id}_G \times m)$.
+
+    \item \textbf{Identity laws:}
+    $m \circ (e \times \mathrm{id}_G) = \mathrm{id}_G$,
+    $\quad m \circ (\mathrm{id}_G \times e) = \mathrm{id}_G$.
+
+    \item \textbf{Inverse laws:}
+    $m \circ (i \times \mathrm{id}_G) = e \circ !$,
+    $\quad m \circ (\mathrm{id}_G \times i) = e \circ !$,
+    where $! : G \to 1$ is the unique morphism.
+\end{enumerate}
+
+This is equivalent to Definition~\ref{def:group-classical}, but phrased entirely in terms of morphisms and composition.
+\end{definition}
+
+\begin{definition}[Group Homomorphism]
+\label{def:group-hom}
+Let $(G, \cdot)$ and $(H, \ast)$ be groups in the sense of Definition~\ref{def:group-classical}.
+A map $\phi : G \to H$ is a \emph{group homomorphism} if
+\[
+  \phi(a \cdot b) = \phi(a) \ast \phi(b) \quad \text{for all } a, b \in G.
+\]
+If $\phi$ is also a bijection it is called an \emph{isomorphism}, and we write $G \cong H$.
+\end{definition}
+
+\begin{definition}[Kernel and Image]
+\label{def:kernel-image}
+For a homomorphism $\phi : G \to H$ (Definition~\ref{def:group-hom}), the \emph{kernel} and \emph{image} are
+\[
+  \ker \phi := \{ g \in G \mid \phi(g) = e_H \}, \qquad
+  \operatorname{im} \phi := \{ \phi(g) \mid g \in G \}.
+\]
+\end{definition}
+
+\begin{definition}[Subgroup and Normal Subgroup]
+\label{def:subgroup}
+Let $G$ be a group (Definition~\ref{def:group-classical}).
+A subset $H \subseteq G$ is a \emph{subgroup}, written $H \leq G$, if it is closed under multiplication and inverses and contains the identity.
+It is \emph{normal}, written $H \trianglelefteq G$, if $gHg^{-1} = H$ for all $g \in G$.
+\end{definition}
+
+\begin{proposition}
+\label{prop:kernel-normal}
+For any homomorphism $\phi : G \to H$ (Definition~\ref{def:group-hom}),
+$\ker \phi \trianglelefteq G$ and $\operatorname{im} \phi \leq H$
+in the sense of Definition~\ref{def:subgroup}, where $\ker\phi$ and $\operatorname{im}\phi$ are as in Definition~\ref{def:kernel-image}.
+\end{proposition}
+
+\begin{exercise}
+Prove Proposition~\ref{prop:kernel-normal}. Show that normality of $\ker\phi$ follows directly from the homomorphism property.
+\end{exercise}
+
+\begin{definition}[Quotient Group]
+\label{def:quotient-group}
+Let $N \trianglelefteq G$ be a normal subgroup (Definition~\ref{def:subgroup}).
+The \emph{quotient group} $G/N$ is the set of left cosets $\{ gN \mid g \in G \}$ equipped with the operation $(aN)(bN) := (ab)N$.
+\end{definition}
+
+\begin{theorem}[First Isomorphism Theorem]
+\label{thm:first-iso}
+Let $\phi : G \to H$ be a group homomorphism (Definition~\ref{def:group-hom}).
+Then the quotient group (Definition~\ref{def:quotient-group}) by the kernel (Definition~\ref{def:kernel-image}) satisfies
+\[
+  G / \ker\phi \;\cong\; \operatorname{im}\phi.
+\]
+\end{theorem}
+
+\begin{exercise}
+Prove Theorem~\ref{thm:first-iso}. Construct the isomorphism explicitly and verify it is well-defined.
+\end{exercise}
+
+\begin{definition}[Group Action]
+\label{def:group-action}
+A \emph{left action} of a group $G$ (Definition~\ref{def:group-classical}) on a set $X$ is a map $G \times X \to X$, written $(g, x) \mapsto g \cdot x$, satisfying
+\[
+  e \cdot x = x \quad \text{and} \quad g \cdot (h \cdot x) = (gh) \cdot x \quad \text{for all } g,h \in G,\, x \in X.
+\]
+\end{definition}
+
+\begin{definition}[Orbit and Stabilizer]
+\label{def:orbit-stabilizer}
+Let $G$ act on $X$ (Definition~\ref{def:group-action}).
+For $x \in X$, the \emph{orbit} and \emph{stabilizer} of $x$ are
+\[
+  G \cdot x := \{ g \cdot x \mid g \in G \}, \qquad
+  G_x := \{ g \in G \mid g \cdot x = x \}.
+\]
+Note that $G_x \leq G$ is a subgroup in the sense of Definition~\ref{def:subgroup}.
+\end{definition}
+
+\begin{theorem}[Orbit-Stabilizer Theorem]
+\label{thm:orbit-stab}
+For any $x \in X$ with orbit and stabilizer as in Definition~\ref{def:orbit-stabilizer},
+\[
+  |G \cdot x| = [G : G_x],
+\]
+where $[G : G_x]$ is the index of the subgroup $G_x \leq G$ (Definition~\ref{def:subgroup}), equivalently the cardinality of the quotient $G/G_x$ (Definition~\ref{def:quotient-group}).
+In particular, if $G$ is finite then $|G| = |G \cdot x| \cdot |G_x|$.
+\end{theorem}
+
+\begin{exercise}
+Prove Theorem~\ref{thm:orbit-stab} by constructing a bijection $G \cdot x \leftrightarrow G/G_x$.
+\end{exercise}
+
+\begin{definition}[Direct and Semidirect Product]
+\label{def:direct-semidirect}
+The \emph{direct product} $G \times H$ of two groups (Definition~\ref{def:group-classical}) is the Cartesian product with componentwise operations.
+More generally, given a normal subgroup $N \trianglelefteq G$ and a subgroup $H \leq G$ (Definition~\ref{def:subgroup}) with $G = NH$ and $N \cap H = \{e\}$,
+we say $G$ is the \emph{semidirect product} $N \rtimes H$, where $H$ acts on $N$ (Definition~\ref{def:group-action}) by conjugation.
+\end{definition}
+
+\begin{definition}[Topological Space]
+\label{def:topological-space}
+A \emph{topological space} is a pair $(X, \mathcal{T})$ where $\mathcal{T}$ is a collection of subsets of $X$ (the \emph{open sets}) satisfying: $\emptyset, X \in \mathcal{T}$; arbitrary unions of open sets are open; finite intersections of open sets are open.
+\end{definition}
+
+\begin{definition}[Continuous Map and Homeomorphism]
+\label{def:continuous-homeomorphism}
+Let $(X, \mathcal{T}_X)$ and $(Y, \mathcal{T}_Y)$ be topological spaces (Definition~\ref{def:topological-space}).
+A map $f : X \to Y$ is \emph{continuous} if $f^{-1}(U) \in \mathcal{T}_X$ for every $U \in \mathcal{T}_Y$.
+If $f$ is a continuous bijection with continuous inverse, it is a \emph{homeomorphism}, and we write $X \cong Y$.
+\end{definition}
+
+\begin{definition}[Connectedness and Path-Connectedness]
+\label{def:connected}
+A topological space $X$ (Definition~\ref{def:topological-space}) is \emph{connected} if it cannot be written as a disjoint union of two nonempty open sets.
+It is \emph{path-connected} if for every $x, y \in X$ there exists a continuous path $\gamma : [0,1] \to X$ (Definition~\ref{def:continuous-homeomorphism}) with $\gamma(0) = x$ and $\gamma(1) = y$.
+\end{definition}
+
+\begin{remark}
+\label{rem:connected-lie}
+Path-connectedness implies connectedness, but not conversely. For Lie groups the two notions coincide: every connected Lie group is path-connected.
+\end{remark}
+
+\begin{definition}[Simply Connected]
+\label{def:simply-connected}
+A path-connected space $X$ (Definition~\ref{def:connected}) is \emph{simply connected} if every loop $\gamma : [0,1] \to X$ with $\gamma(0) = \gamma(1)$ can be continuously contracted to a point, i.e., the fundamental group $\pi_1(X) = 0$.
+\end{definition}
+
+\begin{definition}[Compactness]
+\label{def:compact}
+A topological space $X$ (Definition~\ref{def:topological-space}) is \emph{compact} if every open cover of $X$ has a finite subcover.
+A subset $A \subseteq \mathbb{R}^n$ is compact if and only if it is closed and bounded (Heine--Borel).
+\end{definition}
+
+\begin{definition}[Topological Manifold]
+\label{def:topological-manifold}
+A \emph{topological $n$-manifold} is a Hausdorff, second-countable topological space $M$ (Definition~\ref{def:topological-space}) such that every point $p \in M$ has a neighbourhood homeomorphic (Definition~\ref{def:continuous-homeomorphism}) to an open subset of $\mathbb{R}^n$.
+\end{definition}
+
+\begin{definition}[Smooth Manifold]
+\label{def:smooth-manifold}
+A topological $n$-manifold $M$ (Definition~\ref{def:topological-manifold}) is a \emph{smooth manifold} if it is equipped with a maximal smooth atlas: a collection of charts $(U_\alpha, \varphi_\alpha)$ covering $M$ such that all transition maps $\varphi_\beta \circ \varphi_\alpha^{-1}$ are smooth.
+\end{definition}
+
+\begin{definition}[Tangent Space]
+\label{def:tangent-space}
+For $p \in M$ a smooth manifold (Definition~\ref{def:smooth-manifold}), the \emph{tangent space} $T_pM$ is the vector space of derivations on smooth functions near $p$. Concretely in a chart, it is spanned by $\partial/\partial x^i|_p$. The \emph{tangent bundle} is $TM = \bigsqcup_{p \in M} T_pM$.
+\end{definition}
+
+\begin{definition}[Smooth Map and Diffeomorphism]
+\label{def:smooth-map}
+A map $f : M \to N$ between smooth manifolds (Definition~\ref{def:smooth-manifold}) is \emph{smooth} if its coordinate representations are smooth.
+It is a \emph{diffeomorphism} if it is a smooth bijection with smooth inverse; in particular a diffeomorphism is a homeomorphism (Definition~\ref{def:continuous-homeomorphism}).
+\end{definition}
+
+\begin{definition}[Immersion and Embedding]
+\label{def:immersion-embedding}
+A smooth map $f : M \to N$ (Definition~\ref{def:smooth-map}) is an \emph{immersion} if the differential $df_p : T_pM \to T_{f(p)}N$ (Definition~\ref{def:tangent-space}) is injective for all $p$.
+It is an \emph{embedding} if it is additionally a homeomorphism (Definition~\ref{def:continuous-homeomorphism}) onto its image.
+An \emph{embedded submanifold} is the image of an embedding; an \emph{immersed submanifold} is the image of an injective immersion (which need not be a homeomorphism).
+\end{definition}
+
+\begin{remark}
+\label{rem:immersed-embedded}
+This distinction matters for Lie subgroups: closed subgroups are always embedded (Definition~\ref{def:immersion-embedding}), but immersed subgroups (e.g.\ a dense winding on a torus) need not be.
+\end{remark}
+
+\begin{definition}[Covering Space]
+\label{def:covering-space}
+A continuous map $p : \widetilde{X} \to X$ (Definition~\ref{def:continuous-homeomorphism}) between topological spaces (Definition~\ref{def:topological-space}) is a \emph{covering map} if every point $x \in X$ has an open neighbourhood $U$ such that $p^{-1}(U)$ is a disjoint union of open sets each mapped homeomorphically to $U$ by $p$.
+The \emph{universal cover} $\widetilde{X}$ is the unique (up to isomorphism) simply connected (Definition~\ref{def:simply-connected}) covering space of $X$.
+\end{definition}
+
+\begin{theorem}[Universal Cover of a Lie Group]
+\label{thm:universal-cover}
+If $G$ is a connected (Definition~\ref{def:connected}) Lie group, its universal cover $\widetilde{G}$ (Definition~\ref{def:covering-space}) carries a unique Lie group structure such that the covering map $p : \widetilde{G} \to G$ is a Lie group homomorphism (Definition~\ref{def:group-hom}). The kernel $\ker p$ (Definition~\ref{def:kernel-image}) is a discrete central subgroup (Definition~\ref{def:subgroup}) of $\widetilde{G}$.
+\end{theorem}
+
+\begin{exercise}
+Verify Theorem~\ref{thm:universal-cover} for the example $G = S^1$: identify $\widetilde{G}$ explicitly, write down $p$, and determine $\ker p$.
+\end{exercise}
+
+\begin{definition}[Representation]
+\label{def:representation}
+A \emph{(linear) representation} of a group $G$ (Definition~\ref{def:group-classical}) on a vector space $V$ over a field $k$ is a group homomorphism (Definition~\ref{def:group-hom})
+\[
+  \rho : G \to \mathrm{GL}(V).
+\]
+We say $(V, \rho)$ is a \emph{$G$-representation}, or simply a \emph{$G$-module}. The \emph{dimension} of the representation is $\dim V$.
+\end{definition}
+
+\begin{definition}[Subrepresentation and Invariant Subspace]
+\label{def:subrepresentation}
+Given a $G$-representation $(V, \rho)$ (Definition~\ref{def:representation}), a subspace $W \subseteq V$ is \emph{$G$-invariant} (a \emph{subrepresentation}) if $\rho(g)w \in W$ for all $g \in G$, $w \in W$.
+The restriction $\rho|_W$ then defines a representation of $G$ on $W$.
+\end{definition}
+
+\begin{definition}[Irreducible Representation]
+\label{def:irreducible}
+A representation $(V, \rho)$ (Definition~\ref{def:representation}) is \emph{irreducible} (or \emph{simple}) if $V \neq 0$ and its only subrepresentations (Definition~\ref{def:subrepresentation}) are $\{0\}$ and $V$ itself.
+\end{definition}
+
+\begin{definition}[Morphism of Representations]
+\label{def:morphism-rep}
+A linear map $T : V \to W$ between $G$-representations (Definition~\ref{def:representation}) is a \emph{$G$-equivariant map} (or \emph{intertwiner}) if
+\[
+  T \circ \rho_V(g) = \rho_W(g) \circ T \quad \text{for all } g \in G.
+\]
+An invertible intertwiner is an \emph{isomorphism of representations}, analogous to a group isomorphism (Definition~\ref{def:group-hom}).
+\end{definition}
+
+\begin{theorem}[Schur's Lemma]
+\label{thm:schur}
+Let $(V, \rho)$ and $(W, \sigma)$ be irreducible $G$-representations (Definition~\ref{def:irreducible}) over an algebraically closed field, and let $T : V \to W$ be an intertwiner (Definition~\ref{def:morphism-rep}).
+\begin{enumerate}
+  \item Either $T = 0$ or $T$ is an isomorphism.
+  \item If $V = W$, then $T = \lambda\, \mathrm{id}_V$ for some $\lambda \in k$.
+\end{enumerate}
+\end{theorem}
+
+\begin{exercise}
+Prove Theorem~\ref{thm:schur}. For part (1), consider $\ker T$ and $\mathrm{im}\, T$ as subrepresentations (Definition~\ref{def:subrepresentation}) and use irreducibility (Definition~\ref{def:irreducible}). For part (2), let $\lambda$ be an eigenvalue of $T$ and apply part (1) to $T - \lambda\,\mathrm{id}$.
+\end{exercise}
+
+\begin{definition}[Direct Sum of Representations]
+\label{def:direct-sum-rep}
+Given $G$-representations $(V, \rho)$ and $(W, \sigma)$ (Definition~\ref{def:representation}), their \emph{direct sum} is $(V \oplus W, \rho \oplus \sigma)$ where $(\rho \oplus \sigma)(g)(v, w) = (\rho(g)v, \sigma(g)w)$.
+\end{definition}
+
+\begin{definition}[Complete Reducibility]
+\label{def:complete-reducibility}
+A representation $V$ (Definition~\ref{def:representation}) is \emph{completely reducible} (semisimple) if it decomposes as a direct sum (Definition~\ref{def:direct-sum-rep}) of irreducible subrepresentations (Definition~\ref{def:irreducible}, Definition~\ref{def:subrepresentation}).
+\end{definition}
+
+\begin{theorem}[Maschke's Theorem for Compact Groups]
+\label{thm:maschke}
+Every finite-dimensional continuous representation (Definition~\ref{def:representation}) of a compact Lie group (Definition~\ref{def:compact}) over $\mathbb{R}$ or $\mathbb{C}$ is completely reducible (Definition~\ref{def:complete-reducibility}).
+\end{theorem}
+
+\begin{exercise}
+Prove Theorem~\ref{thm:maschke}. The key step is to show that every $G$-invariant subspace (Definition~\ref{def:subrepresentation}) has a $G$-invariant complement. Do this by taking an arbitrary inner product on $V$ and averaging it over $G$ using the Haar measure to obtain a $G$-invariant inner product; then take the orthogonal complement.
+\end{exercise}
+
+\begin{definition}[Character]
+\label{def:character}
+The \emph{character} of a finite-dimensional representation $(V, \rho)$ (Definition~\ref{def:representation}) is the function $\chi_V : G \to k$ defined by $\chi_V(g) = \mathrm{tr}(\rho(g))$.
+Characters are class functions: $\chi_V(hgh^{-1}) = \chi_V(g)$, which follows from the group structure (Definition~\ref{def:group-classical}).
+\end{definition}
+
+\begin{proposition}
+\label{prop:character-iso}
+Isomorphic representations (Definition~\ref{def:morphism-rep}) have equal characters (Definition~\ref{def:character}).
+For compact groups (Definition~\ref{def:compact}), the converse holds: two representations are isomorphic if and only if their characters are equal.
+\end{proposition}
+
+\begin{exercise}
+Prove the forward direction of Proposition~\ref{prop:character-iso}. For the converse, look up the Peter--Weyl theorem and understand how it implies character determines the representation.
+\end{exercise}
+
+\begin{proposition}
+  Let $\rho_1 : G \to \mathrm{GL}(V_1)$ and $\rho_2 : G \to \mathrm{V_2}$ be two linear representations of $G$ (Definition \ref{def:representation}), and let $\chi_1$ and $\chi_2$ be their characters (Definition \ref{def:character}).
+  Then:
+  \begin{enumerate}
+    \item The character of the direct sum representation (Definition \ref{def:direct-sum-rep}) is equal to $\chi_1 + \chi_2$.
+    \item The character of the tensor product representation $V_1 \otimes V_2$ is equal to $\chi_1 \cdot \chi_2$.
+  \end{enumerate}
+\end{proposition}
+
+\begin{definition}[Inner Product]
+  \label{def:inner-product}
+  The inner product of two characters (Definition \ref{def:character}) of representations of a finite group $G$ (Definition \ref{def:representation} is
+  \[
+    \langle \chi_1, \chi_2 \rangle = \frac{1}{|G|}\sum_{g \in G} \chi_1 (g) \overline{\chi_2(g)}
+  \]
+
+  \begin{remark}
+    The inner product of two characters (Definition \ref{def:inner-product}) for a finite group is a sort of "averaging" over character values
+    for a finite group. Keep this in mind when we define a similar notion for compact Lie groups using the Haar measure. Intuitively, averaging
+    over continuous symmetries require making the sum finer and finer, which turns into an integral!
+  \end{remark}
+
+\end{definition}
+
+\begin{definition}[Lie Group]
+  \label{def:lie-group}
+  A \emph{Lie Group} is a group (Definition \ref{def:group-classical}) that is also a finite dimensional smooth differentiable manifold (Definition \ref{def:smooth-manifold}), with the added
+  condition that the group operations of multiplication and inversion are smooth maps (Definition \ref{def:smooth-map}).
+\end{definition}
+
+\begin{example}[Unit Circle]
+  \label{example:S1}
+
+The unit circle in $\mathbb{C}$ denoted $$S^1 = \{e^{i\theta} \colon \theta \in [0,2\pi)\} = \{z \in \mathbb{C}\colon |z|= 1\}$$ endowed with group multiplication as
+  \[
+    e^{i\alpha} \cdot e^{i\beta} = e^{i(\alpha+\beta)}
+  \]
+  is a Lie group (Definition \ref{def:lie-group}).
+\end{example}
+
+\begin{proposition}
+  $S^1$ (Example \ref{example:S1}) is a Lie group and is isomorphic to $SO(2)$ the rotation group.
+\end{proposition}
+
+\begin{proof}
+Firstly, it is clear that the group operation as defined in the example added with the closure of the unit circle makes a group.
+
+FINISH THE PROOF.
+\end{proof}
+
+\begin{definition}[Representation of a Lie Group]
+\label{def:representation-lie-group}
+A representation of a Lie group (Definition \ref{def:lie-group}) is the exact same as a representation of a finite group (Definition \ref{def:representation}), however with the added condition
+  that the representation must be a continuous map.
+\end{definition}

@@ -11,7 +11,7 @@
   :source-file "algebraic-topology.tex",
   :area "Algebraic Topology",
   :depends-on [],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -25,7 +25,7 @@
   :source-file "algebraic-topology.tex",
   :area "Algebraic Topology",
   :depends-on [],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:homotopy"],
@@ -39,7 +39,7 @@
   :source-file "algebraic-topology.tex",
   :area "Algebraic Topology",
   :depends-on ["c4860b45"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -53,7 +53,7 @@
   :source-file "algebraic-topology.tex",
   :area "Algebraic Topology",
   :depends-on [],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex
   "\\textbf{Reflexivity}\n  \nLet $\\gamma : [0,1] \\to X$ be a path. Define\n$$\nH(t,s) = \\gamma(t).\n$$\nThen $H$ is continuous and satisfies\n$$\nH(t,0) = \\gamma(t), \\quad H(t,1) = \\gamma(t),\n$$\nand\n$$\nH(0,s) = \\gamma(0), \\quad H(1,s) = \\gamma(1).\n$$\nThus $\\gamma \\sim \\gamma$.\n\n\\textbf{Symmetry}\n\nSuppose $\\gamma_0 \\sim \\gamma_1$ via a homotopy $H(t,s)$. Define\n$$\nG(t,s) = H(t, 1 - s).\n$$\nThen $G$ is continuous and satisfies\n$$\nG(t,0) = H(t,1) = \\gamma_1(t), \\quad G(t,1) = H(t,0) = \\gamma_0(t),\n$$\nand\n$$\nG(0,s) = \\gamma_0(0), \\quad G(1,s) = \\gamma_0(1).\n$$\nThus $\\gamma_1 \\sim \\gamma_0$.\n\n\\textbf{Transitivity}\n\nSuppose $\\gamma_0 \\sim \\gamma_1$ via $H$ and $\\gamma_1 \\sim \\gamma_2$ via $K$. Define\n$$\nG(t,s) =\n\\begin{cases}\nH(t, 2s) & \\text{if } 0 \\le s \\le \\tfrac{1}{2}, \\\\\nK(t, 2s - 1) & \\text{if } \\tfrac{1}{2} \\le s \\le 1.\n\\end{cases}\n$$\nThen $G$ is continuous (by the pasting lemma), since at $s = \\tfrac{1}{2}$ we have\n$$\nH(t,1) = \\gamma_1(t) = K(t,0).\n$$\nMoreover,\n$$\nG(t,0) = H(t,0) = \\gamma_0(t), \\quad G(t,1) = K(t,1) = \\gamma_2(t),\n$$\nand\n$$\nG(0,s) = \\gamma_0(0), \\quad G(1,s) = \\gamma_0(1).\n$$\nThus $\\gamma_0 \\sim \\gamma_2$.",
@@ -68,7 +68,7 @@
   :source-file "algebraic-topology.tex",
   :area "Algebraic Topology",
   :depends-on ["383e8134" "c4860b45"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:loops" "def:homotopy" "lemma:homeqclass"],
@@ -82,7 +82,7 @@
   :source-file "algebraic-topology.tex",
   :area "Algebraic Topology",
   :depends-on ["718480f8" "c4860b45" "34077999"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex
   "Let $X$ be a topological space and $x \\in X$. The fundamental group $\\pi_1(X,x)$ is defined as the set of homotopy classes (relative to endpoints) of loops based at $x$, i.e.\n$$\n\\pi_1(X,x) = \\{ [\\gamma] \\mid \\gamma : [0,1] \\to X, \\ \\gamma(0)=\\gamma(1)=x \\}.\n$$\n\nWe define a binary operation on $\\pi_1(X,x)$ by concatenation:\nfor loops $\\gamma_1, \\gamma_2$, define\n$$\n(\\gamma_1 * \\gamma_2)(t) =\n\\begin{cases}\n\\gamma_1(2t) & 0 \\le t \\le \\tfrac{1}{2}, \\\\\n\\gamma_2(2t - 1) & \\tfrac{1}{2} \\le t \\le 1.\n\\end{cases}\n$$\nThen define\n$$\n[\\gamma_1] \\cdot [\\gamma_2] := [\\gamma_1 * \\gamma_2].\n$$\n\nWe show this makes $\\pi_1(X,x)$ a group.\n\n\n\n\nSuppose $\\gamma_1 \\sim \\gamma_1'$ and $\\gamma_2 \\sim \\gamma_2'$ (homotopy relative endpoints). Then there exist homotopies $H$ and $K$ between them. One constructs a homotopy between $\\gamma_1 * \\gamma_2$ and $\\gamma_1' * \\gamma_2'$ by concatenating $H$ and $K$ in the same way:\n$$\nF(t,s) =\n\\begin{cases}\nH(2t,s) & 0 \\le t \\le \\tfrac{1}{2}, \\\\\nK(2t-1,s) & \\tfrac{1}{2} \\le t \\le 1.\n\\end{cases}\n$$\nThus $[\\gamma_1 * \\gamma_2] = [\\gamma_1' * \\gamma_2']$, so the operation is well-defined.\n\nLet $\\gamma_1, \\gamma_2, \\gamma_3$ be loops at $x$. Then\n$$\n(\\gamma_1 * \\gamma_2) * \\gamma_3 \\sim \\gamma_1 * (\\gamma_2 * \\gamma_3),\n$$\nsince both paths traverse $\\gamma_1$, $\\gamma_2$, and $\\gamma_3$ in order, differing only by a reparametrization of $[0,1]$. This reparametrization yields a homotopy relative endpoints. Hence\n$$\n([\\gamma_1] \\cdot [\\gamma_2]) \\cdot [\\gamma_3]\n= [\\gamma_1] \\cdot ([\\gamma_2] \\cdot [\\gamma_3]).\n$$\n\n\nLet $e : [0,1] \\to X$ be the constant loop at $x$, defined by $e(t)=x$. Then for any loop $\\gamma$,\n$$\ne * \\gamma \\sim \\gamma, \\quad \\gamma * e \\sim \\gamma,\n$$\nby a simple reparametrization homotopy. Hence $[e]$ is the identity element.\n\n\nLet $\\gamma$ be a loop at $x$. Define the reverse path\n$$\n\\gamma^{-1}(t) = \\gamma(1 - t).\n$$\nThen\n$$\n\\gamma * \\gamma^{-1} \\sim e, \\quad \\gamma^{-1} * \\gamma \\sim e,\n$$\nsince the path goes out along $\\gamma$ and returns along the same path, which can be contracted to the constant loop. Thus $[\\gamma^{-1}]$ is the inverse of $[\\gamma]$.\n\nTherefore, the fundamental group is indeed a group.",
@@ -97,12 +97,12 @@
   :source-file "algebraic-topology.tex",
   :area "Algebraic Topology",
   :depends-on ["9be75791"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:fundgrp"],
   :latex
-  "\\label{rmk:deponbasepoint}\n  \\ref{def:fundgrp}\n  For a path $a : x \\to y$, define \n  \\[\n    \\gamma[a] : \\pi_1(X,x) \\to \\pi_1(X,y)\n  \\]\n\n  by \n  \\[\n    \\gamma[a][f] = [a \\cdot f \\cdot a^{-1}]\n  \\]\n\n  This is a homeomorphism of groups.",
+  "\\label{rmk:deponbasepoint}\n  \\ref{def:fundgrp}\n  For a path $a : x \\to y$, define \n  \\[\n    \\gamma[a] : \\pi_1(X,x) \\to \\pi_1(X,y)\n  \\]\n\n  by \n  \\[\n    \\gamma[a][f] = [a \\cdot f \\cdot a^{-1}]\n  \\]\n\n  This is a homomorphism of groups.",
   :type :remark,
   :title "Dependence on the Base Point",
   :concepts [],
@@ -111,12 +111,12 @@
   :source-file "algebraic-topology.tex",
   :area "Algebraic Topology",
   :depends-on ["9be75791"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs ["rmk:deponbasepoint"],
   :latex
-  "Prove that the map $\\gamma[a]$ as defined in \\ref{rmk:deponbasepoint} is indeed a group homeomorphism.",
+  "Prove that the map $\\gamma[a]$ as defined in \\ref{rmk:deponbasepoint} is indeed a group homomorphism.",
   :type :problem,
   :title "",
   :concepts [],
@@ -125,7 +125,612 @@
   :source-file "algebraic-topology.tex",
   :area "Algebraic Topology",
   :depends-on ["a8b6b7cd"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs [],
+  :latex
+  "\\label{def:group-classical}\nA \\emph{group} is a pair $(G,\\cdot)$ consisting of a set $G$ together with a binary operation\n\\[\n\\cdot : G \\times G \\to G\n\\]\nsuch that:\n\\begin{enumerate}\n    \\item \\textbf{Associativity:} For all $a,b,c \\in G$,\n    $(a \\cdot b)\\cdot c = a \\cdot (b \\cdot c)$.\n\n    \\item \\textbf{Identity:} There exists an element $e \\in G$ such that for all $a \\in G$,\n    $e \\cdot a = a \\cdot e = a$.\n\n    \\item \\textbf{Inverses:} For every $a \\in G$, there exists $a^{-1} \\in G$ such that\n    $a \\cdot a^{-1} = a^{-1} \\cdot a = e$.\n\\end{enumerate}",
+  :type :definition,
+  :title "Group (Classical)",
+  :concepts [],
+  :label "def:group-classical",
+  :id "71746aac",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on [],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:group-classical"],
+  :latex
+  "\\label{def:group-categorical}\nA \\emph{group} is a group object in the category $\\mathbf{Set}$.\n\nThat is, a set $G$ equipped with morphisms:\n\\[\nm : G \\times G \\to G, \\quad\ne : 1 \\to G, \\quad\ni : G \\to G\n\\]\nsuch that the following identities hold:\n\n\\begin{enumerate}\n    \\item \\textbf{Associativity:}\n    $m \\circ (m \\times \\mathrm{id}_G) = m \\circ (\\mathrm{id}_G \\times m)$.\n\n    \\item \\textbf{Identity laws:}\n    $m \\circ (e \\times \\mathrm{id}_G) = \\mathrm{id}_G$,\n    $\\quad m \\circ (\\mathrm{id}_G \\times e) = \\mathrm{id}_G$.\n\n    \\item \\textbf{Inverse laws:}\n    $m \\circ (i \\times \\mathrm{id}_G) = e \\circ !$,\n    $\\quad m \\circ (\\mathrm{id}_G \\times i) = e \\circ !$,\n    where $! : G \\to 1$ is the unique morphism.\n\\end{enumerate}\n\nThis is equivalent to Definition~\\ref{def:group-classical}, but phrased entirely in terms of morphisms and composition.",
+  :type :definition,
+  :title "Group (Categorical)",
+  :concepts [],
+  :label "def:group-categorical",
+  :id "4cacdd3e",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["71746aac"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:group-classical"],
+  :latex
+  "\\label{def:group-hom}\nLet $(G, \\cdot)$ and $(H, \\ast)$ be groups in the sense of Definition~\\ref{def:group-classical}.\nA map $\\phi : G \\to H$ is a \\emph{group homomorphism} if\n\\[\n  \\phi(a \\cdot b) = \\phi(a) \\ast \\phi(b) \\quad \\text{for all } a, b \\in G.\n\\]\nIf $\\phi$ is also a bijection it is called an \\emph{isomorphism}, and we write $G \\cong H$.",
+  :type :definition,
+  :title "Group Homomorphism",
+  :concepts [],
+  :label "def:group-hom",
+  :id "e087180c",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["71746aac"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:group-hom"],
+  :latex
+  "\\label{def:kernel-image}\nFor a homomorphism $\\phi : G \\to H$ (Definition~\\ref{def:group-hom}), the \\emph{kernel} and \\emph{image} are\n\\[\n  \\ker \\phi := \\{ g \\in G \\mid \\phi(g) = e_H \\}, \\qquad\n  \\operatorname{im} \\phi := \\{ \\phi(g) \\mid g \\in G \\}.\n\\]",
+  :type :definition,
+  :title "Kernel and Image",
+  :concepts [],
+  :label "def:kernel-image",
+  :id "6fd9cebe",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["e087180c"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:group-classical"],
+  :latex
+  "\\label{def:subgroup}\nLet $G$ be a group (Definition~\\ref{def:group-classical}).\nA subset $H \\subseteq G$ is a \\emph{subgroup}, written $H \\leq G$, if it is closed under multiplication and inverses and contains the identity.\nIt is \\emph{normal}, written $H \\trianglelefteq G$, if $gHg^{-1} = H$ for all $g \\in G$.",
+  :type :definition,
+  :title "Subgroup and Normal Subgroup",
+  :concepts [],
+  :label "def:subgroup",
+  :id "3d67b716",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["71746aac"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:group-hom" "def:subgroup" "def:kernel-image"],
+  :latex
+  "\\label{prop:kernel-normal}\nFor any homomorphism $\\phi : G \\to H$ (Definition~\\ref{def:group-hom}),\n$\\ker \\phi \\trianglelefteq G$ and $\\operatorname{im} \\phi \\leq H$\nin the sense of Definition~\\ref{def:subgroup}, where $\\ker\\phi$ and $\\operatorname{im}\\phi$ are as in Definition~\\ref{def:kernel-image}.",
+  :type :proposition,
+  :title "",
+  :concepts [],
+  :label "prop:kernel-normal",
+  :id "8aabc776",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["e087180c" "3d67b716" "6fd9cebe"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:subgroup"],
+  :latex
+  "\\label{def:quotient-group}\nLet $N \\trianglelefteq G$ be a normal subgroup (Definition~\\ref{def:subgroup}).\nThe \\emph{quotient group} $G/N$ is the set of left cosets $\\{ gN \\mid g \\in G \\}$ equipped with the operation $(aN)(bN) := (ab)N$.",
+  :type :definition,
+  :title "Quotient Group",
+  :concepts [],
+  :label "def:quotient-group",
+  :id "4ceac839",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["3d67b716"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:group-hom" "def:quotient-group" "def:kernel-image"],
+  :latex
+  "\\label{thm:first-iso}\nLet $\\phi : G \\to H$ be a group homomorphism (Definition~\\ref{def:group-hom}).\nThen the quotient group (Definition~\\ref{def:quotient-group}) by the kernel (Definition~\\ref{def:kernel-image}) satisfies\n\\[\n  G / \\ker\\phi \\;\\cong\\; \\operatorname{im}\\phi.\n\\]",
+  :type :theorem,
+  :title "First Isomorphism Theorem",
+  :concepts [],
+  :label "thm:first-iso",
+  :id "856a1ed3",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["e087180c" "4ceac839" "6fd9cebe"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:group-classical"],
+  :latex
+  "\\label{def:group-action}\nA \\emph{left action} of a group $G$ (Definition~\\ref{def:group-classical}) on a set $X$ is a map $G \\times X \\to X$, written $(g, x) \\mapsto g \\cdot x$, satisfying\n\\[\n  e \\cdot x = x \\quad \\text{and} \\quad g \\cdot (h \\cdot x) = (gh) \\cdot x \\quad \\text{for all } g,h \\in G,\\, x \\in X.\n\\]",
+  :type :definition,
+  :title "Group Action",
+  :concepts [],
+  :label "def:group-action",
+  :id "f7184fc4",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["71746aac"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:group-action" "def:subgroup"],
+  :latex
+  "\\label{def:orbit-stabilizer}\nLet $G$ act on $X$ (Definition~\\ref{def:group-action}).\nFor $x \\in X$, the \\emph{orbit} and \\emph{stabilizer} of $x$ are\n\\[\n  G \\cdot x := \\{ g \\cdot x \\mid g \\in G \\}, \\qquad\n  G_x := \\{ g \\in G \\mid g \\cdot x = x \\}.\n\\]\nNote that $G_x \\leq G$ is a subgroup in the sense of Definition~\\ref{def:subgroup}.",
+  :type :definition,
+  :title "Orbit and Stabilizer",
+  :concepts [],
+  :label "def:orbit-stabilizer",
+  :id "1641e614",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["f7184fc4" "3d67b716"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:orbit-stabilizer" "def:subgroup" "def:quotient-group"],
+  :latex
+  "\\label{thm:orbit-stab}\nFor any $x \\in X$ with orbit and stabilizer as in Definition~\\ref{def:orbit-stabilizer},\n\\[\n  |G \\cdot x| = [G : G_x],\n\\]\nwhere $[G : G_x]$ is the index of the subgroup $G_x \\leq G$ (Definition~\\ref{def:subgroup}), equivalently the cardinality of the quotient $G/G_x$ (Definition~\\ref{def:quotient-group}).\nIn particular, if $G$ is finite then $|G| = |G \\cdot x| \\cdot |G_x|$.",
+  :type :theorem,
+  :title "Orbit-Stabilizer Theorem",
+  :concepts [],
+  :label "thm:orbit-stab",
+  :id "28571139",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["1641e614" "3d67b716" "4ceac839"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:group-classical" "def:subgroup" "def:group-action"],
+  :latex
+  "\\label{def:direct-semidirect}\nThe \\emph{direct product} $G \\times H$ of two groups (Definition~\\ref{def:group-classical}) is the Cartesian product with componentwise operations.\nMore generally, given a normal subgroup $N \\trianglelefteq G$ and a subgroup $H \\leq G$ (Definition~\\ref{def:subgroup}) with $G = NH$ and $N \\cap H = \\{e\\}$,\nwe say $G$ is the \\emph{semidirect product} $N \\rtimes H$, where $H$ acts on $N$ (Definition~\\ref{def:group-action}) by conjugation.",
+  :type :definition,
+  :title "Direct and Semidirect Product",
+  :concepts [],
+  :label "def:direct-semidirect",
+  :id "59ff85d3",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["71746aac" "3d67b716" "f7184fc4"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs [],
+  :latex
+  "\\label{def:topological-space}\nA \\emph{topological space} is a pair $(X, \\mathcal{T})$ where $\\mathcal{T}$ is a collection of subsets of $X$ (the \\emph{open sets}) satisfying: $\\emptyset, X \\in \\mathcal{T}$; arbitrary unions of open sets are open; finite intersections of open sets are open.",
+  :type :definition,
+  :title "Topological Space",
+  :concepts [],
+  :label "def:topological-space",
+  :id "c9093e38",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on [],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:topological-space"],
+  :latex
+  "\\label{def:continuous-homeomorphism}\nLet $(X, \\mathcal{T}_X)$ and $(Y, \\mathcal{T}_Y)$ be topological spaces (Definition~\\ref{def:topological-space}).\nA map $f : X \\to Y$ is \\emph{continuous} if $f^{-1}(U) \\in \\mathcal{T}_X$ for every $U \\in \\mathcal{T}_Y$.\nIf $f$ is a continuous bijection with continuous inverse, it is a \\emph{homeomorphism}, and we write $X \\cong Y$.",
+  :type :definition,
+  :title "Continuous Map and Homeomorphism",
+  :concepts [],
+  :label "def:continuous-homeomorphism",
+  :id "a9fa06fb",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["c9093e38"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:topological-space" "def:continuous-homeomorphism"],
+  :latex
+  "\\label{def:connected}\nA topological space $X$ (Definition~\\ref{def:topological-space}) is \\emph{connected} if it cannot be written as a disjoint union of two nonempty open sets.\nIt is \\emph{path-connected} if for every $x, y \\in X$ there exists a continuous path $\\gamma : [0,1] \\to X$ (Definition~\\ref{def:continuous-homeomorphism}) with $\\gamma(0) = x$ and $\\gamma(1) = y$.",
+  :type :definition,
+  :title "Connectedness and Path-Connectedness",
+  :concepts [],
+  :label "def:connected",
+  :id "dc4990c2",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["c9093e38" "a9fa06fb"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs [],
+  :latex
+  "\\label{rem:connected-lie}\nPath-connectedness implies connectedness, but not conversely. For Lie groups the two notions coincide: every connected Lie group is path-connected.",
+  :type :remark,
+  :title "",
+  :concepts [],
+  :label "rem:connected-lie",
+  :id "9bfcb403",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on [],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:connected"],
+  :latex
+  "\\label{def:simply-connected}\nA path-connected space $X$ (Definition~\\ref{def:connected}) is \\emph{simply connected} if every loop $\\gamma : [0,1] \\to X$ with $\\gamma(0) = \\gamma(1)$ can be continuously contracted to a point, i.e., the fundamental group $\\pi_1(X) = 0$.",
+  :type :definition,
+  :title "Simply Connected",
+  :concepts [],
+  :label "def:simply-connected",
+  :id "5592bb9e",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["dc4990c2"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:topological-space"],
+  :latex
+  "\\label{def:compact}\nA topological space $X$ (Definition~\\ref{def:topological-space}) is \\emph{compact} if every open cover of $X$ has a finite subcover.\nA subset $A \\subseteq \\mathbb{R}^n$ is compact if and only if it is closed and bounded (Heine--Borel).",
+  :type :definition,
+  :title "Compactness",
+  :concepts [],
+  :label "def:compact",
+  :id "5d29db29",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["c9093e38"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:topological-space" "def:continuous-homeomorphism"],
+  :latex
+  "\\label{def:topological-manifold}\nA \\emph{topological $n$-manifold} is a Hausdorff, second-countable topological space $M$ (Definition~\\ref{def:topological-space}) such that every point $p \\in M$ has a neighbourhood homeomorphic (Definition~\\ref{def:continuous-homeomorphism}) to an open subset of $\\mathbb{R}^n$.",
+  :type :definition,
+  :title "Topological Manifold",
+  :concepts [],
+  :label "def:topological-manifold",
+  :id "5751451d",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["c9093e38" "a9fa06fb"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:topological-manifold"],
+  :latex
+  "\\label{def:smooth-manifold}\nA topological $n$-manifold $M$ (Definition~\\ref{def:topological-manifold}) is a \\emph{smooth manifold} if it is equipped with a maximal smooth atlas: a collection of charts $(U_\\alpha, \\varphi_\\alpha)$ covering $M$ such that all transition maps $\\varphi_\\beta \\circ \\varphi_\\alpha^{-1}$ are smooth.",
+  :type :definition,
+  :title "Smooth Manifold",
+  :concepts [],
+  :label "def:smooth-manifold",
+  :id "49c0e84b",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["5751451d"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:smooth-manifold"],
+  :latex
+  "\\label{def:tangent-space}\nFor $p \\in M$ a smooth manifold (Definition~\\ref{def:smooth-manifold}), the \\emph{tangent space} $T_pM$ is the vector space of derivations on smooth functions near $p$. Concretely in a chart, it is spanned by $\\partial/\\partial x^i|_p$. The \\emph{tangent bundle} is $TM = \\bigsqcup_{p \\in M} T_pM$.",
+  :type :definition,
+  :title "Tangent Space",
+  :concepts [],
+  :label "def:tangent-space",
+  :id "d0ae9dbd",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["49c0e84b"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:smooth-manifold" "def:continuous-homeomorphism"],
+  :latex
+  "\\label{def:smooth-map}\nA map $f : M \\to N$ between smooth manifolds (Definition~\\ref{def:smooth-manifold}) is \\emph{smooth} if its coordinate representations are smooth.\nIt is a \\emph{diffeomorphism} if it is a smooth bijection with smooth inverse; in particular a diffeomorphism is a homeomorphism (Definition~\\ref{def:continuous-homeomorphism}).",
+  :type :definition,
+  :title "Smooth Map and Diffeomorphism",
+  :concepts [],
+  :label "def:smooth-map",
+  :id "03a51003",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["49c0e84b" "a9fa06fb"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs
+  ["def:smooth-map"
+   "def:tangent-space"
+   "def:continuous-homeomorphism"],
+  :latex
+  "\\label{def:immersion-embedding}\nA smooth map $f : M \\to N$ (Definition~\\ref{def:smooth-map}) is an \\emph{immersion} if the differential $df_p : T_pM \\to T_{f(p)}N$ (Definition~\\ref{def:tangent-space}) is injective for all $p$.\nIt is an \\emph{embedding} if it is additionally a homeomorphism (Definition~\\ref{def:continuous-homeomorphism}) onto its image.\nAn \\emph{embedded submanifold} is the image of an embedding; an \\emph{immersed submanifold} is the image of an injective immersion (which need not be a homeomorphism).",
+  :type :definition,
+  :title "Immersion and Embedding",
+  :concepts [],
+  :label "def:immersion-embedding",
+  :id "e5d64c7b",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["03a51003" "d0ae9dbd" "a9fa06fb"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:immersion-embedding"],
+  :latex
+  "\\label{rem:immersed-embedded}\nThis distinction matters for Lie subgroups: closed subgroups are always embedded (Definition~\\ref{def:immersion-embedding}), but immersed subgroups (e.g.\\ a dense winding on a torus) need not be.",
+  :type :remark,
+  :title "",
+  :concepts [],
+  :label "rem:immersed-embedded",
+  :id "9bfcb403",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["e5d64c7b"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs
+  ["def:continuous-homeomorphism"
+   "def:topological-space"
+   "def:simply-connected"],
+  :latex
+  "\\label{def:covering-space}\nA continuous map $p : \\widetilde{X} \\to X$ (Definition~\\ref{def:continuous-homeomorphism}) between topological spaces (Definition~\\ref{def:topological-space}) is a \\emph{covering map} if every point $x \\in X$ has an open neighbourhood $U$ such that $p^{-1}(U)$ is a disjoint union of open sets each mapped homeomorphically to $U$ by $p$.\nThe \\emph{universal cover} $\\widetilde{X}$ is the unique (up to isomorphism) simply connected (Definition~\\ref{def:simply-connected}) covering space of $X$.",
+  :type :definition,
+  :title "Covering Space",
+  :concepts [],
+  :label "def:covering-space",
+  :id "c5e5fa8f",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["a9fa06fb" "c9093e38" "5592bb9e"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs
+  ["def:connected"
+   "def:covering-space"
+   "def:group-hom"
+   "def:kernel-image"
+   "def:subgroup"],
+  :latex
+  "\\label{thm:universal-cover}\nIf $G$ is a connected (Definition~\\ref{def:connected}) Lie group, its universal cover $\\widetilde{G}$ (Definition~\\ref{def:covering-space}) carries a unique Lie group structure such that the covering map $p : \\widetilde{G} \\to G$ is a Lie group homomorphism (Definition~\\ref{def:group-hom}). The kernel $\\ker p$ (Definition~\\ref{def:kernel-image}) is a discrete central subgroup (Definition~\\ref{def:subgroup}) of $\\widetilde{G}$.",
+  :type :theorem,
+  :title "Universal Cover of a Lie Group",
+  :concepts [],
+  :label "thm:universal-cover",
+  :id "738e8542",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["dc4990c2" "c5e5fa8f" "e087180c" "6fd9cebe" "3d67b716"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:group-classical" "def:group-hom"],
+  :latex
+  "\\label{def:representation}\nA \\emph{(linear) representation} of a group $G$ (Definition~\\ref{def:group-classical}) on a vector space $V$ over a field $k$ is a group homomorphism (Definition~\\ref{def:group-hom})\n\\[\n  \\rho : G \\to \\mathrm{GL}(V).\n\\]\nWe say $(V, \\rho)$ is a \\emph{$G$-representation}, or simply a \\emph{$G$-module}. The \\emph{dimension} of the representation is $\\dim V$.",
+  :type :definition,
+  :title "Representation",
+  :concepts [],
+  :label "def:representation",
+  :id "ca6bd350",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["71746aac" "e087180c"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:representation"],
+  :latex
+  "\\label{def:subrepresentation}\nGiven a $G$-representation $(V, \\rho)$ (Definition~\\ref{def:representation}), a subspace $W \\subseteq V$ is \\emph{$G$-invariant} (a \\emph{subrepresentation}) if $\\rho(g)w \\in W$ for all $g \\in G$, $w \\in W$.\nThe restriction $\\rho|_W$ then defines a representation of $G$ on $W$.",
+  :type :definition,
+  :title "Subrepresentation and Invariant Subspace",
+  :concepts [],
+  :label "def:subrepresentation",
+  :id "45f1bf4d",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["4e94b0c3"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:representation" "def:subrepresentation"],
+  :latex
+  "\\label{def:irreducible}\nA representation $(V, \\rho)$ (Definition~\\ref{def:representation}) is \\emph{irreducible} (or \\emph{simple}) if $V \\neq 0$ and its only subrepresentations (Definition~\\ref{def:subrepresentation}) are $\\{0\\}$ and $V$ itself.",
+  :type :definition,
+  :title "Irreducible Representation",
+  :concepts [],
+  :label "def:irreducible",
+  :id "c8a0881e",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["4e94b0c3" "3fe2b240"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:representation" "def:group-hom"],
+  :latex
+  "\\label{def:morphism-rep}\nA linear map $T : V \\to W$ between $G$-representations (Definition~\\ref{def:representation}) is a \\emph{$G$-equivariant map} (or \\emph{intertwiner}) if\n\\[\n  T \\circ \\rho_V(g) = \\rho_W(g) \\circ T \\quad \\text{for all } g \\in G.\n\\]\nAn invertible intertwiner is an \\emph{isomorphism of representations}, analogous to a group isomorphism (Definition~\\ref{def:group-hom}).",
+  :type :definition,
+  :title "Morphism of Representations",
+  :concepts [],
+  :label "def:morphism-rep",
+  :id "f70e3a35",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["4e94b0c3" "e087180c"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:irreducible" "def:morphism-rep"],
+  :latex
+  "\\label{thm:schur}\nLet $(V, \\rho)$ and $(W, \\sigma)$ be irreducible $G$-representations (Definition~\\ref{def:irreducible}) over an algebraically closed field, and let $T : V \\to W$ be an intertwiner (Definition~\\ref{def:morphism-rep}).\n\\begin{enumerate}\n  \\item Either $T = 0$ or $T$ is an isomorphism.\n  \\item If $V = W$, then $T = \\lambda\\, \\mathrm{id}_V$ for some $\\lambda \\in k$.\n\\end{enumerate}",
+  :type :theorem,
+  :title "Schur's Lemma",
+  :concepts [],
+  :label "thm:schur",
+  :id "36e5bd4f",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["a8ec3e23" "f70e3a35"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:representation"],
+  :latex
+  "\\label{def:direct-sum-rep}\nGiven $G$-representations $(V, \\rho)$ and $(W, \\sigma)$ (Definition~\\ref{def:representation}), their \\emph{direct sum} is $(V \\oplus W, \\rho \\oplus \\sigma)$ where $(\\rho \\oplus \\sigma)(g)(v, w) = (\\rho(g)v, \\sigma(g)w)$.",
+  :type :definition,
+  :title "Direct Sum of Representations",
+  :concepts [],
+  :label "def:direct-sum-rep",
+  :id "36d19f67",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["4e94b0c3"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs
+  ["def:representation"
+   "def:direct-sum-rep"
+   "def:irreducible"
+   "def:subrepresentation"],
+  :latex
+  "\\label{def:complete-reducibility}\nA representation $V$ (Definition~\\ref{def:representation}) is \\emph{completely reducible} (semisimple) if it decomposes as a direct sum (Definition~\\ref{def:direct-sum-rep}) of irreducible subrepresentations (Definition~\\ref{def:irreducible}, Definition~\\ref{def:subrepresentation}).",
+  :type :definition,
+  :title "Complete Reducibility",
+  :concepts [],
+  :label "def:complete-reducibility",
+  :id "a4ca6986",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["4e94b0c3" "36d19f67" "a8ec3e23" "3fe2b240"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs
+  ["def:representation" "def:compact" "def:complete-reducibility"],
+  :latex
+  "\\label{thm:maschke}\nEvery finite-dimensional continuous representation (Definition~\\ref{def:representation}) of a compact Lie group (Definition~\\ref{def:compact}) over $\\mathbb{R}$ or $\\mathbb{C}$ is completely reducible (Definition~\\ref{def:complete-reducibility}).",
+  :type :theorem,
+  :title "Maschke's Theorem for Compact Groups",
+  :concepts [],
+  :label "thm:maschke",
+  :id "692f1650",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["4e94b0c3" "5d29db29" "a4ca6986"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:representation" "def:group-classical"],
+  :latex
+  "\\label{def:character}\nThe \\emph{character} of a finite-dimensional representation $(V, \\rho)$ (Definition~\\ref{def:representation}) is the function $\\chi_V : G \\to k$ defined by $\\chi_V(g) = \\mathrm{tr}(\\rho(g))$.\nCharacters are class functions: $\\chi_V(hgh^{-1}) = \\chi_V(g)$, which follows from the group structure (Definition~\\ref{def:group-classical}).",
+  :type :definition,
+  :title "Character",
+  :concepts [],
+  :label "def:character",
+  :id "e83c1383",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["4e94b0c3" "71746aac"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:morphism-rep" "def:character" "def:compact"],
+  :latex
+  "\\label{prop:character-iso}\nIsomorphic representations (Definition~\\ref{def:morphism-rep}) have equal characters (Definition~\\ref{def:character}).\nFor compact groups (Definition~\\ref{def:compact}), the converse holds: two representations are isomorphic if and only if their characters are equal.",
+  :type :proposition,
+  :title "",
+  :concepts [],
+  :label "prop:character-iso",
+  :id "8aabc776",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["f70e3a35" "e83c1383" "5d29db29"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:representation" "def:character" "def:direct-sum-rep"],
+  :latex
+  "Let $\\rho_1 : G \\to \\mathrm{GL}(V_1)$ and $\\rho_2 : G \\to \\mathrm{V_2}$ be two linear representations of $G$ (Definition \\ref{def:representation}), and let $\\chi_1$ and $\\chi_2$ be their characters (Definition \\ref{def:character}).\n  Then:\n  \\begin{enumerate}\n    \\item The character of the direct sum representation (Definition \\ref{def:direct-sum-rep}) is equal to $\\chi_1 + \\chi_2$.\n    \\item The character of the tensor product representation $V_1 \\otimes V_2$ is equal to $\\chi_1 \\cdot \\chi_2$.\n  \\end{enumerate}",
+  :type :proposition,
+  :title "",
+  :concepts [],
+  :label nil,
+  :id "8aabc776",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["4e94b0c3" "e83c1383" "36d19f67"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:character" "def:representation" "def:inner-product"],
+  :latex
+  "\\label{def:inner-product}\n  The inner product of two characters (Definition \\ref{def:character}) of representations of a finite group $G$ (Definition \\ref{def:representation} is\n  \\[\n    \\langle \\chi_1, \\chi_2 \\rangle = \\frac{1}{|G|}\\sum_{g \\in G} \\chi_1 (g) \\overline{\\chi_2(g)}\n  \\]\n\n  \\begin{remark}\n    The inner product of two characters (Definition \\ref{def:inner-product}) for a finite group is a sort of \"averaging\" over character values\n    for a finite group. Keep this in mind when we define a similar notion for compact Lie groups using the Haar measure. Intuitively, averaging\n    over continuous symmetries require making the sum finer and finer, which turns into an integral!\n  \\end{remark}",
+  :type :definition,
+  :title "Inner Product",
+  :concepts [],
+  :label "def:inner-product",
+  :id "ecf76e5d",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["e83c1383" "4e94b0c3"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:group-classical" "def:smooth-manifold" "def:smooth-map"],
+  :latex
+  "\\label{def:lie-group}\n  A \\emph{Lie Group} is a group (Definition \\ref{def:group-classical}) that is also a finite dimensional smooth differentiable manifold (Definition \\ref{def:smooth-manifold}), with the added\n  condition that the group operations of multiplication and inversion are smooth maps (Definition \\ref{def:smooth-map}).",
+  :type :definition,
+  :title "Lie Group",
+  :concepts [],
+  :label "def:lie-group",
+  :id "e5f4203c",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["71746aac" "49c0e84b" "03a51003"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:lie-group"],
+  :latex
+  "\\label{example:S1}\n\nThe unit circle in $\\mathbb{C}$ denoted $$S^1 = \\{e^{i\\theta} \\colon \\theta \\in [0,2\\pi)\\} = \\{z \\in \\mathbb{C}\\colon |z|= 1\\}$$ endowed with group multiplication as\n  \\[\n    e^{i\\alpha} \\cdot e^{i\\beta} = e^{i(\\alpha+\\beta)}\n  \\]\n  is a Lie group (Definition \\ref{def:lie-group}).",
+  :type :example,
+  :title "Unit Circle",
+  :concepts [],
+  :label "example:S1",
+  :id "383b5512",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["e5f4203c"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex
+  "Firstly, it is clear that the group operation as defined in the example added with the closure of the unit circle makes a group.\n\nFINISH THE PROOF.",
+  :refs ["example:S1"],
+  :latex
+  "$S^1$ (Example \\ref{example:S1}) is a Lie group and is isomorphic to $SO(2)$ the rotation group.",
+  :type :proposition,
+  :title "",
+  :concepts [],
+  :label nil,
+  :id "8aabc776",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["383b5512"],
+  :created-at "2026-03-27"}
+ {:tags [],
+  :proof-latex nil,
+  :refs ["def:lie-group" "def:representation"],
+  :latex
+  "\\label{def:representation-lie-group}\nA representation of a Lie group (Definition \\ref{def:lie-group}) is the exact same as a representation of a finite group (Definition \\ref{def:representation}), however with the added condition\n  that the representation must be a continuous map.",
+  :type :definition,
+  :title "Representation of a Lie Group",
+  :concepts [],
+  :label "def:representation-lie-group",
+  :id "e599a876",
+  :source-file "lie-groups.tex",
+  :area "Lie Groups and Lie Algebras",
+  :depends-on ["e5f4203c" "4e94b0c3"],
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -139,7 +744,7 @@
   :source-file "topology.tex",
   :area "Topology",
   :depends-on [],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -153,7 +758,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on [],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -167,7 +772,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on [],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -180,7 +785,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on [],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:sepclass"],
@@ -194,7 +799,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on ["825b2bf9"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex
   "$\\implies$\n  If $N \\sim N(0,1)$, then \n  \\[\n    \\mathbb{E}(f'(N)) = \\mathbb{E}(Nf(N))\n  \\]\n  implies \n  \\[\n    \\int_\\mathbb{R} f'(x) \\frac{1}{\\sqrt{2\\pi}}dx = \\int_\\mathbb{R} x f(x) \\frac{1}{\\sqrt{2\\pi}}dx \n  \\]\n  which if we translate into the Gaussian measure \n  \\[\n    \\int_\\mathbb{R} f'(x) \\gamma(dx) = \\int_\\mathbb{R} xf(x) \\gamma(dx)\n  \\]\n  which is just a representation of integration by parts.\n\n  Other direction is HW : TODO\n\n  For some distributions, they are characterized by their moments. Necessarily this means the distribution has to be characterized by this. \n  Distribution needs moments of all moments. If you figure it out what the moments, we can take $f$ to be a monomial then we get moments of higher order, since $\\mathcal{H}$ is a seperating class.",
@@ -209,7 +814,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on ["f64c7c47"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -223,7 +828,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on [],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -237,7 +842,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on [],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs ["rmk:steinsheuristic"],
@@ -251,7 +856,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on ["7e9ff904"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex
   "$ \\sqrt{2\\pi}\\int_{-\\infty}^x h(y) \\frac{e^{y^2/2}}{\\sqrt{2\\pi}} - \\mathbb{E}(h(N))\\int_{-/infty}^\\infty \\gamma(dx) = 0$",
@@ -266,7 +871,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on ["19bfbd84"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs
@@ -281,7 +886,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on ["52ca04cc" "19bfbd84" "f64c7c47"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:metprobmeasure"],
@@ -295,7 +900,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on ["f64c7c47"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:metprobmeasure"],
@@ -309,7 +914,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on ["f64c7c47"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex
   "Recall \n\n\\[\n    f_h(x) = e^{x^2/2}\\int_{-\\infty}^x [h(y)-\\mathbb{E}(h(N))]e^{y^2/2} dy\n\\]\n\nNote that \n\\[\n  |h(y)-\\mathbb{E}(h(N))|\\le 1\n\\]\n\nNote that :\n\n\\[\n  \\int_{-\\infty}^x = \\int_{-\\infty}^\\infty - \\int_x^{\\infty} = - \\int_x^{\\infty}\n\\]\nSo, \n\\[\n  \n    |f_h(x)| \\le e^{x^2/2}\\int_{-\\infty}^x e^{y^2/2} dy\n\\]\nBut also \n\n\\[\n  \n    |f_h(x)| \\le e^{x^2/2}\\int_{x}^\\infty e^{y^2/2} dy\n\\]\n\nIf $x>0$, then \n\\[\n  \n    |f_h(x)| \\le e^{x^2/2}\\int_{|x|}^\\infty e^{y^2/2} dy\n\\]\n\nIf $x<0$, then \n\\[\n  \n  |f_h(x)| \\le e^{x^2/2}\\int_{-\\infty}^{|x|} e^{y^2/2} dy = e^{x^2/2}\\int_{|x|}^{\\infty} e^{y^2/2}  \n\\]\n\nWe have obtained that \n\n\\[\n  \n  |f_h(x)| \\le e^{x^2/2}\\int_{-\\infty}^{|x|} e^{y^2/2} dy = e^{x^2/2}\\int_{|x|}^{\\infty} e^{-y^2/2} dy \\quad \\forall x  \n\\]\n\nThe function $x \\mapsto e^{x^2/2}\\int_{|x|}^{\\infty} e^{-y^2/2} dy$ attins its maximum at $x=0$. and \n\n\\[\n  \\int_0^\\infty e^{y^2/2}dy = \\sqrt{\\pi/2}\n\\]\n\nWhich proves the result by taking the $\\sup$.\n\nFor the derivative, \n\n\\[\n  f_h'(x) = x e^{x^2/2}\\int_{-\\infty}^x [h(y)-\\mathbb{E}(h(N))]e^{-y^2/2}dy \n  + 0 = h(x)-\\mathbb{E}(h(N))+xe^{x^2/2}\\int ... dy \n\\]\nNow we take bounds \n\\[\n  |f'_h(x)| \\le 1 + |x|e^{x^2/2}\\int_{-\\infty}^x e^{-y^2/2}\n\\]\n\n\\begin{lemma}[Kol Topology > Cvg Cdf Topology]\n  \\label{lemma:koltopcdftop}\n  \\ref{def:kolmetric}\n  The topology induced by the Kolmogorov metric is strictly stronger than the topology induced by convergence of CDFs of random variables.\n\\end{lemma}",
@@ -329,7 +934,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on ["52ca04cc" "19bfbd84" "ca6a663f" "046c3273" "cfde8c86"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -343,7 +948,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on [],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:category"],
@@ -357,7 +962,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:category"],
@@ -371,7 +976,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex
   "Suppose\n$$\ng,h : Y \\to X\n$$\nare both inverses of $f$. Then\n\n$$\ng \\circ f = \\operatorname{id}_X,\n\\qquad\nf \\circ g = \\operatorname{id}_Y,\n$$\n\nand\n\n$$\nh \\circ f = \\operatorname{id}_X,\n\\qquad\nf \\circ h = \\operatorname{id}_Y.\n$$\n\nUsing associativity of composition from Definition~\\ref{def:category} we obtain\n\n$$\ng\n=\ng \\circ \\operatorname{id}_Y\n=\ng \\circ (f \\circ h)\n=\n(g \\circ f) \\circ h\n=\n\\operatorname{id}_X \\circ h\n=\nh.\n$$\n\nThus the inverse is unique.",
@@ -386,7 +991,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5" "136199b7"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex
   "\\textbf{Reflexivity.}  \nFor every object $X$, the identity morphism $\\operatorname{id}_X$ from\nDefinition~\\ref{def:category} satisfies\n\n$$\n\\operatorname{id}_X \\circ \\operatorname{id}_X = \\operatorname{id}_X.\n$$\n\nThus $\\operatorname{id}_X$ is an isomorphism.\n\n\\textbf{Symmetry.}  \nIf $f : X \\to Y$ is an isomorphism, Definition~\\ref{def:isomorphism}\nprovides an inverse $f^{-1} : Y \\to X$.\n\n\\textbf{Transitivity.}  \nIf $f : X \\to Y$ and $g : Y \\to Z$ are isomorphisms, then\n\n$$\n(g \\circ f)^{-1} = f^{-1} \\circ g^{-1}\n$$\n\nby associativity of composition in Definition~\\ref{def:category}.",
@@ -401,7 +1006,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5" "136199b7"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:category"],
@@ -415,7 +1020,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:category"],
@@ -429,7 +1034,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:category" "def:opposite-category"],
@@ -443,7 +1048,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5" "310ab4af"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:category"],
@@ -457,7 +1062,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex
   "Since $f$ is an isomorphism, there exists a morphism\n$$\nf^{-1} : Y \\to X\n$$\nsuch that\n$$\nf^{-1} \\circ f = \\operatorname{id}_X,\n\\qquad\nf \\circ f^{-1} = \\operatorname{id}_Y .\n$$\n\nApply the functor $F$ to the first equality:\n\n$$\nF(f^{-1} \\circ f) = F(\\operatorname{id}_X).\n$$\n\nBy functoriality of composition and identities this becomes\n\n$$\nF(f^{-1}) \\circ F(f) = \\operatorname{id}_{F(X)}.\n$$\n\nApplying $F$ to the second equality gives\n\n$$\nF(f) \\circ F(f^{-1}) = \\operatorname{id}_{F(Y)}.\n$$\n\nThus $F(f^{-1})$ is an inverse of $F(f)$, and therefore $F(f)$ is an isomorphism.",
@@ -472,7 +1077,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["39e872fb" "136199b7"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:functor"],
@@ -486,7 +1091,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["39e872fb"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex
   "Let\n\n$$\nF : \\mathcal{C} \\to \\mathcal{D},\n\\qquad\nG : \\mathcal{D} \\to \\mathcal{E}.\n$$\n\nFirst we check preservation of identities.\n\nFor an object $X$,\n\n$$\n(G \\circ F)(\\operatorname{id}_X)\n=\nG(F(\\operatorname{id}_X)).\n$$\n\nSince $F$ preserves identities,\n\n$$\nF(\\operatorname{id}_X) = \\operatorname{id}_{F(X)}.\n$$\n\nThus\n\n$$\n(G \\circ F)(\\operatorname{id}_X)\n=\nG(\\operatorname{id}_{F(X)})\n=\n\\operatorname{id}_{G(F(X))}.\n$$\n\nNext we check preservation of composition.\n\nLet\n\n$$\nf : X \\to Y,\n\\qquad\ng : Y \\to Z.\n$$\n\nThen\n\n$$\n(G \\circ F)(g \\circ f)\n=\nG(F(g \\circ f)).\n$$\n\nSince $F$ preserves composition,\n\n$$\nF(g \\circ f) = F(g) \\circ F(f).\n$$\n\nApplying $G$ gives\n\n$$\nG(F(g) \\circ F(f))\n=\nG(F(g)) \\circ G(F(f)).\n$$\n\nThus\n\n$$\n(G \\circ F)(g \\circ f)\n=\n(G \\circ F)(g) \\circ (G \\circ F)(f).\n$$\n\nTherefore $G \\circ F$ is a functor.",
@@ -501,7 +1106,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["39e872fb" "297b3591"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -515,7 +1120,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on [],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex
   "Let $f : X \\to Y$ and $g : Y \\to Z$.\n\nThen\n\n$$\n\\operatorname{Id}_{\\mathcal{C}}(g \\circ f)\n=\ng \\circ f\n=\n\\operatorname{Id}_{\\mathcal{C}}(g) \\circ \\operatorname{Id}_{\\mathcal{C}}(f).\n$$\n\nAlso\n\n$$\n\\operatorname{Id}_{\\mathcal{C}}(\\operatorname{id}_X)\n=\n\\operatorname{id}_X.\n$$\n\nThus the functor axioms hold.",
@@ -530,7 +1135,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["39e872fb" "297b3591"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex
   "Let\n\n$$\nF : \\mathcal{C} \\to \\mathcal{D},\n\\qquad\nG : \\mathcal{D} \\to \\mathcal{E},\n\\qquad\nH : \\mathcal{E} \\to \\mathcal{F}.\n$$\n\nFor an object $X$,\n\n$$\nH \\circ (G \\circ F)(X)\n=\nH(G(F(X))).\n$$\n\nAlso\n\n$$\n(H \\circ G) \\circ F (X)\n=\nH(G(F(X))).\n$$\n\nThus the two functors agree on objects.\n\nFor a morphism $f : X \\to Y$,\n\n$$\nH \\circ (G \\circ F)(f)\n=\nH(G(F(f))).\n$$\n\nSimilarly,\n\n$$\n(H \\circ G) \\circ F (f)\n=\nH(G(F(f))).\n$$\n\nThus the functors agree on morphisms.",
@@ -545,7 +1150,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["297b3591"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -559,7 +1164,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on [],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:functor"],
@@ -573,7 +1178,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["39e872fb"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -587,7 +1192,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on [],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:representation"],
@@ -601,7 +1206,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["4e94b0c3"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:representation" "def:subrepresentation"],
@@ -615,7 +1220,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["4e94b0c3" "3fe2b240"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex
   "(1) Since $\\ker(\\phi)$ and $\\mathrm{Im}(\\phi)$ are subrepresentations of $V$\nand $W$ respectively, irreducibility forces each to be $\\{0\\}$ or the whole\nspace. The non-trivial cases give an isomorphism.\n\n(2) For any $\\lambda \\in k$, the map $\\phi - \\lambda \\cdot \\mathrm{id}_V$ is\nagain a $G$-endomorphism. Since $k$ is algebraically closed, $\\phi$ has some\neigenvalue $\\lambda_0$, and $\\phi - \\lambda_0 \\cdot \\mathrm{id}_V$ has a\nnontrivial kernel. By (1) it must be identically zero, so $\\phi = \\lambda_0\n\\cdot \\mathrm{id}_V$.",
@@ -630,7 +1235,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["a8ec3e23"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:representation" "def:irreducible"],
@@ -644,7 +1249,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["4e94b0c3" "a8ec3e23"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:representation" "thm:maschke"],
@@ -658,7 +1263,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["4e94b0c3" "f1efa483"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs ["thm:maschke" "thm:schur"],
@@ -672,7 +1277,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["f1efa483" "ce9df6b9"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs ["thm:maschke" "rem:conj-classes"],
@@ -686,7 +1291,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["f1efa483" "b96526a2"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex nil,
   :refs ["cor:dimension" "thm:schur"],
@@ -700,7 +1305,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["3b157f10" "ce9df6b9"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-27"}
  {:tags [],
   :proof-latex
   "Let $G$ be a group and $k$ a field.\n    \n    \\medskip\n    \n    \\emph{Step 1: From representations to $kG$-modules.}\n    \n    Let $\\rho : G \\to \\operatorname{GL}(V)$ be a representation of $G$ over $k$.  \n    We define a $kG$-module structure on $V$ as follows.\n    \n    Recall that $kG$ consists of finite sums $\\sum_{g \\in G} a_g g$ with $a_g \\in k$.  \n    For $v \\in V$, define\n    $$\n    \\left( \\sum_{g \\in G} a_g g \\right)\\cdot v\n    \\;:=\\;\n    \\sum_{g \\in G} a_g \\, \\rho(g)(v).\n    $$\n    \n    We verify this defines a $kG$-module structure.\n    \n    Linearity in $v$ and in the coefficients $a_g$ is immediate from linearity of each $\\rho(g)$.  \n    \n    For multiplicativity, let\n    $$\n    x = \\sum_g a_g g, \n    \\qquad\n    y = \\sum_h b_h h.\n    $$\n    Then\n    $$\n    xy = \\sum_{g,h} a_g b_h \\, gh.\n    $$\n    Hence\n$$ \n    (xy) \\cdot v\n    =\n    \\sum_{g,h} a_g b_h \\, \\rho(gh)(v)\n    $$\n    $$\n    =\n    \\sum_{g,h} a_g b_h \\, \\rho(g)\\rho(h)(v) \n$$\n$$\n    =\n    \\sum_g a_g \\rho(g)\\!\\left( \\sum_h b_h \\rho(h)(v) \\right) \\\\\n    =\n    x \\cdot (y \\cdot v).\n    $$\n    Thus $V$ becomes a left $kG$-module.\n    \n    \n    \\emph{Step 2: From $kG$-modules to representations.}\n    \n    Conversely, let $V$ be a $kG$-module.\n    \n    For $g \\in G$, define\n    $$\n    \\rho(g) : V \\to V\n    \\qquad \\text{by} \\qquad\n    \\rho(g)(v) := g \\cdot v.\n    $$\n    Since the $kG$-action is $k$-linear, each $\\rho(g)$ is a $k$-linear map.\n    \n    We check that $\\rho$ is a group homomorphism. For $g,h \\in G$,\n    $$\n    \\rho(g)\\rho(h)(v)\n    =\n    g \\cdot (h \\cdot v)\n    =\n    (gh) \\cdot v\n    =\n    \\rho(gh)(v),\n    $$\n    where the middle equality uses associativity of the module action. Also,\n    $$\n    \\rho(1)(v) = 1 \\cdot v = v.\n    $$\n    Thus $\\rho : G \\to \\operatorname{GL}(V)$ is a representation.\n    \n    \n    \\emph{Step 3: The constructions are inverse to each other.}\n    \n    Starting with a representation $\\rho$, constructing the associated $kG$-module, and then restricting the action back to $G$, clearly recovers the original $\\rho$.\n    \n    Conversely, starting with a $kG$-module $V$, defining $\\rho(g)=g\\cdot$, and then extending linearly to $kG$, recovers the original module structure.\n    \n    Thus the two constructions are mutually inverse.\n    \n    \n    Therefore there is a one-to-one correspondence between representations of $G$ over $k$ and left $kG$-modules.",
@@ -715,4 +1320,4 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["4e94b0c3"],
-  :created-at "2026-03-26"}]
+  :created-at "2026-03-27"}]
