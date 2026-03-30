@@ -358,3 +358,31 @@ FINISH THE PROOF.
 A representation of a Lie group (Definition \ref{def:lie-group}) is the exact same as a representation of a finite group (Definition \ref{def:representation}), however with the added condition
   that the representation must be a continuous map.
 \end{definition}
+
+
+\begin{definition}[Adjoint Representation of a Lie Group]
+  \label{def:adjoint-representation}
+\ref{def:representation-lie-group}
+Let $\mathfrak{G}$ be a Lie group and let 
+\[
+  \Psi : \mathfrak{G} \to \operatorname{Aut}(\mathfrak{G}) \text{ such that } g \mapsto \Psi_g
+\]
+
+given by conjugation by $g$ 
+\[
+  \Psi_g(h) = ghg^{-1}
+\]
+
+This is a Lie group homomorphism if $G$ is connected. 
+
+for each $g \in \mathfrak{G}$, define $\operatorname{Ad}_g$ to be the derivative of $\Psi_g$ at the origin
+\[
+  \operatorname{Ad}_g = (d\Psi_g)_e : T_e\mathfrak{G} \to T_e\mathfrak{G}
+\]
+this turns into 
+\[
+  \operatorname{Ad} : \mathfrak{G} \to \operatorname{Aut}(\mathfrak{g}), g \mapsto \operatorname{Ad}_g
+\]
+which is a group representation called the adjoin representation of $\mathfrak{G}$.
+\end{definition}
+
