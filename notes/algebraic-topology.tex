@@ -251,4 +251,17 @@ Therefore, the fundamental group is indeed a group.
 \end{problem}
 
 
+\begin{proposition}
+  \label{proposition:continuous-d-s1}
+  \ref{def:fundgrp}
+  There is no continuous $r: D^2 \to S^1$ such that $r \circ i = \operatorname{id}$. 
+\end{proposition}
 
+\begin{proof}
+Suppose for contradiction that there does exist such a map $r$. Then the homomorphism 
+\[
+  \pi_1 (S^1, 1)\xrightarrow{i_*} \pi_1(D^2, 1) \xrightarrow{r_*} \pi_1(S^1, 1)
+\]
+
+would be the identity. Since the identity homomorphism of $\mathbb{Z}$ does not through the zero group, this is impossible. 
+\end{proof}

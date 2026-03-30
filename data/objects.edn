@@ -11,7 +11,7 @@
   :source-file "algebraic-topology.tex",
   :area "Algebraic Topology",
   :depends-on [],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -25,7 +25,7 @@
   :source-file "algebraic-topology.tex",
   :area "Algebraic Topology",
   :depends-on [],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:homotopy"],
@@ -39,7 +39,7 @@
   :source-file "algebraic-topology.tex",
   :area "Algebraic Topology",
   :depends-on ["c4860b45"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -53,7 +53,7 @@
   :source-file "algebraic-topology.tex",
   :area "Algebraic Topology",
   :depends-on [],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex
   "\\textbf{Reflexivity}\n  \nLet $\\gamma : [0,1] \\to X$ be a path. Define\n$$\nH(t,s) = \\gamma(t).\n$$\nThen $H$ is continuous and satisfies\n$$\nH(t,0) = \\gamma(t), \\quad H(t,1) = \\gamma(t),\n$$\nand\n$$\nH(0,s) = \\gamma(0), \\quad H(1,s) = \\gamma(1).\n$$\nThus $\\gamma \\sim \\gamma$.\n\n\\textbf{Symmetry}\n\nSuppose $\\gamma_0 \\sim \\gamma_1$ via a homotopy $H(t,s)$. Define\n$$\nG(t,s) = H(t, 1 - s).\n$$\nThen $G$ is continuous and satisfies\n$$\nG(t,0) = H(t,1) = \\gamma_1(t), \\quad G(t,1) = H(t,0) = \\gamma_0(t),\n$$\nand\n$$\nG(0,s) = \\gamma_0(0), \\quad G(1,s) = \\gamma_0(1).\n$$\nThus $\\gamma_1 \\sim \\gamma_0$.\n\n\\textbf{Transitivity}\n\nSuppose $\\gamma_0 \\sim \\gamma_1$ via $H$ and $\\gamma_1 \\sim \\gamma_2$ via $K$. Define\n$$\nG(t,s) =\n\\begin{cases}\nH(t, 2s) & \\text{if } 0 \\le s \\le \\tfrac{1}{2}, \\\\\nK(t, 2s - 1) & \\text{if } \\tfrac{1}{2} \\le s \\le 1.\n\\end{cases}\n$$\nThen $G$ is continuous (by the pasting lemma), since at $s = \\tfrac{1}{2}$ we have\n$$\nH(t,1) = \\gamma_1(t) = K(t,0).\n$$\nMoreover,\n$$\nG(t,0) = H(t,0) = \\gamma_0(t), \\quad G(t,1) = K(t,1) = \\gamma_2(t),\n$$\nand\n$$\nG(0,s) = \\gamma_0(0), \\quad G(1,s) = \\gamma_0(1).\n$$\nThus $\\gamma_0 \\sim \\gamma_2$.",
@@ -68,7 +68,7 @@
   :source-file "algebraic-topology.tex",
   :area "Algebraic Topology",
   :depends-on ["383e8134" "c4860b45"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:loops" "def:homotopy" "lemma:homeqclass"],
@@ -82,7 +82,7 @@
   :source-file "algebraic-topology.tex",
   :area "Algebraic Topology",
   :depends-on ["718480f8" "c4860b45" "34077999"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex
   "Let $X$ be a topological space and $x \\in X$. The fundamental group $\\pi_1(X,x)$ is defined as the set of homotopy classes (relative to endpoints) of loops based at $x$, i.e.\n$$\n\\pi_1(X,x) = \\{ [\\gamma] \\mid \\gamma : [0,1] \\to X, \\ \\gamma(0)=\\gamma(1)=x \\}.\n$$\n\nWe define a binary operation on $\\pi_1(X,x)$ by concatenation:\nfor loops $\\gamma_1, \\gamma_2$, define\n$$\n(\\gamma_1 * \\gamma_2)(t) =\n\\begin{cases}\n\\gamma_1(2t) & 0 \\le t \\le \\tfrac{1}{2}, \\\\\n\\gamma_2(2t - 1) & \\tfrac{1}{2} \\le t \\le 1.\n\\end{cases}\n$$\nThen define\n$$\n[\\gamma_1] \\cdot [\\gamma_2] := [\\gamma_1 * \\gamma_2].\n$$\n\nWe show this makes $\\pi_1(X,x)$ a group.\n\n\n\n\nSuppose $\\gamma_1 \\sim \\gamma_1'$ and $\\gamma_2 \\sim \\gamma_2'$ (homotopy relative endpoints). Then there exist homotopies $H$ and $K$ between them. One constructs a homotopy between $\\gamma_1 * \\gamma_2$ and $\\gamma_1' * \\gamma_2'$ by concatenating $H$ and $K$ in the same way:\n$$\nF(t,s) =\n\\begin{cases}\nH(2t,s) & 0 \\le t \\le \\tfrac{1}{2}, \\\\\nK(2t-1,s) & \\tfrac{1}{2} \\le t \\le 1.\n\\end{cases}\n$$\nThus $[\\gamma_1 * \\gamma_2] = [\\gamma_1' * \\gamma_2']$, so the operation is well-defined.\n\nLet $\\gamma_1, \\gamma_2, \\gamma_3$ be loops at $x$. Then\n$$\n(\\gamma_1 * \\gamma_2) * \\gamma_3 \\sim \\gamma_1 * (\\gamma_2 * \\gamma_3),\n$$\nsince both paths traverse $\\gamma_1$, $\\gamma_2$, and $\\gamma_3$ in order, differing only by a reparametrization of $[0,1]$. This reparametrization yields a homotopy relative endpoints. Hence\n$$\n([\\gamma_1] \\cdot [\\gamma_2]) \\cdot [\\gamma_3]\n= [\\gamma_1] \\cdot ([\\gamma_2] \\cdot [\\gamma_3]).\n$$\n\n\nLet $e : [0,1] \\to X$ be the constant loop at $x$, defined by $e(t)=x$. Then for any loop $\\gamma$,\n$$\ne * \\gamma \\sim \\gamma, \\quad \\gamma * e \\sim \\gamma,\n$$\nby a simple reparametrization homotopy. Hence $[e]$ is the identity element.\n\n\nLet $\\gamma$ be a loop at $x$. Define the reverse path\n$$\n\\gamma^{-1}(t) = \\gamma(1 - t).\n$$\nThen\n$$\n\\gamma * \\gamma^{-1} \\sim e, \\quad \\gamma^{-1} * \\gamma \\sim e,\n$$\nsince the path goes out along $\\gamma$ and returns along the same path, which can be contracted to the constant loop. Thus $[\\gamma^{-1}]$ is the inverse of $[\\gamma]$.\n\nTherefore, the fundamental group is indeed a group.",
@@ -97,12 +97,12 @@
   :source-file "algebraic-topology.tex",
   :area "Algebraic Topology",
   :depends-on ["9be75791"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:fundgrp"],
   :latex
-  "\\label{rmk:deponbasepoint}\n  \\ref{def:fundgrp}\n  For a path $a : x \\to y$, define \n  \\[\n    \\gamma[a] : \\pi_1(X,x) \\to \\pi_1(X,y)\n  \\]\n\n  by \n  \\[\n    \\gamma[a][f] = [a \\cdot f \\cdot a^{-1}]\n  \\]\n\n  This is a homeomorphism of groups.",
+  "\\label{rmk:deponbasepoint}\n  \\ref{def:fundgrp}\n  For a path $a : x \\to y$, define \n  \\[\n    \\gamma[a] : \\pi_1(X,x) \\to \\pi_1(X,y)\n  \\]\n\n  by \n  \\[\n    \\gamma[a][f] = [a \\cdot f \\cdot a^{-1}]\n  \\]\n\n  This is a homomorphism of groups.",
   :type :remark,
   :title "Dependence on the Base Point",
   :concepts [],
@@ -111,12 +111,12 @@
   :source-file "algebraic-topology.tex",
   :area "Algebraic Topology",
   :depends-on ["9be75791"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs ["rmk:deponbasepoint"],
   :latex
-  "Prove that the map $\\gamma[a]$ as defined in \\ref{rmk:deponbasepoint} is indeed a group homeomorphism.",
+  "Prove that the map $\\gamma[a]$ as defined in \\ref{rmk:deponbasepoint} is indeed a group homomorphism.",
   :type :problem,
   :title "",
   :concepts [],
@@ -125,7 +125,22 @@
   :source-file "algebraic-topology.tex",
   :area "Algebraic Topology",
   :depends-on ["a8b6b7cd"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
+ {:tags [],
+  :proof-latex
+  "Suppose for contradiction that there does exist such a map $r$. Then the homomorphism \n\\[\n  \\pi_1 (S^1, 1)\\xrightarrow{i_*} \\pi_1(D^2, 1) \\xrightarrow{r_*} \\pi_1(S^1, 1)\n\\]\n\nwould be the identity. Since the identity homomorphism of $\\mathbb{Z}$ does not through the zero group, this is impossible.",
+  :refs ["def:fundgrp"],
+  :latex
+  "\\label{proposition:continuous-d-s1}\n  \\ref{def:fundgrp}\n  There is no continuous $r: D^2 \\to S^1$ such that $r \\circ i = \\operatorname{id}$.",
+  :type :proposition,
+  :title "",
+  :concepts [],
+  :label "proposition:continuous-d-s1",
+  :id "8c739389",
+  :source-file "algebraic-topology.tex",
+  :area "Algebraic Topology",
+  :depends-on ["9be75791"],
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -139,7 +154,7 @@
   :source-file "topology.tex",
   :area "Topology",
   :depends-on [],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -153,7 +168,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on [],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -167,7 +182,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on [],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -180,7 +195,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on [],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:sepclass"],
@@ -194,7 +209,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on ["825b2bf9"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex
   "$\\implies$\n  If $N \\sim N(0,1)$, then \n  \\[\n    \\mathbb{E}(f'(N)) = \\mathbb{E}(Nf(N))\n  \\]\n  implies \n  \\[\n    \\int_\\mathbb{R} f'(x) \\frac{1}{\\sqrt{2\\pi}}dx = \\int_\\mathbb{R} x f(x) \\frac{1}{\\sqrt{2\\pi}}dx \n  \\]\n  which if we translate into the Gaussian measure \n  \\[\n    \\int_\\mathbb{R} f'(x) \\gamma(dx) = \\int_\\mathbb{R} xf(x) \\gamma(dx)\n  \\]\n  which is just a representation of integration by parts.\n\n  Other direction is HW : TODO\n\n  For some distributions, they are characterized by their moments. Necessarily this means the distribution has to be characterized by this. \n  Distribution needs moments of all moments. If you figure it out what the moments, we can take $f$ to be a monomial then we get moments of higher order, since $\\mathcal{H}$ is a seperating class.",
@@ -209,7 +224,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on ["f64c7c47"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -223,7 +238,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on [],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -237,7 +252,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on [],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs ["rmk:steinsheuristic"],
@@ -251,7 +266,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on ["7e9ff904"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex
   "$ \\sqrt{2\\pi}\\int_{-\\infty}^x h(y) \\frac{e^{y^2/2}}{\\sqrt{2\\pi}} - \\mathbb{E}(h(N))\\int_{-/infty}^\\infty \\gamma(dx) = 0$",
@@ -266,7 +281,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on ["19bfbd84"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs
@@ -281,7 +296,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on ["52ca04cc" "19bfbd84" "f64c7c47"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:metprobmeasure"],
@@ -295,7 +310,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on ["f64c7c47"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:metprobmeasure"],
@@ -309,7 +324,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on ["f64c7c47"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex
   "Recall \n\n\\[\n    f_h(x) = e^{x^2/2}\\int_{-\\infty}^x [h(y)-\\mathbb{E}(h(N))]e^{y^2/2} dy\n\\]\n\nNote that \n\\[\n  |h(y)-\\mathbb{E}(h(N))|\\le 1\n\\]\n\nNote that :\n\n\\[\n  \\int_{-\\infty}^x = \\int_{-\\infty}^\\infty - \\int_x^{\\infty} = - \\int_x^{\\infty}\n\\]\nSo, \n\\[\n  \n    |f_h(x)| \\le e^{x^2/2}\\int_{-\\infty}^x e^{y^2/2} dy\n\\]\nBut also \n\n\\[\n  \n    |f_h(x)| \\le e^{x^2/2}\\int_{x}^\\infty e^{y^2/2} dy\n\\]\n\nIf $x>0$, then \n\\[\n  \n    |f_h(x)| \\le e^{x^2/2}\\int_{|x|}^\\infty e^{y^2/2} dy\n\\]\n\nIf $x<0$, then \n\\[\n  \n  |f_h(x)| \\le e^{x^2/2}\\int_{-\\infty}^{|x|} e^{y^2/2} dy = e^{x^2/2}\\int_{|x|}^{\\infty} e^{y^2/2}  \n\\]\n\nWe have obtained that \n\n\\[\n  \n  |f_h(x)| \\le e^{x^2/2}\\int_{-\\infty}^{|x|} e^{y^2/2} dy = e^{x^2/2}\\int_{|x|}^{\\infty} e^{-y^2/2} dy \\quad \\forall x  \n\\]\n\nThe function $x \\mapsto e^{x^2/2}\\int_{|x|}^{\\infty} e^{-y^2/2} dy$ attins its maximum at $x=0$. and \n\n\\[\n  \\int_0^\\infty e^{y^2/2}dy = \\sqrt{\\pi/2}\n\\]\n\nWhich proves the result by taking the $\\sup$.\n\nFor the derivative, \n\n\\[\n  f_h'(x) = x e^{x^2/2}\\int_{-\\infty}^x [h(y)-\\mathbb{E}(h(N))]e^{-y^2/2}dy \n  + 0 = h(x)-\\mathbb{E}(h(N))+xe^{x^2/2}\\int ... dy \n\\]\nNow we take bounds \n\\[\n  |f'_h(x)| \\le 1 + |x|e^{x^2/2}\\int_{-\\infty}^x e^{-y^2/2}\n\\]\n\n\\begin{lemma}[Kol Topology > Cvg Cdf Topology]\n  \\label{lemma:koltopcdftop}\n  \\ref{def:kolmetric}\n  The topology induced by the Kolmogorov metric is strictly stronger than the topology induced by convergence of CDFs of random variables.\n\\end{lemma}",
@@ -329,7 +344,7 @@
   :source-file "probability.tex",
   :area "Probability Theory",
   :depends-on ["52ca04cc" "19bfbd84" "ca6a663f" "046c3273" "cfde8c86"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -343,7 +358,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on [],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:category"],
@@ -357,7 +372,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:category"],
@@ -371,7 +386,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex
   "Suppose\n$$\ng,h : Y \\to X\n$$\nare both inverses of $f$. Then\n\n$$\ng \\circ f = \\operatorname{id}_X,\n\\qquad\nf \\circ g = \\operatorname{id}_Y,\n$$\n\nand\n\n$$\nh \\circ f = \\operatorname{id}_X,\n\\qquad\nf \\circ h = \\operatorname{id}_Y.\n$$\n\nUsing associativity of composition from Definition~\\ref{def:category} we obtain\n\n$$\ng\n=\ng \\circ \\operatorname{id}_Y\n=\ng \\circ (f \\circ h)\n=\n(g \\circ f) \\circ h\n=\n\\operatorname{id}_X \\circ h\n=\nh.\n$$\n\nThus the inverse is unique.",
@@ -386,7 +401,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5" "136199b7"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex
   "\\textbf{Reflexivity.}  \nFor every object $X$, the identity morphism $\\operatorname{id}_X$ from\nDefinition~\\ref{def:category} satisfies\n\n$$\n\\operatorname{id}_X \\circ \\operatorname{id}_X = \\operatorname{id}_X.\n$$\n\nThus $\\operatorname{id}_X$ is an isomorphism.\n\n\\textbf{Symmetry.}  \nIf $f : X \\to Y$ is an isomorphism, Definition~\\ref{def:isomorphism}\nprovides an inverse $f^{-1} : Y \\to X$.\n\n\\textbf{Transitivity.}  \nIf $f : X \\to Y$ and $g : Y \\to Z$ are isomorphisms, then\n\n$$\n(g \\circ f)^{-1} = f^{-1} \\circ g^{-1}\n$$\n\nby associativity of composition in Definition~\\ref{def:category}.",
@@ -401,7 +416,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5" "136199b7"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:category"],
@@ -415,7 +430,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:category"],
@@ -429,7 +444,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:category" "def:opposite-category"],
@@ -443,7 +458,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5" "310ab4af"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:category"],
@@ -457,7 +472,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["f2c6bdf5"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex
   "Since $f$ is an isomorphism, there exists a morphism\n$$\nf^{-1} : Y \\to X\n$$\nsuch that\n$$\nf^{-1} \\circ f = \\operatorname{id}_X,\n\\qquad\nf \\circ f^{-1} = \\operatorname{id}_Y .\n$$\n\nApply the functor $F$ to the first equality:\n\n$$\nF(f^{-1} \\circ f) = F(\\operatorname{id}_X).\n$$\n\nBy functoriality of composition and identities this becomes\n\n$$\nF(f^{-1}) \\circ F(f) = \\operatorname{id}_{F(X)}.\n$$\n\nApplying $F$ to the second equality gives\n\n$$\nF(f) \\circ F(f^{-1}) = \\operatorname{id}_{F(Y)}.\n$$\n\nThus $F(f^{-1})$ is an inverse of $F(f)$, and therefore $F(f)$ is an isomorphism.",
@@ -472,7 +487,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["39e872fb" "136199b7"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:functor"],
@@ -486,7 +501,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["39e872fb"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex
   "Let\n\n$$\nF : \\mathcal{C} \\to \\mathcal{D},\n\\qquad\nG : \\mathcal{D} \\to \\mathcal{E}.\n$$\n\nFirst we check preservation of identities.\n\nFor an object $X$,\n\n$$\n(G \\circ F)(\\operatorname{id}_X)\n=\nG(F(\\operatorname{id}_X)).\n$$\n\nSince $F$ preserves identities,\n\n$$\nF(\\operatorname{id}_X) = \\operatorname{id}_{F(X)}.\n$$\n\nThus\n\n$$\n(G \\circ F)(\\operatorname{id}_X)\n=\nG(\\operatorname{id}_{F(X)})\n=\n\\operatorname{id}_{G(F(X))}.\n$$\n\nNext we check preservation of composition.\n\nLet\n\n$$\nf : X \\to Y,\n\\qquad\ng : Y \\to Z.\n$$\n\nThen\n\n$$\n(G \\circ F)(g \\circ f)\n=\nG(F(g \\circ f)).\n$$\n\nSince $F$ preserves composition,\n\n$$\nF(g \\circ f) = F(g) \\circ F(f).\n$$\n\nApplying $G$ gives\n\n$$\nG(F(g) \\circ F(f))\n=\nG(F(g)) \\circ G(F(f)).\n$$\n\nThus\n\n$$\n(G \\circ F)(g \\circ f)\n=\n(G \\circ F)(g) \\circ (G \\circ F)(f).\n$$\n\nTherefore $G \\circ F$ is a functor.",
@@ -501,7 +516,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["39e872fb" "297b3591"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -515,7 +530,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on [],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex
   "Let $f : X \\to Y$ and $g : Y \\to Z$.\n\nThen\n\n$$\n\\operatorname{Id}_{\\mathcal{C}}(g \\circ f)\n=\ng \\circ f\n=\n\\operatorname{Id}_{\\mathcal{C}}(g) \\circ \\operatorname{Id}_{\\mathcal{C}}(f).\n$$\n\nAlso\n\n$$\n\\operatorname{Id}_{\\mathcal{C}}(\\operatorname{id}_X)\n=\n\\operatorname{id}_X.\n$$\n\nThus the functor axioms hold.",
@@ -530,7 +545,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["39e872fb" "297b3591"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex
   "Let\n\n$$\nF : \\mathcal{C} \\to \\mathcal{D},\n\\qquad\nG : \\mathcal{D} \\to \\mathcal{E},\n\\qquad\nH : \\mathcal{E} \\to \\mathcal{F}.\n$$\n\nFor an object $X$,\n\n$$\nH \\circ (G \\circ F)(X)\n=\nH(G(F(X))).\n$$\n\nAlso\n\n$$\n(H \\circ G) \\circ F (X)\n=\nH(G(F(X))).\n$$\n\nThus the two functors agree on objects.\n\nFor a morphism $f : X \\to Y$,\n\n$$\nH \\circ (G \\circ F)(f)\n=\nH(G(F(f))).\n$$\n\nSimilarly,\n\n$$\n(H \\circ G) \\circ F (f)\n=\nH(G(F(f))).\n$$\n\nThus the functors agree on morphisms.",
@@ -545,7 +560,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["297b3591"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -559,7 +574,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on [],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:functor"],
@@ -573,7 +588,7 @@
   :source-file "category.tex",
   :area "Category Theory",
   :depends-on ["39e872fb"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs [],
@@ -587,7 +602,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on [],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:representation"],
@@ -601,7 +616,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["4e94b0c3"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:representation" "def:subrepresentation"],
@@ -615,7 +630,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["4e94b0c3" "3fe2b240"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex
   "(1) Since $\\ker(\\phi)$ and $\\mathrm{Im}(\\phi)$ are subrepresentations of $V$\nand $W$ respectively, irreducibility forces each to be $\\{0\\}$ or the whole\nspace. The non-trivial cases give an isomorphism.\n\n(2) For any $\\lambda \\in k$, the map $\\phi - \\lambda \\cdot \\mathrm{id}_V$ is\nagain a $G$-endomorphism. Since $k$ is algebraically closed, $\\phi$ has some\neigenvalue $\\lambda_0$, and $\\phi - \\lambda_0 \\cdot \\mathrm{id}_V$ has a\nnontrivial kernel. By (1) it must be identically zero, so $\\phi = \\lambda_0\n\\cdot \\mathrm{id}_V$.",
@@ -630,7 +645,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["a8ec3e23"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:representation" "def:irreducible"],
@@ -644,7 +659,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["4e94b0c3" "a8ec3e23"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs ["def:representation" "thm:maschke"],
@@ -658,7 +673,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["4e94b0c3" "f1efa483"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs ["thm:maschke" "thm:schur"],
@@ -672,7 +687,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["f1efa483" "ce9df6b9"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs ["thm:maschke" "rem:conj-classes"],
@@ -686,7 +701,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["f1efa483" "b96526a2"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex nil,
   :refs ["cor:dimension" "thm:schur"],
@@ -700,7 +715,7 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["3b157f10" "ce9df6b9"],
-  :created-at "2026-03-26"}
+  :created-at "2026-03-29"}
  {:tags [],
   :proof-latex
   "Let $G$ be a group and $k$ a field.\n    \n    \\medskip\n    \n    \\emph{Step 1: From representations to $kG$-modules.}\n    \n    Let $\\rho : G \\to \\operatorname{GL}(V)$ be a representation of $G$ over $k$.  \n    We define a $kG$-module structure on $V$ as follows.\n    \n    Recall that $kG$ consists of finite sums $\\sum_{g \\in G} a_g g$ with $a_g \\in k$.  \n    For $v \\in V$, define\n    $$\n    \\left( \\sum_{g \\in G} a_g g \\right)\\cdot v\n    \\;:=\\;\n    \\sum_{g \\in G} a_g \\, \\rho(g)(v).\n    $$\n    \n    We verify this defines a $kG$-module structure.\n    \n    Linearity in $v$ and in the coefficients $a_g$ is immediate from linearity of each $\\rho(g)$.  \n    \n    For multiplicativity, let\n    $$\n    x = \\sum_g a_g g, \n    \\qquad\n    y = \\sum_h b_h h.\n    $$\n    Then\n    $$\n    xy = \\sum_{g,h} a_g b_h \\, gh.\n    $$\n    Hence\n$$ \n    (xy) \\cdot v\n    =\n    \\sum_{g,h} a_g b_h \\, \\rho(gh)(v)\n    $$\n    $$\n    =\n    \\sum_{g,h} a_g b_h \\, \\rho(g)\\rho(h)(v) \n$$\n$$\n    =\n    \\sum_g a_g \\rho(g)\\!\\left( \\sum_h b_h \\rho(h)(v) \\right) \\\\\n    =\n    x \\cdot (y \\cdot v).\n    $$\n    Thus $V$ becomes a left $kG$-module.\n    \n    \n    \\emph{Step 2: From $kG$-modules to representations.}\n    \n    Conversely, let $V$ be a $kG$-module.\n    \n    For $g \\in G$, define\n    $$\n    \\rho(g) : V \\to V\n    \\qquad \\text{by} \\qquad\n    \\rho(g)(v) := g \\cdot v.\n    $$\n    Since the $kG$-action is $k$-linear, each $\\rho(g)$ is a $k$-linear map.\n    \n    We check that $\\rho$ is a group homomorphism. For $g,h \\in G$,\n    $$\n    \\rho(g)\\rho(h)(v)\n    =\n    g \\cdot (h \\cdot v)\n    =\n    (gh) \\cdot v\n    =\n    \\rho(gh)(v),\n    $$\n    where the middle equality uses associativity of the module action. Also,\n    $$\n    \\rho(1)(v) = 1 \\cdot v = v.\n    $$\n    Thus $\\rho : G \\to \\operatorname{GL}(V)$ is a representation.\n    \n    \n    \\emph{Step 3: The constructions are inverse to each other.}\n    \n    Starting with a representation $\\rho$, constructing the associated $kG$-module, and then restricting the action back to $G$, clearly recovers the original $\\rho$.\n    \n    Conversely, starting with a $kG$-module $V$, defining $\\rho(g)=g\\cdot$, and then extending linearly to $kG$, recovers the original module structure.\n    \n    Thus the two constructions are mutually inverse.\n    \n    \n    Therefore there is a one-to-one correspondence between representations of $G$ over $k$ and left $kG$-modules.",
@@ -715,4 +730,4 @@
   :source-file "example.tex",
   :area "Representation Theory",
   :depends-on ["4e94b0c3"],
-  :created-at "2026-03-26"}]
+  :created-at "2026-03-29"}]
