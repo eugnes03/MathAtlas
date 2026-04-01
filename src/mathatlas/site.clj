@@ -127,7 +127,8 @@
    [:div {:style "flex:1"}]
    [:div.nav-links
     [:a {:href (str root "objects.html")} "Objects"]
-    [:a {:href (str root "areas.html")} "Areas"]]])
+    [:a {:href (str root "areas.html")} "Areas"]
+    [:a {:href (str root "graph.html")} "Graph"]]])
 
 (defn page-shell
   "Wrap `body` forms in a full HTML5 page with nav, KaTeX, and stylesheet."
@@ -754,7 +755,7 @@ a:hover { color: #4f46e5; }
   color: #9ca3af;
   margin-bottom: 0.5rem;
 }
-#area-graph {
+#area-graph, #global-graph {
   width: 100%;
   height: 480px;
   background: #fff;
@@ -763,6 +764,7 @@ a:hover { color: #4f46e5; }
   box-shadow: 0 1px 3px rgba(0,0,0,0.07);
   cursor: pointer;
 }
+#global-graph { height: 70vh; }
 #graph-tooltip {
   position: fixed;
   background: #111827;
@@ -784,6 +786,12 @@ a:hover { color: #4f46e5; }
   letter-spacing: 0.07em;
   opacity: 0.65;
   margin-right: 0.35rem;
+}
+.gtt-area {
+  display: block;
+  font-size: 0.6rem;
+  opacity: 0.5;
+  margin-top: 0.1rem;
 }
 .graph-legend {
   display: flex;
@@ -814,6 +822,117 @@ a:hover { color: #4f46e5; }
 ;; Site generation
 ;; ---------------------------------------------------------------------------
 
+(defn- generate-global-graph-page [objects gr root]
+  (let [nodes-js (str/join ","
+                  (map (fn [obj]
+                         (str "{\"id\":\"" (:id obj)
+                              "\",\"label\":\"" (json-str (or (not-empty (:title obj)) (type-label (:type obj))))
+                              "\",\"type\":\"" (name (:type obj))
+                              "\",\"color\":\"" (get type-colors (:type obj) "#888")
+                              "\",\"area\":\"" (json-str (or (:area obj) ""))
+                              "\",\"href\":\"" root "objects/" (:id obj) ".html\"}"))
+                       objects))
+        edges-js (str/join ","
+                  (map (fn [{:keys [from to]}]
+                         (str "{\"source\":\"" to "\",\"target\":\"" from "\"}"))
+                       (:edges gr)))
+        present-types (->> objects (map :type) distinct
+                           (filter #(contains? type-colors %)))
+        areas         (->> objects (map :area) (remove nil?) distinct sort)]
+    (page-shell "Graph Explorer" root
+      [:h1 "Knowledge Graph"]
+      [:p.subtitle (str (count objects) " objects · " (count (:edges gr)) " dependencies")]
+      [:div.filters
+       [:button.filter-btn.active
+        {:data-area "all" :data-color "#1c1c2e" :onclick "filterGraph('all',this)"}
+        "All Areas"]
+       (map (fn [a]
+              [:button.filter-btn
+               {:data-area  a
+                :data-color (area-color a)
+                :onclick    (str "filterGraph('" (str/replace a "'" "\\'") "',this)")}
+               a])
+            areas)]
+      [:div#global-graph]
+      [:div#graph-tooltip]
+      [:div.graph-legend
+       (map (fn [t]
+              [:span.legend-item
+               {:style (str "--dot:" (get type-colors t))}
+               (type-label t)])
+            present-types)]
+      [:script
+       (str "(function(){
+  var nodes=[" nodes-js "];
+  var edges=[" edges-js "];
+  function init(){
+    if(typeof cytoscape==='undefined'||typeof cytoscapeDagre==='undefined'){setTimeout(init,100);return;}
+    cytoscape.use(cytoscapeDagre);
+    var cy=cytoscape({
+      container:document.getElementById('global-graph'),
+      elements:{
+        nodes:nodes.map(function(n){return{data:n};}),
+        edges:edges.map(function(e){return{data:e};})
+      },
+      layout:{name:'dagre',rankDir:'LR',nodeSep:60,rankSep:120,padding:40,edgeSep:20},
+      style:[
+        {selector:'node',style:{
+          'background-color':'data(color)',
+          'width':20,'height':20,
+          'border-width':2,'border-color':'data(color)','border-opacity':0.3
+        }},
+        {selector:'edge',style:{
+          'width':1.5,'line-color':'#d1d5db',
+          'target-arrow-color':'#d1d5db','target-arrow-shape':'triangle',
+          'curve-style':'bezier','arrow-scale':0.8,'opacity':0.8
+        }},
+        {selector:'edge:hover',style:{
+          'line-color':'#9ca3af','target-arrow-color':'#9ca3af','width':2.5,'opacity':1
+        }}
+      ]
+    });
+    var tooltip=document.getElementById('graph-tooltip');
+    cy.on('mouseover','node',function(e){
+      var d=e.target.data();
+      tooltip.innerHTML='<span class=\"gtt-type\">'+d.type+'</span>'+d.label+'<span class=\"gtt-area\">'+d.area+'</span>';
+      tooltip.style.display='block';
+      e.target.animate({'style':{'width':28,'height':28,'border-opacity':1}},{duration:120});
+    });
+    cy.on('mousemove','node',function(e){
+      var oe=e.originalEvent;
+      tooltip.style.left=(oe.clientX+14)+'px';
+      tooltip.style.top=(oe.clientY-12)+'px';
+    });
+    cy.on('mouseout','node',function(e){
+      tooltip.style.display='none';
+      e.target.animate({'style':{'width':20,'height':20,'border-opacity':0.3}},{duration:120});
+    });
+    window.filterGraph=function(area,btn){
+      if(area==='all'){
+        cy.elements().show();
+      } else {
+        cy.nodes().forEach(function(n){
+          if(n.data('area')===area) n.show(); else n.hide();
+        });
+        cy.edges().forEach(function(e){
+          if(e.source().hidden()||e.target().hidden()) e.hide(); else e.show();
+        });
+      }
+      document.querySelectorAll('.filter-btn').forEach(function(b){
+        var active=b.dataset.area===area;
+        b.classList.toggle('active',active);
+        b.style.background =active?(b.dataset.color||'#1c1c2e'):'';
+        b.style.borderColor=active?(b.dataset.color||'#1c1c2e'):'';
+        b.style.color      =active?'white':'';
+      });
+    };
+    cy.on('tap','node',function(e){window.location.href=e.target.data('href');});
+  }
+  init();
+})();")])))
+
+;; ---------------------------------------------------------------------------
+
 (defn- write-page [path content]
   (let [f (java.io.File. path)]
     (.mkdirs (.getParentFile f))
@@ -827,10 +946,11 @@ a:hover { color: #4f46e5; }
     (write-page (str output-dir "/index.html")   (index-page        objects ""))
     (write-page (str output-dir "/objects.html") (objects-page      objects ""))
     (write-page (str output-dir "/areas.html")   (areas-index-page  objects ""))
+    (write-page (str output-dir "/graph.html")   (generate-global-graph-page objects gr ""))
     (doseq [area all-areas]
       (write-page (str output-dir "/areas/" (area-slug area) ".html")
                   (area-detail-page area (get by-area area []) gr "../")))
     (doseq [obj objects]
       (write-page (str output-dir "/objects/" (:id obj) ".html")
                   (object-page obj gr objects-by-id "../")))
-    (println (str "  Wrote " (+ 3 (count all-areas) (count objects) 1) " files."))))
+    (println (str "  Wrote " (+ 4 (count all-areas) (count objects) 1) " files."))))
