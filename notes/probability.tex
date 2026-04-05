@@ -21,6 +21,7 @@
 
 \begin{definition}[Random Variable]
   \label{def:rv}
+  \ref{def:probspace}
 A random variable $X$ is a measurable function from the sample space $\Omega$ to $\R$ 
 
 $$ X : \Omega \to \R $$ 
@@ -75,6 +76,7 @@ $$ X^{-1} (A) = \{\omega : X(\omega) \in A \} \in \mathcal{F} \quad \forall A \i
 
 \begin{remark}[Stein's Heuristic]
   \label{rmk:steinsheuristic}
+  \ref{lemma:steinslemma}
   Let $F$ be a random variable such that 
   \[
     \mathbb{E}(f'(F)-Ff(f)) \approx 0
@@ -88,6 +90,8 @@ where $L$ denotes the Law of a random variable (cdf).
 \end{remark}
 \begin{theorem}[Stein's Method]
   \label{thm:steins}
+  \ref{lemma:steinslemma}
+  \ref{def:steinsequation}
   Let $\gamma$ be the standard Gaussian Measure 
   \[
     \gamma(dx) = \frac{1}{}
@@ -96,6 +100,7 @@ where $L$ denotes the Law of a random variable (cdf).
 
 \begin{definition}[Stein's Equation]
   \label{def:steinsequation}
+  \ref{lemma:steinslemma}
   \ref{rmk:steinsheuristic}
   Let $N \sim N(0,1)$. Let $h : \mathbb{R} \to \mathbb{R}$ be a Borel function such that 
   \[
@@ -140,6 +145,7 @@ where $L$ denotes the Law of a random variable (cdf).
   \label{thm:steinsmetrics}
   \ref{lemma:steinslemma}
   \ref{def:steinsequation}
+  \ref{lemma:ODEsolutions}
   Let $\mathcal{H}$ be a seperating class and let $h \in \mathcal{H}$. 
 
   Let $f_h$ be the solution to the Stein Equation associated with $h$. Then 
