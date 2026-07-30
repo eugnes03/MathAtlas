@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap');
+    #ma2-root, #ma2-root * { box-sizing: border-box; }
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+</helmet>
+<div id="ma2-root" style="min-height:100vh;background:#f6f1e8;color:#2b2620;line-height:1.6;font-family:'Lora',serif;">
+
+  <div style="position:sticky;top:0;z-index:100;background:#f6f1e8;border-bottom:1px solid #e6ddc9;padding:0 2rem;height:64px;display:flex;align-items:center;gap:22px;">
+    <a onClick="{{ goHome }}" style="cursor:pointer;font-family:'Lora',serif;font-style:italic;font-weight:600;font-size:1.2rem;color:#2b2620;text-decoration:none;white-space:nowrap;">MathAtlas</a>
+    <div style="flex:1;max-width:360px;border:1px solid #ddd0b3;border-radius:20px;padding:8px 16px;background:#fbf7ee;">
+      <input value="{{ searchQuery }}" onChange="{{ onSearchChange }}" placeholder="Search theorems, definitions…" style="border:none;outline:none;background:transparent;font-family:'Inter',sans-serif;font-size:13px;color:#2b2620;width:100%;"/>
+    </div>
+    <div style="flex:1;"></div>
+    <div style="display:flex;gap:6px;font-family:'Inter',sans-serif;">
+      <a onClick="{{ goAreas }}" style="{{ navAreasStyle }}">Areas</a>
+      <a onClick="{{ goObjects }}" style="{{ navObjectsStyle }}">All Notes</a>
+      <a onClick="{{ goGlossary }}" style="{{ navGlossaryStyle }}">Index</a>
+    </div>
+  </div>
+
+  <main style="max-width:720px;margin:0 auto;padding:3rem 1.5rem 5rem;">
+
+    <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+      <div style="margin-bottom:40px;">
+        <div style="font-size:34px;font-style:italic;font-weight:600;color:#2b2620;margin-bottom:10px;">A map of the math I've learned.</div>
+        <div style="font-size:14.5px;color:#7a6e5a;font-family:'Inter',sans-serif;max-width:520px;">Definitions, theorems and proofs, written down as I go — organized by area, and open for anyone else studying the same things to wander through.</div>
+      </div>
+      <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#a89a80;font-family:'Inter',sans-serif;font-weight:600;margin-bottom:14px;">Areas</div>
+      <sc-for list="{{ homeAreas }}" as="a" hint-placeholder-count="5">
+        <div onClick="{{ a.openFn }}" style="display:flex;justify-content:space-between;align-items:baseline;padding:12px 0;border-bottom:1px solid #e6ddc9;cursor:pointer;">
+          <span style="font-size:17px;color:#2b2620;">{{ a.name }}</span>
+          <span style="font-size:12px;color:#b5533c;font-family:'Inter',sans-serif;">{{ a.countLabel }}</span>
+        </div>
+      </sc-for>
+      <p style="margin-top:14px;"><a onClick="{{ goAreas }}" style="font-size:13px;color:#b5533c;font-family:'Inter',sans-serif;text-decoration:none;cursor:pointer;">Browse all areas →</a></p>
+
+      <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#a89a80;font-family:'Inter',sans-serif;font-weight:600;margin:36px 0 10px;">Lately</div>
+      <sc-for list="{{ recentObjects }}" as="obj" hint-placeholder-count="6">
+        <div onClick="{{ obj.openFn }}" style="padding:12px 0;border-bottom:1px solid #e6ddc9;cursor:pointer;">
+          <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px;">
+            <span style="{{ obj.readDotStyle }}"></span>
+            <span style="font-size:16px;color:#2b2620;">{{ obj.title }}</span>
+            <span style="font-size:10.5px;color:{{ obj.color }};font-family:'Inter',sans-serif;text-transform:uppercase;letter-spacing:.05em;">{{ obj.typeLabel }}</span>
+          </div>
+          <div style="font-size:13px;color:#8a7f6d;font-family:'Inter',sans-serif;" dangerouslySetInnerHTML="{{ obj.previewHtml }}"></div>
+        </div>
+      </sc-for>
+    </sc-if>
+
+    <sc-if value="{{ isAreas }}" hint-placeholder-val="{{ false }}">
+      <div style="font-size:26px;font-style:italic;font-weight:600;color:#2b2620;margin-bottom:26px;">Areas</div>
+      <sc-for list="{{ areasList }}" as="a" hint-placeholder-count="7">
+        <div onClick="{{ a.openFn }}" style="padding:16px 0;border-bottom:1px solid #e6ddc9;cursor:pointer;">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;">
+            <span style="font-size:19px;color:#2b2620;">{{ a.name }}</span>
+            <span style="font-size:12px;color:#b5533c;font-family:'Inter',sans-serif;">{{ a.countLabel }}</span>
+          </div>
+          <sc-if value="{{ a.desc }}"><div style="font-size:13px;color:#8a7f6d;font-family:'Inter',sans-serif;margin-top:4px;max-width:520px;">{{ a.desc }}</div></sc-if>
+        </div>
+      </sc-for>
+    </sc-if>
+
+    <sc-if value="{{ isObjects }}" hint-placeholder-val="{{ false }}">
+      <div style="font-size:26px;font-style:italic;font-weight:600;color:#2b2620;margin-bottom:6px;">All Notes</div>
+      <div style="font-size:13px;color:#8a7f6d;font-family:'Inter',sans-serif;margin-bottom:20px;">{{ filteredCountLabel }}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;font-family:'Inter',sans-serif;">
+        <sc-for list="{{ typeFilters }}" as="tf" hint-placeholder-count="9">
+          <button onClick="{{ tf.selectFn }}" style="{{ tf.buttonStyle }}">{{ tf.label }}</button>
+        </sc-for>
+      </div>
+      <sc-for list="{{ filteredObjects }}" as="obj" hint-placeholder-count="10">
+        <div onClick="{{ obj.openFn }}" style="padding:13px 0;border-bottom:1px solid #e6ddc9;cursor:pointer;">
+          <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:3px;">
+            <span style="{{ obj.readDotStyle }}"></span>
+            <span style="font-size:16px;color:#2b2620;">{{ obj.titleOrType }}</span>
+            <span style="font-size:10.5px;color:{{ obj.color }};font-family:'Inter',sans-serif;text-transform:uppercase;letter-spacing:.05em;">{{ obj.typeLabel }}</span>
+            <span style="font-size:11px;color:#c2b191;font-family:'Inter',sans-serif;">{{ obj.area }}</span>
+          </div>
+          <div style="font-size:13px;color:#8a7f6d;font-family:'Inter',sans-serif;" dangerouslySetInnerHTML="{{ obj.previewHtml }}"></div>
+        </div>
+      </sc-for>
+      <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:40px 0;color:#a89a80;font-family:'Inter',sans-serif;font-size:13px;font-style:italic;">No notes match "{{ searchQuery }}".</div>
+      </sc-if>
+    </sc-if>
+
+    <sc-if value="{{ isGlossary }}" hint-placeholder-val="{{ false }}">
+      <div style="font-size:26px;font-style:italic;font-weight:600;color:#2b2620;margin-bottom:26px;">Index</div>
+      <sc-for list="{{ glossaryGroups }}" as="grp" hint-placeholder-count="10">
+        <div style="margin-bottom:18px;">
+          <div style="font-size:11px;letter-spacing:.1em;color:#b5533c;font-family:'Inter',sans-serif;font-weight:700;margin-bottom:4px;">{{ grp.letter }}</div>
+          <sc-for list="{{ grp.items }}" as="obj" hint-placeholder-count="3">
+            <div onClick="{{ obj.openFn }}" style="display:flex;align-items:baseline;gap:8px;padding:8px 0;border-bottom:1px solid #e6ddc9;cursor:pointer;">
+              <span style="{{ obj.readDotStyle }}"></span>
+              <span style="font-size:15px;color:#2b2620;">{{ obj.titleOrType }}</span>
+              <span style="font-size:10.5px;color:{{ obj.color }};font-family:'Inter',sans-serif;text-transform:uppercase;letter-spacing:.05em;">{{ obj.typeLabel }}</span>
+              <span style="font-size:11px;color:#c2b191;font-family:'Inter',sans-serif;">{{ obj.area }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </sc-for>
+    </sc-if>
+
+    <sc-if value="{{ isAreaDetail }}" hint-placeholder-val="{{ false }}">
+      <a onClick="{{ goAreas }}" style="font-size:12px;color:#a89a80;font-family:'Inter',sans-serif;text-decoration:none;cursor:pointer;">← Areas</a>
+      <div style="display:flex;gap:28px;margin-top:16px;">
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:26px;font-style:italic;font-weight:600;color:#2b2620;margin-bottom:6px;">{{ areaDetail.name }}</div>
+          <sc-if value="{{ areaDetail.desc }}"><div style="font-size:13px;color:#8a7f6d;font-family:'Inter',sans-serif;margin-bottom:22px;max-width:440px;">{{ areaDetail.desc }}</div></sc-if>
+          <sc-for list="{{ areaDetail.objects }}" as="obj" hint-placeholder-count="6">
+            <div onClick="{{ obj.openFn }}" style="padding:12px 0;border-bottom:1px solid #e6ddc9;cursor:pointer;">
+              <div style="display:flex;align-items:baseline;gap:8px;">
+                <span style="{{ obj.readDotStyle }}"></span>
+                <span style="font-size:16px;color:#2b2620;">{{ obj.titleOrType }}</span>
+                <span style="font-size:10.5px;color:{{ obj.color }};font-family:'Inter',sans-serif;text-transform:uppercase;letter-spacing:.05em;">{{ obj.typeLabel }}</span>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="width:180px;flex:none;background:#efe3ca;border-radius:10px;padding:16px;align-self:flex-start;">
+          <div style="font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#9c8a68;font-family:'Inter',sans-serif;margin-bottom:10px;">sketch of this area</div>
+          <svg width="{{ areaDetail.sketch.width }}" height="{{ areaDetail.sketch.height }}" viewBox="0 0 {{ areaDetail.sketch.width }} {{ areaDetail.sketch.height }}">
+            <sc-for list="{{ areaDetail.sketch.lines }}" as="ln" hint-placeholder-count="6">
+              <line x1="{{ ln.x1 }}" y1="{{ ln.y1 }}" x2="{{ ln.x2 }}" y2="{{ ln.y2 }}" stroke="#c9a876" stroke-width="1.2"></line>
+            </sc-for>
+            <sc-for list="{{ areaDetail.sketch.nodes }}" as="nd" hint-placeholder-count="8">
+              <circle cx="{{ nd.cx }}" cy="{{ nd.cy }}" r="{{ nd.r }}" fill="{{ nd.fill }}" fill-opacity="0.75"></circle>
+            </sc-for>
+          </svg>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isObjectDetail }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;">
+        <a onClick="{{ objectDetail.backFn }}" style="font-size:12px;color:#a89a80;font-family:'Inter',sans-serif;text-decoration:none;cursor:pointer;">← {{ objectDetail.backLabel }}</a>
+        <a onClick="{{ objectDetail.onToggleRead }}" style="font-size:12px;font-family:'Inter',sans-serif;text-decoration:none;cursor:pointer;color:#8a7256;">{{ objectDetail.readToggleLabel }}</a>
+      </div>
+      <div style="display:flex;gap:28px;margin-top:16px;">
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:11px;color:#a89a80;font-family:'Inter',sans-serif;margin-bottom:8px;">{{ objectDetail.area }} <span style="color:{{ objectDetail.color }};">· {{ objectDetail.typeLabel }}</span></div>
+          <sc-if value="{{ objectDetail.title }}"><div style="font-size:28px;font-style:italic;font-weight:600;color:#2b2620;margin-bottom:18px;">{{ objectDetail.title }}</div></sc-if>
+          <sc-if value="{{ objectDetail.hasNote }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#efe6d3;border-radius:8px;padding:14px 18px;margin-bottom:20px;">
+              <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9c8a68;font-family:'Inter',sans-serif;font-weight:600;margin-bottom:6px;">In plain terms</div>
+              <div style="font-size:14.5px;line-height:1.7;color:#4a4130;font-family:'Inter',sans-serif;font-style:italic;" dangerouslySetInnerHTML="{{ objectDetail.noteHtml }}"></div>
+            </div>
+          </sc-if>
+          <div style="font-size:16px;line-height:1.85;color:#3a3327;margin-bottom:20px;" dangerouslySetInnerHTML="{{ objectDetail.bodyHtml }}"></div>
+
+          <sc-if value="{{ objectDetail.hasProof }}" hint-placeholder-val="{{ false }}">
+            <div>
+              <a onClick="{{ toggleProof }}" style="font-size:12.5px;color:#8a7256;font-family:'Inter',sans-serif;cursor:pointer;text-decoration:none;">{{ objectDetail.proofToggleLabel }}</a>
+              <sc-if value="{{ showProof }}" hint-placeholder-val="{{ false }}">
+                <div style="background:#efe6d3;border-left:3px solid #8a7256;padding:14px 18px;margin-top:10px;font-size:14.5px;line-height:1.8;color:#4a4130;" dangerouslySetInnerHTML="{{ objectDetail.proofHtml }}"></div>
+              </sc-if>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ objectDetail.hasNext }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:32px;padding-top:16px;border-top:1px solid #e6ddc9;">
+              <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#a89a80;font-family:'Inter',sans-serif;margin-bottom:6px;">Continue to</div>
+              <a onClick="{{ objectDetail.nextFn }}" style="font-size:16px;color:#b5533c;text-decoration:none;cursor:pointer;font-style:italic;">{{ objectDetail.nextLabel }} →</a>
+            </div>
+          </sc-if>
+        </div>
+
+        <sc-if value="{{ objectDetail.hasSketch }}" hint-placeholder-val="{{ false }}">
+          <div style="width:190px;flex:none;">
+            <div style="font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#9c8a68;font-family:'Inter',sans-serif;margin-bottom:10px;">nearby ideas</div>
+            <div style="position:relative;">
+              <svg width="{{ objectDetail.sketch.width }}" height="{{ objectDetail.sketch.height }}" viewBox="0 0 {{ objectDetail.sketch.width }} {{ objectDetail.sketch.height }}">
+                <sc-for list="{{ objectDetail.sketch.lines }}" as="ln" hint-placeholder-count="4">
+                  <line x1="{{ ln.x1 }}" y1="{{ ln.y1 }}" x2="{{ ln.x2 }}" y2="{{ ln.y2 }}" stroke="#c9a876" stroke-width="1.3"></line>
+                </sc-for>
+                <sc-for list="{{ objectDetail.sketch.nodes }}" as="nd" hint-placeholder-count="5">
+                  <circle cx="{{ nd.cx }}" cy="{{ nd.cy }}" r="{{ nd.r }}" fill="{{ nd.fill }}" onClick="{{ nd.onClick }}" style="cursor:pointer;"></circle>
+                </sc-for>
+              </svg>
+              <sc-for list="{{ objectDetail.sketch.labels }}" as="lb" hint-placeholder-count="5">
+                <div onClick="{{ lb.onClick }}" style="{{ lb.style }}">{{ lb.text }}</div>
+              </sc-for>
+            </div>
+            <sc-if value="{{ objectDetail.hasCrossAreas }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:14px;font-size:11.5px;color:#9c8a68;font-family:'Inter',sans-serif;line-height:1.6;">
+                Also connects to
+                <sc-for list="{{ objectDetail.crossAreaLinks }}" as="ca" hint-placeholder-count="1">
+                  <span> · <a onClick="{{ ca.openFn }}" style="color:#b5533c;text-decoration:none;cursor:pointer;">{{ ca.name }}</a></span>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const TYPE_COLORS = {
+  theorem: "#6b7d8f", lemma: "#8a6d9e", definition: "#b5533c", problem: "#a34a3a",
+  example: "#c9a04a", remark: "#9c9080", proof: "#5e8f7c", corollary: "#b06a8f", proposition: "#5f7a9e"
+};
+function typeLabel(t) { return t.charAt(0).toUpperCase() + t.slice(1); }
+function areaSlug(a) { return a.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, ""); }
+function stripTextCommands(s) {
+  return s.replace(/\\textbf\{([^}]*)\}/g, "$1").replace(/\\textit\{([^}]*)\}/g, "$1")
+    .replace(/\\emph\{([^}]*)\}/g, "$1").replace(/\\texttt\{([^}]*)\}/g, "$1")
+    .replace(/\\text\{([^}]*)\}/g, "$1").replace(/\\begin\{(enumerate|itemize)\}/g, "")
+    .replace(/\\end\{(enumerate|itemize)\}/g, "").replace(/\\item\s*/g, "\u2022 ")
+    .replace(/\\label\{[^}]*\}/g, "").replace(/\\(ref|eqref|autoref|cref)\{[^}]*\}/g, "").trim();
+}
+function truncate(s, n) { return s.length > n ? s.slice(0, n) + "\u2026" : s; }
+function escapeHtml(s) { return (s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+function mathify(html) {
+  if (!window.katex) return html;
+  const render = (expr, displayMode) => {
+    try { return window.katex.renderToString(expr, { throwOnError: false, errorColor: "#8a7f6d", displayMode }); }
+    catch (e) { return expr; }
+  };
+  let out = html.replace(/\$\$([\s\S]+?)\$\$/g, (m, expr) => render(expr, true));
+  out = out.replace(/\$([^$\n]+?)\$/g, (m, expr) => render(expr, false));
+  return out;
+}
+function renderBody(latex) {
+  let s = (latex || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  s = s.replace(/\\textbf\{([^}]*)\}/g, "<strong>$1</strong>")
+    .replace(/\\textit\{([^}]*)\}/g, "<em>$1</em>").replace(/\\emph\{([^}]*)\}/g, "<em>$1</em>")
+    .replace(/\\texttt\{([^}]*)\}/g, "<code>$1</code>").replace(/\\text\{([^}]*)\}/g, "$1")
+    .replace(/\\label\{[^}]*\}/g, "");
+  s = s.replace(/\\begin\{enumerate\}([\s\S]*?)\\end\{enumerate\}/g, (m, items) =>
+    "<ol style=\"padding-left:1.6rem;margin:0.5rem 0;\">" + items.replace(/\\item\s*/g, "<li style=\"margin-bottom:0.4rem;\">") + "</ol>");
+  s = s.replace(/\\begin\{itemize\}([\s\S]*?)\\end\{itemize\}/g, (m, items) =>
+    "<ul style=\"padding-left:1.6rem;margin:0.5rem 0;\">" + items.replace(/\\item\s*/g, "<li style=\"margin-bottom:0.4rem;\">") + "</ul>");
+  return s;
+}
+
+const AREA_META = {
+  "Category Theory": { desc: "Functors, natural transformations, limits, adjunctions, and universal properties." },
+  "Topology": { desc: "Open sets, continuity, compactness, connectedness, and fundamental groups." },
+  "Representation Theory": { desc: "Group actions on vector spaces, characters, modules, and Schur functors." },
+  "Probability Theory": { desc: "Measure-theoretic probability, distributions, and stochastic processes." },
+  "Algebraic Topology": { desc: "Homotopy theory, fundamental group, homology." }
+};
+
+const RAW = [
+  { id:"c4860b45", type:"definition", title:"Homotopy", area:"Algebraic Topology", src:"algebraic-topology.tex", dep:[],
+    latex:"A homotopy $h : p \\simeq q$ between maps $p,q : X \\to Y$ is a continuous map\n$$h: X \\times I \\to Y$$\nsuch that\n$$h(x,0) = p(x),\\ h(x,1) = q(x)$$\nwhere $I = [0,1]$ the unit interval.",
+    note:"Picture one path smoothly morphing into another, like clay being reshaped \u2014 nothing tears, nothing jumps. That continuous morphing is exactly what a homotopy captures." },
+  { id:"383e8134", type:"definition", title:"Equivalence Class/Relation", area:"Algebraic Topology", src:"algebraic-topology.tex", dep:[],
+    latex:"An equivalence class is a subset of a larger set containing elements considered \"equivalent\" under an equivalence relation.\n\nAn equivalence relation $a \\sim b$ satisfies:\n\\begin{itemize}\n\\item (Reflexivity) $a \\sim a$\n\\item (Symmetry) If $a \\sim b$, then $b \\sim a$\n\\item (Transitivity) If $a \\sim b$ and $b \\sim c$, then $a \\sim c$\n\\end{itemize}" },
+  { id:"d65691cf", type:"example", title:"An Example of a Homotopy", area:"Algebraic Topology", src:"algebraic-topology.tex", dep:["c4860b45"],
+    latex:"Let $\\gamma_0(t) = (t,0)$, $\\gamma_1(t) = (t,t)$, $t \\in [0,1]$. Both paths go from $(0,0)$ to $(1,1)$.\n\nDefine $H(t,s) = (t, st)$.\n\n\\textbf{Initial path:} $H(t,0) = \\gamma_0(t)$.\n\\textbf{Final path:} $H(t,1) = \\gamma_1(t)$.\n\nThus $H$ defines a homotopy between $\\gamma_0$ and $\\gamma_1$.",
+    note:"Nothing deep here \u2014 just watch the diagonal line slide over to become the straight line along the bottom, at a steady rate." },
+  { id:"718480f8", type:"definition", title:"Loops", area:"Algebraic Topology", src:"algebraic-topology.tex", dep:[],
+    latex:"A loop is a path $f : I \\to X$ such that $f(0) = f(1)$." },
+  { id:"34077999", type:"lemma", title:"Homotopy Equivalence Class", area:"Algebraic Topology", src:"algebraic-topology.tex", dep:["383e8134","c4860b45"],
+    latex:"Paths being homotopic defines an equivalence class.",
+    proof:"\\textbf{Reflexivity, Symmetry, Transitivity} are verified directly by constructing explicit homotopies $H(t,s) = \\gamma(t)$, $G(t,s) = H(t,1-s)$, and a pasted homotopy for transitivity, each continuous by the pasting lemma." },
+  { id:"9be75791", type:"definition", title:"Fundamental Group", area:"Algebraic Topology", src:"algebraic-topology.tex", dep:["718480f8","c4860b45","34077999"],
+    latex:"Let $f$ be a loop and $[f]$ its homotopy equivalence class. We define $\\pi_1(X,x)$ to be the set of equivalence classes of loops based at $x$. This is the \\textbf{fundamental group} of $X$.",
+    note:"Loops that can be shrunk into each other without leaving X count as \u2018the same.\u2019 The fundamental group just catalogs the loops that can\u2019t be shrunk away \u2014 it\u2019s a fingerprint of the holes in a space." },
+  { id:"7f497ae0", type:"lemma", title:"Fundamental Group Axiom Verification", area:"Algebraic Topology", src:"algebraic-topology.tex", dep:["9be75791"],
+    latex:"The fundamental group $\\pi_1(X,x)$ is indeed a group.",
+    proof:"Define concatenation $(\\gamma_1 * \\gamma_2)(t)$ piecewise; show well-definedness, associativity up to reparametrization, the constant loop as identity, and $\\gamma^{-1}$ as inverse." },
+  { id:"a8b6b7cd", type:"remark", title:"Dependence on the Base Point", area:"Algebraic Topology", src:"algebraic-topology.tex", dep:["9be75791"],
+    latex:"For a path $a : x \\to y$, define $\\gamma[a] : \\pi_1(X,x) \\to \\pi_1(X,y)$ by $\\gamma[a][f] = [a \\cdot f \\cdot a^{-1}]$. This is a group homomorphism." },
+  { id:"dd7ffa18", type:"problem", title:"", area:"Algebraic Topology", src:"algebraic-topology.tex", dep:["a8b6b7cd"],
+    latex:"Prove that the map $\\gamma[a]$ is indeed a group homomorphism." },
+  { id:"71746aac", type:"definition", title:"Group (Classical)", area:"Lie Groups and Lie Algebras", src:"lie-groups.tex", dep:[],
+    latex:"A \\emph{group} is a pair $(G,\\cdot)$ with $\\cdot : G \\times G \\to G$ such that:\n\\begin{enumerate}\n\\item \\textbf{Associativity:} $(a \\cdot b) \\cdot c = a \\cdot (b \\cdot c)$.\n\\item \\textbf{Identity:} $\\exists e \\in G,\\ e \\cdot a = a \\cdot e = a$.\n\\item \\textbf{Inverses:} $\\forall a,\\ \\exists a^{-1},\\ a \\cdot a^{-1} = e$.\n\\end{enumerate}" },
+  { id:"4cacdd3e", type:"definition", title:"Group (Categorical)", area:"Lie Groups and Lie Algebras", src:"lie-groups.tex", dep:["71746aac"],
+    latex:"A group is a group object in $\\mathbf{Set}$: a set $G$ with morphisms $m, e, i$ satisfying associativity, identity, and inverse laws. Equivalent to the classical definition." },
+  { id:"e087180c", type:"definition", title:"Group Homomorphism", area:"Lie Groups and Lie Algebras", src:"lie-groups.tex", dep:["71746aac"],
+    latex:"A map $\\phi : G \\to H$ is a \\emph{group homomorphism} if $\\phi(a \\cdot b) = \\phi(a) * \\phi(b)$ for all $a,b \\in G$. If bijective, an \\emph{isomorphism}, written $G \\cong H$.",
+    note:"A homomorphism is a structure-preserving translator between two groups \u2014 do the operation before or after translating, you get the same answer either way." },
+  { id:"6fd9cebe", type:"definition", title:"Kernel and Image", area:"Lie Groups and Lie Algebras", src:"lie-groups.tex", dep:["e087180c"],
+    latex:"For $\\phi : G \\to H$: $\\ker \\phi := \\{g \\in G \\mid \\phi(g) = e_H\\}$, $\\operatorname{im}\\phi := \\{\\phi(g) \\mid g \\in G\\}$." },
+  { id:"3d67b716", type:"definition", title:"Subgroup and Normal Subgroup", area:"Lie Groups and Lie Algebras", src:"lie-groups.tex", dep:["71746aac"],
+    latex:"$H \\subseteq G$ is a \\emph{subgroup} if closed under multiplication/inverses and contains the identity. \\emph{Normal} if $gHg^{-1} = H$ for all $g \\in G$." },
+  { id:"8aabc776", type:"proposition", title:"", area:"Lie Groups and Lie Algebras", src:"lie-groups.tex", dep:["e087180c","3d67b716","6fd9cebe"],
+    latex:"For any homomorphism $\\phi : G \\to H$, $\\ker\\phi \\trianglelefteq G$ and $\\operatorname{im}\\phi \\leq H$." },
+  { id:"4ceac839", type:"definition", title:"Quotient Group", area:"Lie Groups and Lie Algebras", src:"lie-groups.tex", dep:["3d67b716"],
+    latex:"For $N \\trianglelefteq G$, the quotient group $G/N$ is the set of cosets $\\{gN\\}$ with $(aN)(bN) := (ab)N$." },
+  { id:"856a1ed3", type:"theorem", title:"First Isomorphism Theorem", area:"Lie Groups and Lie Algebras", src:"lie-groups.tex", dep:["e087180c","4ceac839","6fd9cebe"],
+    latex:"For a homomorphism $\\phi : G \\to H$: $G / \\ker\\phi \\cong \\operatorname{im}\\phi$.",
+    note:"Collapse a group by everything a homomorphism kills (the kernel), and what\u2019s left is an exact copy of the image. Nothing is lost, nothing extra is added." },
+  { id:"f7184fc4", type:"definition", title:"Group Action", area:"Lie Groups and Lie Algebras", src:"lie-groups.tex", dep:["71746aac"],
+    latex:"A left action of $G$ on $X$ is a map $G \\times X \\to X$ satisfying $e \\cdot x = x$ and $g \\cdot (h \\cdot x) = (gh)\\cdot x$.",
+    note:"A group acting on a set just means every element of the group can \u2018move\u2019 the points of that set around, consistently." },
+  { id:"1641e614", type:"definition", title:"Orbit and Stabilizer", area:"Lie Groups and Lie Algebras", src:"lie-groups.tex", dep:["f7184fc4","3d67b716"],
+    latex:"The orbit $G \\cdot x := \\{g \\cdot x\\}$ and stabilizer $G_x := \\{g \\mid g \\cdot x = x\\}$, with $G_x \\leq G$." },
+  { id:"28571139", type:"theorem", title:"Orbit-Stabilizer Theorem", area:"Lie Groups and Lie Algebras", src:"lie-groups.tex", dep:["1641e614","3d67b716","4ceac839"],
+    latex:"$|G \\cdot x| = [G : G_x]$. In particular, if $G$ is finite, $|G| = |G \\cdot x| \\cdot |G_x|$.",
+    note:"The bigger the orbit a point can reach, the smaller its stabilizing subgroup has to be \u2014 the two sizes trade off exactly, multiplying back to the size of the whole group." },
+  { id:"a9fa06fb", type:"definition", title:"Continuous Map and Homeomorphism", area:"Lie Groups and Lie Algebras", src:"lie-groups.tex", dep:["c9093e38"],
+    latex:"$f : X \\to Y$ is continuous if $f^{-1}(U)$ is open for every open $U \\subseteq Y$. A homeomorphism is a continuous bijection with continuous inverse." },
+  { id:"c9093e38", type:"definition", title:"Topological Space", area:"Lie Groups and Lie Algebras", src:"lie-groups.tex", dep:[],
+    latex:"A topological space is $(X,\\mathcal{T})$ where $\\mathcal{T}$ is a collection of open subsets: $\\emptyset, X \\in \\mathcal{T}$; arbitrary unions and finite intersections of open sets are open." },
+  { id:"36e5bd4f", type:"theorem", title:"Schur's Lemma", area:"Lie Groups and Lie Algebras", src:"lie-groups.tex", dep:["c8a0881e","f70e3a35"],
+    latex:"Let $(V,\\rho)$, $(W,\\sigma)$ be irreducible $G$-representations over an algebraically closed field, $T : V \\to W$ an intertwiner.\n\\begin{enumerate}\n\\item Either $T=0$ or $T$ is an isomorphism.\n\\item If $V=W$, then $T = \\lambda\\,\\mathrm{id}_V$ for some $\\lambda$.\n\\end{enumerate}",
+    note:"If a linear map respects the full symmetry of two irreducible representations, it\u2019s either completely trivial (zero) or a perfect dictionary between them (an isomorphism) \u2014 there\u2019s no in-between." },
+  { id:"c8a0881e", type:"definition", title:"Irreducible Representation", area:"Lie Groups and Lie Algebras", src:"lie-groups.tex", dep:[],
+    latex:"A representation $(V,\\rho)$ is \\emph{irreducible} if $V \\ne 0$ and its only subrepresentations are $\\{0\\}$ and $V$." },
+  { id:"f70e3a35", type:"definition", title:"Morphism of Representations", area:"Lie Groups and Lie Algebras", src:"lie-groups.tex", dep:[],
+    latex:"A linear map $T : V \\to W$ is $G$-equivariant (an intertwiner) if $T \\circ \\rho_V(g) = \\rho_W(g) \\circ T$ for all $g$." },
+  { id:"b1f3a221", type:"definition", title:"Metric Spaces", area:"Topology", src:"topology.tex", dep:[],
+    latex:"A metric space is $X$ with $\\operatorname{dist}: X \\times X \\to \\mathbb{R}$ satisfying positivity, symmetry, and the triangle inequality." },
+  { id:"d9c02a41", type:"definition", title:"Probability Space", area:"Probability Theory", src:"probability.tex", dep:[],
+    latex:"$(\\Omega,\\mathcal{F},P)$ is a probability space: $\\Omega$ a sample space, $\\mathcal{F}$ a $\\sigma$-algebra, $P$ a probability measure following the Kolmogorov axioms." },
+  { id:"e4b71c02", type:"definition", title:"Sigma-Algebra", area:"Stochastic Calculus", src:"bm.tex", dep:[],
+    latex:"A $\\sigma$-algebra on $\\Omega$ is $\\mathcal{F} \\subseteq 2^\\Omega$ closed under complements and countable unions, with $\\Omega \\in \\mathcal{F}$." },
+  { id:"a41c9e02", type:"definition", title:"Group Representation", area:"Representation Theory", src:"example.tex", dep:[],
+    latex:"A representation of $G$ on $V$ is a homomorphism $\\rho : G \\to \\mathrm{GL}(V)$." },
+  { id:"f2b8d113", type:"theorem", title:"Maschke's Theorem", area:"Representation Theory", src:"example.tex", dep:["a41c9e02"],
+    latex:"If $|G|$ is finite and $\\operatorname{char}(k) \\nmid |G|$, every representation of $G$ over $k$ is completely reducible.",
+    note:"As long as the group\u2019s size doesn\u2019t divide evenly into the field\u2019s characteristic, any representation can always be broken apart into its irreducible building blocks." },
+  { id:"c7a51e88", type:"example", title:"Regular Representation", area:"Representation Theory", src:"example.tex", dep:["a41c9e02"],
+    latex:"$G$ acts on $k[G]$ by left multiplication, giving the regular representation of dimension $|G|$.",
+    note:"The simplest way a group can act on itself: shift every element by multiplying on the left. Every other representation of G can be built from pieces of this one." },
+  { id:"9f0d2a77", type:"corollary", title:"Dimension Formula", area:"Representation Theory", src:"example.tex", dep:["f2b8d113"],
+    latex:"$|G| = \\sum_i (\\dim V_i)^2$, summed over irreducible representations $V_i$ of $G$." },
+  { id:"3c8e9a01", type:"definition", title:"Category", area:"Category Theory", src:"category.tex", dep:[],
+    latex:"A category $\\mathcal{C}$ consists of objects, morphisms between them, an identity morphism per object, and associative composition.",
+    note:"Forget what the objects *are* \u2014 a category only cares about how things map into and out of each other." },
+  { id:"78bd0e42", type:"proposition", title:"Uniqueness of Inverses", area:"Category Theory", src:"category.tex", dep:["3c8e9a01"],
+    latex:"If $f : A \\to B$ has a two-sided inverse in $\\mathcal{C}$, that inverse is unique." },
+  { id:"5a1d7c33", type:"corollary", title:"Isomorphism is an Equivalence Relation", area:"Category Theory", src:"category.tex", dep:["78bd0e42"],
+    latex:"Isomorphism of objects in $\\mathcal{C}$ is reflexive, symmetric, and transitive." },
+  { id:"e6f4a190", type:"definition", title:"Functor", area:"Category Theory", src:"category.tex", dep:["3c8e9a01"],
+    latex:"A functor $F : \\mathcal{C} \\to \\mathcal{D}$ assigns objects to objects and morphisms to morphisms, preserving identities and composition.",
+    note:"A functor is the categorical version of a homomorphism: it moves you from one category to another while keeping all the arrows pointing the right way." },
+  { id:"1d9b3f60", type:"lemma", title:"Functors Preserve Isomorphisms", area:"Category Theory", src:"category.tex", dep:["e6f4a190"],
+    latex:"If $f$ is an isomorphism in $\\mathcal{C}$, then $F(f)$ is an isomorphism in $\\mathcal{D}$." }
+];
+
+class Component extends DCLogic {
+  state = { view: "home", areaSlug: null, objectId: null, searchQuery: "", filterType: "all", showProof: false, objectOrigin: "objects", readIds: {} };
+
+  constructor(props) {
+    super(props);
+    try { this.state.readIds = JSON.parse(localStorage.getItem("mathatlas_read_ids") || "{}"); } catch (e) {}
+  }
+
+  isRead(id) { return !!this.state.readIds[id]; }
+  toggleRead(id) {
+    const readIds = { ...this.state.readIds };
+    if (readIds[id]) delete readIds[id]; else readIds[id] = true;
+    try { localStorage.setItem("mathatlas_read_ids", JSON.stringify(readIds)); } catch (e) {}
+    this.setState({ readIds });
+  }
+
+  componentDidMount() {
+    const waitForKatex = () => {
+      if (window.katex) this.forceUpdate();
+      else setTimeout(waitForKatex, 100);
+    };
+    waitForKatex();
+  }
+
+  color(type) { return TYPE_COLORS[type] || "#8a7f6d"; }
+
+  openObject(id, origin) {
+    this.setState({ view: "object", objectId: id, showProof: false, objectOrigin: origin || this.state.objectOrigin || "objects" });
+  }
+
+  buildRow(o, opts) {
+    opts = opts || {};
+    const read = this.isRead(o.id);
+    return {
+      id: o.id, title: o.title, titleOrType: o.title || typeLabel(o.type), area: o.area,
+      typeLabel: typeLabel(o.type), color: this.color(o.type),
+      previewHtml: { __html: mathify(escapeHtml(truncate(stripTextCommands(o.latex), 170))) },
+      openFn: () => this.openObject(o.id, opts.origin),
+      readDotStyle: { display: "inline-block", width: "6px", height: "6px", borderRadius: "50%", marginRight: "3px",
+        background: read ? "#b5533c" : "transparent", border: "1px solid " + (read ? "#b5533c" : "#ddd0b3") }
+    };
+  }
+
+  buildAreaSketch(objs) {
+    const width = 170, height = 190, cx = 85, cy = 95, rx = 60, ry = 75;
+    const n = Math.max(objs.length, 1);
+    const pts = objs.map((o, i) => {
+      const angle = (i / n) * 2 * Math.PI - Math.PI / 2;
+      return { x: cx + rx * Math.cos(angle), y: cy + ry * Math.sin(angle) };
+    });
+    const idxById = {}; objs.forEach((o, i) => idxById[o.id] = i);
+    const lines = [];
+    objs.forEach((o, i) => { o.dep.forEach(depId => { const j = idxById[depId]; if (j !== undefined) lines.push({ x1: pts[i].x, y1: pts[i].y, x2: pts[j].x, y2: pts[j].y }); }); });
+    const nodes = pts.map((p, i) => ({ cx: p.x, cy: p.y, r: 4, fill: this.color(objs[i].type) }));
+    return { width, height, lines, nodes };
+  }
+
+  buildObjectSketch(deps, dependents) {
+    const width = 210, cx = 105, leftX = 18, rightX = 192;
+    const leftN = deps.length, rightN = dependents.length;
+    const rows = Math.max(leftN, rightN, 1);
+    const height = Math.max(110, rows * 42 + 30);
+    const midY = height / 2;
+    const nodes = [{ cx, cy: midY, r: 8, fill: "#b5533c" }];
+    const lines = []; const labels = [];
+    const labelBase = { position: "absolute", fontSize: "9px", color: "#9c8a68", fontFamily: "'Inter',sans-serif", cursor: "pointer", whiteSpace: "nowrap", lineHeight: "1.2" };
+    const leftStartY = midY - ((leftN - 1) * 42) / 2;
+    deps.forEach((d, i) => {
+      const y = leftN === 1 ? midY : leftStartY + i * 42;
+      const onClick = () => this.openObject(d.id, this.state.objectOrigin);
+      nodes.push({ cx: leftX, cy: y, r: 5, fill: this.color(d.type), onClick });
+      lines.push({ x1: leftX, y1: y, x2: cx, y2: midY });
+      labels.push({ text: truncate(d.title || typeLabel(d.type), 15), onClick, style: { ...labelBase, left: (leftX + 10) + "px", top: (y - 15) + "px", textAlign: "left" } });
+    });
+    const rightStartY = midY - ((rightN - 1) * 42) / 2;
+    dependents.forEach((d, i) => {
+      const y = rightN === 1 ? midY : rightStartY + i * 42;
+      const onClick = () => this.openObject(d.id, this.state.objectOrigin);
+      nodes.push({ cx: rightX, cy: y, r: 5, fill: this.color(d.type), onClick });
+      lines.push({ x1: cx, y1: midY, x2: rightX, y2: y });
+      labels.push({ text: truncate(d.title || typeLabel(d.type), 15), onClick, style: { ...labelBase, right: (width - rightX + 10) + "px", top: (y - 15) + "px", textAlign: "right" } });
+    });
+    return { width, height, nodes, lines, labels };
+  }
+
+  renderVals() {
+    const objects = RAW;
+    const byId = {}; objects.forEach(o => byId[o.id] = o);
+    const types = Array.from(new Set(objects.map(o => o.type)));
+    const areas = Array.from(new Set(objects.map(o => o.area)));
+
+    const navBase = { fontSize: "13px", fontWeight: 500, padding: "6px 12px", borderRadius: "6px", textDecoration: "none", cursor: "pointer" };
+    const navStyle = (active) => ({ ...navBase, color: active ? "#2b2620" : "#a89a80", background: active ? "#efe6d3" : "transparent" });
+
+    const homeAreas = areas.slice(0, 5).map(a => {
+      const n = objects.filter(o => o.area === a).length;
+      return { name: a, countLabel: n + (n === 1 ? " note" : " notes"), openFn: () => this.setState({ view: "area", areaSlug: areaSlug(a) }) };
+    });
+
+    const recentObjects = objects.slice(0, 6).map(o => this.buildRow(o, { origin: "home" }));
+
+    const q = this.state.searchQuery.trim().toLowerCase();
+    const filteredObjects = objects
+      .filter(o => this.state.filterType === "all" || o.type === this.state.filterType)
+      .filter(o => !q || (o.title + " " + o.area + " " + o.type + " " + o.latex).toLowerCase().includes(q))
+      .map(o => this.buildRow(o, { origin: "objects" }));
+
+    const typeFilters = [{ key: "all", label: "All", color: "#2b2620" }, ...types.map(t => ({ key: t, label: typeLabel(t), color: this.color(t) }))]
+      .map(tf => {
+        const active = this.state.filterType === tf.key;
+        return {
+          label: tf.label, selectFn: () => this.setState({ filterType: tf.key }),
+          buttonStyle: { fontSize: "12px", fontWeight: 500, padding: "5px 12px", borderRadius: "16px", cursor: "pointer",
+            border: "1px solid " + (active ? tf.color : "#ddd0b3"), background: active ? tf.color : "#fbf7ee", color: active ? "#fff" : "#7a6e5a" }
+        };
+      });
+
+    const areasList = areas.map(a => {
+      const meta = AREA_META[a] || {};
+      const n = objects.filter(o => o.area === a).length;
+      return { name: a, desc: meta.desc || "", countLabel: n + (n === 1 ? " note" : " notes"),
+        openFn: () => this.setState({ view: "area", areaSlug: areaSlug(a) }) };
+    });
+
+    let areaDetail = null;
+    if (this.state.view === "area") {
+      const areaName = areas.find(a => areaSlug(a) === this.state.areaSlug) || areas[0];
+      const objs = objects.filter(o => o.area === areaName);
+      areaDetail = {
+        name: areaName, desc: (AREA_META[areaName] || {}).desc || "",
+        objects: objs.map(o => this.buildRow(o, { origin: "area:" + this.state.areaSlug })),
+        sketch: this.buildAreaSketch(objs)
+      };
+    }
+
+    let objectDetail = null;
+    if (this.state.view === "object") {
+      const o = byId[this.state.objectId];
+      const deps = o.dep.map(id => byId[id]).filter(Boolean);
+      const dependents = objects.filter(x => x.dep.includes(o.id));
+      const origin = this.state.objectOrigin || "objects";
+      const backFn = origin.startsWith("area:")
+        ? () => this.setState({ view: "area", areaSlug: origin.slice(5) })
+        : origin === "home" ? () => this.setState({ view: "home" })
+        : () => this.setState({ view: "objects" });
+      const backLabel = origin.startsWith("area:") ? "Area" : origin === "home" ? "Home" : origin === "glossary" ? "Index" : "All Notes";
+      const otherAreas = Array.from(new Set([...deps, ...dependents].filter(d => d.area !== o.area).map(d => d.area)));
+      objectDetail = {
+        title: o.title, area: o.area, typeLabel: typeLabel(o.type), color: this.color(o.type),
+        bodyHtml: { __html: mathify(renderBody(o.latex)) },
+        hasProof: !!o.proof, proofHtml: { __html: mathify(renderBody(o.proof || "")) },
+        proofToggleLabel: this.state.showProof ? "▾ Hide proof" : "▸ Show proof",
+        hasNote: !!o.note, noteHtml: { __html: mathify(renderBody(o.note || "")) },
+        hasSketch: deps.length + dependents.length > 0,
+        sketch: this.buildObjectSketch(deps, dependents),
+        hasNext: dependents.length > 0,
+        nextLabel: dependents[0] ? (dependents[0].title || typeLabel(dependents[0].type)) : "",
+        nextFn: dependents[0] ? () => this.openObject(dependents[0].id, origin) : null,
+        hasCrossAreas: otherAreas.length > 0,
+        crossAreaLinks: otherAreas.map(a => ({ name: a, openFn: () => this.setState({ view: "area", areaSlug: areaSlug(a) }) })),
+        isRead: this.isRead(o.id),
+        readToggleLabel: this.isRead(o.id) ? "\u2713 Marked as read" : "Mark as read",
+        onToggleRead: () => this.toggleRead(o.id),
+        backFn, backLabel
+      };
+    }
+
+    const glossaryItems = objects.map(o => this.buildRow(o, { origin: "glossary" })).sort((a, b) => a.titleOrType.localeCompare(b.titleOrType));
+    const groupsMap = {};
+    glossaryItems.forEach(item => { const letter = item.titleOrType.charAt(0).toUpperCase(); (groupsMap[letter] = groupsMap[letter] || []).push(item); });
+    const glossaryGroups = Object.keys(groupsMap).sort().map(letter => ({ letter, items: groupsMap[letter] }));
+
+    return {
+      goHome: () => this.setState({ view: "home" }),
+      goAreas: () => this.setState({ view: "areas" }),
+      goObjects: () => this.setState({ view: "objects" }),
+      goGlossary: () => this.setState({ view: "glossary" }),
+      navAreasStyle: navStyle(this.state.view === "areas" || this.state.view === "area"),
+      navObjectsStyle: navStyle(this.state.view === "objects"),
+      navGlossaryStyle: navStyle(this.state.view === "glossary"),
+      isGlossary: this.state.view === "glossary", glossaryGroups,
+      searchQuery: this.state.searchQuery,
+      onSearchChange: (e) => { const v = e.target.value; this.setState({ searchQuery: v, view: v.trim() ? "objects" : this.state.view }); },
+      isHome: this.state.view === "home", isAreas: this.state.view === "areas",
+      isObjects: this.state.view === "objects", isAreaDetail: this.state.view === "area",
+      isObjectDetail: this.state.view === "object",
+      homeAreas, recentObjects, filteredObjects, typeFilters, areasList, areaDetail, objectDetail,
+      filteredCountLabel: filteredObjects.length + (filteredObjects.length === 1 ? " note" : " notes") + (q ? " matching \u201c" + this.state.searchQuery + "\u201d" : ""),
+      noResults: filteredObjects.length === 0,
+      showProof: this.state.showProof,
+      toggleProof: () => this.setState({ showProof: !this.state.showProof })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap">
+<style>
+body{margin:0;background:#eeece6;font-family:'Inter',system-ui,sans-serif}
+.dv-turn{padding:40px 44px 32px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}
+.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 20px}
+.dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}
+.dv-tname{font:600 13px/1.2 system-ui,sans-serif;color:#1a1a1a}
+.dv-opts{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}
+.dv-opt{flex:none;display:flex;flex-direction:column;gap:9px;scroll-margin-top:16px}
+.dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}
+.dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 system-ui,sans-serif;color:rgba(0,0,0,.55)}
+.dv-card{max-width:100%;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden}
+.dv-opt:target .dv-oid{background:#2a78d6;color:#fff}
+.dv-next{margin:22px 0 0;font:12px/1.5 system-ui,sans-serif;color:rgba(0,0,0,.5)}
+.frame-cap{font:600 10px ui-monospace,Menlo,monospace;letter-spacing:.06em;text-transform:uppercase;color:rgba(0,0,0,.4);margin:0 0 6px 2px}
+</style>
+</helmet>
+
+<section class="dv-turn" id="t2">
+  <div class="dv-thd"><a class="dv-tid" href="#t2">2</a><span class="dv-tname">Keeping <a class="dv-oid" href="#1a">1a</a>'s warmth — three ways to traverse</span></div>
+  <div class="dv-opts">
+
+    <div class="dv-opt" id="2a">
+      <div class="dv-olabel"><a class="dv-oid" href="#2a">2a</a>Guided Trail — linear reading path, no graph at all</div>
+      <div class="frame-cap">Area page</div>
+      <div class="dv-card" style="width:560px;background:#f6f1e8;padding:40px 44px;font-family:'Lora',serif;">
+        <div style="font-size:11px;color:#a89a80;font-family:'Inter',sans-serif;margin-bottom:6px;">Area</div>
+        <div style="font-size:26px;font-style:italic;font-weight:600;color:#2b2620;margin-bottom:6px;">Algebraic Topology</div>
+        <div style="font-size:13px;color:#7a6e5a;font-family:'Inter',sans-serif;margin-bottom:30px;">A suggested path through 9 notes, in the order they build on each other.</div>
+        <div style="position:relative;padding-left:26px;">
+          <div style="position:absolute;left:6px;top:6px;bottom:6px;width:1px;background:#ddd0b3;"></div>
+          <div style="position:relative;padding-bottom:22px;"><div style="position:absolute;left:-26px;top:2px;width:11px;height:11px;border-radius:50%;background:#b5533c;"></div><div style="font-size:11px;color:#b5533c;font-family:'Inter',sans-serif;">1 · Definition</div><div style="font-size:16px;color:#2b2620;">Homotopy</div></div>
+          <div style="position:relative;padding-bottom:22px;"><div style="position:absolute;left:-26px;top:2px;width:11px;height:11px;border-radius:50%;background:#b5533c;"></div><div style="font-size:11px;color:#b5533c;font-family:'Inter',sans-serif;">2 · Definition</div><div style="font-size:16px;color:#2b2620;">Equivalence Class/Relation</div></div>
+          <div style="position:relative;padding-bottom:22px;"><div style="position:absolute;left:-26px;top:2px;width:11px;height:11px;border-radius:50%;background:#cfa07c;"></div><div style="font-size:11px;color:#cfa07c;font-family:'Inter',sans-serif;">3 · Example</div><div style="font-size:16px;color:#2b2620;">An Example of a Homotopy</div></div>
+          <div style="position:relative;padding-bottom:22px;"><div style="position:absolute;left:-26px;top:2px;width:11px;height:11px;border-radius:50%;background:#8a7256;"></div><div style="font-size:11px;color:#8a7256;font-family:'Inter',sans-serif;">4 · Lemma</div><div style="font-size:16px;color:#2b2620;">Homotopy Equivalence Class</div></div>
+          <div style="position:relative;"><div style="position:absolute;left:-26px;top:2px;width:13px;height:13px;margin-left:-1px;margin-top:-1px;border-radius:50%;background:#b5533c;box-shadow:0 0 0 3px #f0e2cd;"></div><div style="font-size:11px;color:#b5533c;font-family:'Inter',sans-serif;">5 · Definition</div><div style="font-size:16px;font-weight:600;color:#2b2620;">Fundamental Group</div></div>
+        </div>
+      </div>
+      <div class="frame-cap">Object page (footer)</div>
+      <div class="dv-card" style="width:560px;background:#f6f1e8;padding:40px 44px;font-family:'Lora',serif;">
+        <div style="font-size:11px;color:#a89a80;font-family:'Inter',sans-serif;margin-bottom:18px;">Algebraic Topology / Definition · step 5 of 9</div>
+        <div style="font-size:28px;font-style:italic;font-weight:600;color:#2b2620;margin-bottom:16px;">Fundamental Group</div>
+        <div style="font-size:16px;line-height:1.85;color:#3a3327;margin-bottom:28px;">Let <em>f</em> be a loop and <em>[f]</em> its homotopy equivalence class. π₁(X,x) is the set of equivalence classes of loops based at <em>x</em> — the <strong>fundamental group</strong> of X.</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #e6ddc9;padding-top:16px;font-family:'Inter',sans-serif;">
+          <div><div style="font-size:10px;color:#a89a80;">← previous</div><div style="font-size:13px;color:#b5533c;">Homotopy Equivalence Class</div></div>
+          <div style="text-align:right;"><div style="font-size:10px;color:#a89a80;">next →</div><div style="font-size:13px;color:#b5533c;">Fundamental Group Axiom Verification</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="2b">
+      <div class="dv-olabel"><a class="dv-oid" href="#2b">2b</a>Margin Constellation — the graph returns, sketched small in the margin</div>
+      <div class="frame-cap">Area page</div>
+      <div class="dv-card" style="width:560px;background:#f6f1e8;padding:40px 40px;font-family:'Lora',serif;display:flex;gap:22px;">
+        <div style="flex:1;">
+          <div style="font-size:11px;color:#a89a80;font-family:'Inter',sans-serif;margin-bottom:6px;">Area</div>
+          <div style="font-size:24px;font-style:italic;font-weight:600;color:#2b2620;margin-bottom:20px;">Algebraic Topology</div>
+          <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #e6ddc9;font-size:15px;color:#2b2620;">Homotopy <span style="font-size:11px;color:#b5533c;font-family:'Inter',sans-serif;">def</span></div>
+          <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #e6ddc9;font-size:15px;color:#2b2620;">Loops <span style="font-size:11px;color:#b5533c;font-family:'Inter',sans-serif;">def</span></div>
+          <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #e6ddc9;font-size:15px;color:#2b2620;">Homotopy Equivalence Class <span style="font-size:11px;color:#8a7256;font-family:'Inter',sans-serif;">lemma</span></div>
+          <div style="display:flex;justify-content:space-between;padding:9px 0;font-size:15px;color:#2b2620;font-weight:600;">Fundamental Group <span style="font-size:11px;color:#b5533c;font-family:'Inter',sans-serif;">def</span></div>
+        </div>
+        <div style="width:160px;flex:none;background:#efe3ca;border-radius:10px;padding:16px;">
+          <div style="font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#9c8a68;font-family:'Inter',sans-serif;margin-bottom:10px;">sketch of this area</div>
+          <svg width="128" height="150" viewBox="0 0 128 150">
+            <path d="M20,20 Q45,45 60,60" stroke="#c9a876" stroke-width="1.3" fill="none"/>
+            <path d="M20,110 Q45,85 60,60" stroke="#c9a876" stroke-width="1.3" fill="none"/>
+            <path d="M60,60 Q80,50 100,30" stroke="#c9a876" stroke-width="1.3" fill="none"/>
+            <path d="M60,60 Q80,90 100,120" stroke="#c9a876" stroke-width="1.3" fill="none"/>
+            <circle cx="20" cy="20" r="4" fill="#b5533c"/>
+            <circle cx="20" cy="110" r="4" fill="#b5533c"/>
+            <circle cx="60" cy="60" r="6" fill="#b5533c"/>
+            <circle cx="100" cy="30" r="4" fill="#8a7256"/>
+            <circle cx="100" cy="120" r="4" fill="#8a7256"/>
+          </svg>
+        </div>
+      </div>
+      <div class="frame-cap">Object page (margin detail)</div>
+      <div class="dv-card" style="width:560px;background:#f6f1e8;padding:40px 40px;font-family:'Lora',serif;display:flex;gap:22px;">
+        <div style="flex:1;">
+          <div style="font-size:11px;color:#a89a80;font-family:'Inter',sans-serif;margin-bottom:16px;">Algebraic Topology / Definition</div>
+          <div style="font-size:26px;font-style:italic;font-weight:600;color:#2b2620;margin-bottom:16px;">Fundamental Group</div>
+          <div style="font-size:15px;line-height:1.8;color:#3a3327;">π₁(X,x) is the set of equivalence classes of loops based at x, under homotopy — the <strong>fundamental group</strong> of X.</div>
+        </div>
+        <div style="width:130px;flex:none;">
+          <div style="font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#9c8a68;font-family:'Inter',sans-serif;margin-bottom:10px;">nearby ideas</div>
+          <svg width="110" height="140" viewBox="0 0 110 140">
+            <path d="M15,25 Q35,45 50,65" stroke="#c9a876" stroke-width="1.3" fill="none"/>
+            <path d="M15,105 Q35,85 50,65" stroke="#c9a876" stroke-width="1.3" fill="none"/>
+            <path d="M50,65 Q75,60 95,50" stroke="#c9a876" stroke-width="1.3" fill="none"/>
+            <circle cx="15" cy="25" r="4" fill="#8a7256"/>
+            <circle cx="15" cy="105" r="4" fill="#8a7256"/>
+            <circle cx="50" cy="65" r="6" fill="#b5533c"/>
+            <circle cx="95" cy="50" r="4" fill="#8a7256"/>
+            <text x="24" y="22" font-size="9" fill="#9c8a68" font-family="Inter">Loops</text>
+            <text x="20" y="122" font-size="9" fill="#9c8a68" font-family="Inter">Homotopy</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="2c">
+      <div class="dv-olabel"><a class="dv-oid" href="#2c">2c</a>Card Catalog — browse a stack of index cards, alphabetical/tabbed, no dependency order</div>
+      <div class="frame-cap">Area page</div>
+      <div class="dv-card" style="width:560px;background:#f6f1e8;padding:36px 40px;font-family:'Lora',serif;">
+        <div style="font-size:24px;font-style:italic;font-weight:600;color:#2b2620;margin-bottom:18px;">Algebraic Topology</div>
+        <div style="position:relative;height:210px;">
+          <div style="position:absolute;top:16px;left:24px;width:420px;height:150px;background:#efe6d3;border:1px solid #ddd0b3;border-radius:4px;"></div>
+          <div style="position:absolute;top:8px;left:12px;width:420px;height:150px;background:#f1e9d8;border:1px solid #ddd0b3;border-radius:4px;"></div>
+          <div style="position:absolute;top:0;left:0;width:420px;height:150px;background:#fbf7ee;border:1px solid #ddd0b3;border-radius:4px;padding:18px 22px;">
+            <div style="font-size:10px;color:#b5533c;font-family:'Inter',sans-serif;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Definition</div>
+            <div style="font-size:18px;color:#2b2620;font-weight:600;margin-bottom:8px;">Fundamental Group</div>
+            <div style="font-size:12.5px;color:#7a6e5a;line-height:1.6;">Let f be a loop and [f] its homotopy equivalence class…</div>
+            <div style="position:absolute;bottom:12px;right:18px;font-size:10px;color:#c2b191;font-family:'Inter',sans-serif;">F</div>
+          </div>
+          <div style="position:absolute;top:0;right:-30px;display:flex;flex-direction:column;gap:2px;">
+            <div style="font-size:9px;font-family:'Inter',sans-serif;color:#fff;background:#b5533c;padding:3px 5px;border-radius:2px;">A–D</div>
+            <div style="font-size:9px;font-family:'Inter',sans-serif;color:#7a6e5a;background:#e6ddc9;padding:3px 5px;border-radius:2px;">E–H</div>
+            <div style="font-size:9px;font-family:'Inter',sans-serif;color:#7a6e5a;background:#e6ddc9;padding:3px 5px;border-radius:2px;">I–L</div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-cap">Object page</div>
+      <div class="dv-card" style="width:560px;background:#f6f1e8;padding:40px;font-family:'Lora',serif;">
+        <div style="background:#fbf7ee;border:1px solid #ddd0b3;border-radius:4px;padding:28px 32px;position:relative;">
+          <div style="position:absolute;top:0;left:32px;right:32px;border-top:1px dashed #ddd0b3;"></div>
+          <div style="font-size:10px;color:#b5533c;font-family:'Inter',sans-serif;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Definition · Algebraic Topology</div>
+          <div style="font-size:24px;color:#2b2620;font-weight:600;margin-bottom:14px;">Fundamental Group</div>
+          <div style="font-size:15px;line-height:1.8;color:#3a3327;margin-bottom:18px;">Let f be a loop and [f] its homotopy equivalence class. π₁(X,x) is the set of equivalence classes of loops based at x — the <strong>fundamental group</strong> of X.</div>
+          <div style="font-size:10px;color:#9c8a68;font-family:'Inter',sans-serif;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">See also</div>
+          <div style="display:flex;gap:8px;">
+            <div style="font-size:11px;color:#7a6e5a;background:#efe6d3;border:1px solid #ddd0b3;border-radius:3px;padding:6px 10px;">Loops</div>
+            <div style="font-size:11px;color:#7a6e5a;background:#efe6d3;border:1px solid #ddd0b3;border-radius:3px;padding:6px 10px;">Homotopy</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <p class="dv-next">Try next: "build out <a class="dv-oid" href="#2a">2a</a> as the real thing" · "combine <a class="dv-oid" href="#2a">2a</a>'s trail with <a class="dv-oid" href="#2b">2b</a>'s margin sketch" · "more traversal ideas"</p>
+</section>
+
+<section class="dv-turn" id="t1">
+  <div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">MathAtlas redesign — three directions</span></div>
+  <div class="dv-opts">
+
+    <div class="dv-opt" id="1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Marginalia — warm notebook, graph dissolved into prose links</div>
+      <div class="frame-cap">Home</div>
+      <div class="dv-card" style="width:560px;background:#f6f1e8;padding:40px 44px;font-family:'Lora',serif;">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:28px;">
+          <div style="font-family:'Lora',serif;font-style:italic;font-weight:600;font-size:22px;color:#2b2620;">MathAtlas</div>
+          <div style="font-size:11px;color:#8a7f6d;font-family:'Inter',sans-serif;">notes, as I learn them</div>
+        </div>
+        <div style="border:1px solid #ddd3bf;border-radius:24px;padding:12px 20px;color:#a89a80;font-size:13px;font-family:'Inter',sans-serif;margin-bottom:34px;">Search theorems, definitions, examples…</div>
+        <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#a89a80;font-family:'Inter',sans-serif;font-weight:600;margin-bottom:14px;">Areas</div>
+        <div style="display:flex;flex-direction:column;">
+          <div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid #e6ddc9;"><span style="font-size:16px;color:#2b2620;">Algebraic Topology</span><span style="font-size:12px;color:#b5533c;font-family:'Inter',sans-serif;">9 notes</span></div>
+          <div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid #e6ddc9;"><span style="font-size:16px;color:#2b2620;">Lie Groups &amp; Algebras</span><span style="font-size:12px;color:#b5533c;font-family:'Inter',sans-serif;">14 notes</span></div>
+          <div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid #e6ddc9;"><span style="font-size:16px;color:#2b2620;">Category Theory</span><span style="font-size:12px;color:#b5533c;font-family:'Inter',sans-serif;">5 notes</span></div>
+          <div style="display:flex;justify-content:space-between;padding:11px 0;"><span style="font-size:16px;color:#c2b8a0;">Probability Theory</span><span style="font-size:12px;color:#c2b8a0;font-family:'Inter',sans-serif;">1 note</span></div>
+        </div>
+        <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#a89a80;font-family:'Inter',sans-serif;font-weight:600;margin:30px 0 6px;">Lately</div>
+        <div style="font-size:14px;color:#5c5344;line-height:1.7;">
+          <span style="color:#b5533c;">Homotopy</span> — a continuous deformation between two maps, the idea behind everything that follows.<br/>
+          <span style="color:#b5533c;">Fundamental Group</span> — loops up to homotopy, finally given a group structure.
+        </div>
+      </div>
+      <div class="frame-cap">Object page</div>
+      <div class="dv-card" style="width:560px;background:#f6f1e8;padding:40px 44px;font-family:'Lora',serif;">
+        <div style="font-size:11px;color:#a89a80;font-family:'Inter',sans-serif;margin-bottom:18px;">Algebraic Topology / Definition</div>
+        <div style="font-size:30px;font-style:italic;font-weight:600;color:#2b2620;margin-bottom:18px;">Fundamental Group</div>
+        <div style="font-size:16px;line-height:1.85;color:#3a3327;margin-bottom:22px;">Let <em>f</em> be a loop and <em>[f]</em> its homotopy equivalence class. We define π₁(X,x) to be the set of equivalence classes of loops based at <em>x</em> — this is the <strong>fundamental group</strong> of X.</div>
+        <div style="background:#efe6d3;border-left:3px solid #b5533c;padding:12px 16px;font-size:13px;color:#6b5f4c;font-family:'Inter',sans-serif;font-style:italic;margin-bottom:26px;">Margin note: this is the starting point for covering space theory.</div>
+        <div style="font-size:14px;color:#5c5344;line-height:1.9;border-top:1px solid #e6ddc9;padding-top:18px;">
+          Builds on <u style="color:#b5533c;">Loops</u> and <u style="color:#b5533c;">Homotopy</u>, by way of <u style="color:#b5533c;">Homotopy Equivalence Class</u>.<br/>
+          Leads to <u style="color:#b5533c;">Dependence on the Base Point</u> and the <u style="color:#b5533c;">Fundamental Group Axiom Verification</u>.
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Field Guide — editorial index, graph as a small embedded constellation</div>
+      <div class="frame-cap">Home</div>
+      <div class="dv-card" style="width:560px;background:#f4f1ea;font-family:'Inter',sans-serif;">
+        <div style="display:flex;align-items:center;gap:16px;padding:16px 28px;border-bottom:1px solid #dedad0;">
+          <div style="font-weight:700;font-size:15px;color:#1f2a1a;letter-spacing:-0.01em;">MathAtlas</div>
+          <div style="flex:1;background:#fff;border:1px solid #dedad0;border-radius:7px;padding:7px 12px;font-size:12px;color:#8b8a80;">Search…</div>
+        </div>
+        <div style="padding:32px 28px 10px;">
+          <div style="font-size:24px;font-weight:600;color:#1f2a1a;letter-spacing:-0.01em;line-height:1.3;margin-bottom:8px;">A field guide to the objects<br/>of mathematics.</div>
+          <div style="font-size:13px;color:#6c6b60;margin-bottom:24px;">300+ definitions, theorems and proofs, catalogued and cross-linked.</div>
+          <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#8b8a80;font-weight:600;margin-bottom:10px;font-family:'IBM Plex Mono',monospace;">Browse by area</div>
+          <div style="display:flex;flex-direction:column;gap:1px;background:#dedad0;">
+            <div style="display:flex;justify-content:space-between;align-items:center;background:#f4f1ea;padding:10px 4px;"><span style="font-size:13px;color:#1f2a1a;font-weight:500;">01 · Algebraic Topology</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5c6b3f;">09</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;background:#f4f1ea;padding:10px 4px;"><span style="font-size:13px;color:#1f2a1a;font-weight:500;">02 · Lie Groups &amp; Algebras</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5c6b3f;">14</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;background:#f4f1ea;padding:10px 4px;"><span style="font-size:13px;color:#1f2a1a;font-weight:500;">03 · Category Theory</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5c6b3f;">05</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-cap">Object page</div>
+      <div class="dv-card" style="width:560px;background:#f4f1ea;font-family:'Inter',sans-serif;padding:0;display:flex;">
+        <div style="width:150px;flex:none;background:#efece3;border-right:1px solid #dedad0;padding:22px 16px;">
+          <div style="font-size:10px;color:#8b8a80;margin-bottom:14px;font-family:'IBM Plex Mono',monospace;">NEIGHBORHOOD</div>
+          <svg width="118" height="150" viewBox="0 0 118 150">
+            <line x1="15" y1="30" x2="59" y2="75" stroke="#c7c2b3" stroke-width="1.5"/>
+            <line x1="15" y1="120" x2="59" y2="75" stroke="#c7c2b3" stroke-width="1.5"/>
+            <line x1="59" y1="75" x2="103" y2="45" stroke="#c7c2b3" stroke-width="1.5"/>
+            <line x1="59" y1="75" x2="103" y2="105" stroke="#c7c2b3" stroke-width="1.5"/>
+            <circle cx="15" cy="30" r="5" fill="#10B981"/>
+            <circle cx="15" cy="120" r="5" fill="#10B981"/>
+            <circle cx="59" cy="75" r="8" fill="#10B981" stroke="#1f2a1a" stroke-width="2"/>
+            <circle cx="103" cy="45" r="5" fill="#8B5CF6"/>
+            <circle cx="103" cy="105" r="5" fill="#6B7280"/>
+          </svg>
+        </div>
+        <div style="flex:1;padding:28px 30px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+            <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#fff;background:#10B981;padding:3px 8px;border-radius:4px;">Definition</span>
+            <span style="font-size:11px;color:#8b8a80;">Algebraic Topology</span>
+          </div>
+          <div style="font-size:21px;font-weight:700;color:#1f2a1a;letter-spacing:-0.01em;margin-bottom:14px;">Fundamental Group</div>
+          <div style="font-size:14px;line-height:1.75;color:#3a3a32;margin-bottom:16px;">Let f be a loop and [f] its homotopy equivalence class. π₁(X,x) is the set of equivalence classes of loops based at x — the <strong>fundamental group</strong> of X.</div>
+          <div style="font-size:12px;color:#5c6b3f;font-weight:500;cursor:pointer;margin-bottom:16px;">▸ Show proof</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;">
+            <span style="font-size:11px;background:#fff;border:1px solid #dedad0;border-radius:20px;padding:4px 10px;color:#5c6b3f;">Loops</span>
+            <span style="font-size:11px;background:#fff;border:1px solid #dedad0;border-radius:20px;padding:4px 10px;color:#5c6b3f;">Homotopy</span>
+            <span style="font-size:11px;background:#fff;border:1px solid #dedad0;border-radius:20px;padding:4px 10px;color:#5c6b3f;">Base Point →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Atlas Map — dark, graph-first navigation</div>
+      <div class="frame-cap">Home</div>
+      <div class="dv-card" style="width:560px;background:#14192b;padding:36px 34px;font-family:'Inter',sans-serif;">
+        <div style="font-family:'Fraunces',serif;font-weight:600;font-size:20px;color:#f2efe8;margin-bottom:4px;">MathAtlas</div>
+        <div style="font-size:12px;color:#8b91a8;margin-bottom:20px;">the map of everything I've learned</div>
+        <div style="border:1px solid #2b3350;border-radius:8px;padding:10px 16px;color:#8b91a8;font-size:12px;margin-bottom:22px;background:#181e33;">Search the atlas…</div>
+        <svg width="492" height="200" viewBox="0 0 492 200" style="background:#181e33;border-radius:10px;margin-bottom:16px;">
+          <line x1="60" y1="50" x2="140" y2="100" stroke="#2b3350" stroke-width="1.5"/>
+          <line x1="60" y1="150" x2="140" y2="100" stroke="#2b3350" stroke-width="1.5"/>
+          <line x1="140" y1="100" x2="230" y2="60" stroke="#2b3350" stroke-width="1.5"/>
+          <line x1="140" y1="100" x2="230" y2="140" stroke="#2b3350" stroke-width="1.5"/>
+          <line x1="230" y1="60" x2="320" y2="40" stroke="#2b3350" stroke-width="1.5"/>
+          <line x1="320" y1="90" x2="400" y2="60" stroke="#2b3350" stroke-width="1.5"/>
+          <line x1="320" y1="90" x2="400" y2="130" stroke="#2b3350" stroke-width="1.5"/>
+          <line x1="230" y1="140" x2="320" y2="90" stroke="#2b3350" stroke-width="1.5"/>
+          <circle cx="60" cy="50" r="5" fill="#d9a441"/>
+          <circle cx="60" cy="150" r="5" fill="#d9a441"/>
+          <circle cx="140" cy="100" r="7" fill="#d9a441"/>
+          <circle cx="230" cy="60" r="5" fill="#5b9bd5"/>
+          <circle cx="230" cy="140" r="5" fill="#5b9bd5"/>
+          <circle cx="320" cy="40" r="5" fill="#5b9bd5"/>
+          <circle cx="320" cy="90" r="6" fill="#9b7fd4"/>
+          <circle cx="400" cy="60" r="5" fill="#6bbf8a"/>
+          <circle cx="400" cy="130" r="5" fill="#6bbf8a"/>
+        </svg>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <span style="font-size:11px;border:1px solid #d9a441;color:#d9a441;border-radius:20px;padding:5px 12px;">Algebraic Topology</span>
+          <span style="font-size:11px;border:1px solid #5b9bd5;color:#5b9bd5;border-radius:20px;padding:5px 12px;">Lie Groups</span>
+          <span style="font-size:11px;border:1px solid #9b7fd4;color:#9b7fd4;border-radius:20px;padding:5px 12px;">Category Theory</span>
+          <span style="font-size:11px;border:1px solid #6bbf8a;color:#6bbf8a;border-radius:20px;padding:5px 12px;">Probability</span>
+        </div>
+      </div>
+      <div class="frame-cap">Object page</div>
+      <div class="dv-card" style="width:560px;background:#14192b;padding:36px 34px;font-family:'Inter',sans-serif;">
+        <div style="font-size:11px;color:#8b91a8;margin-bottom:14px;">Algebraic Topology / Definition</div>
+        <div style="font-family:'Fraunces',serif;font-size:26px;font-weight:600;color:#d9a441;margin-bottom:16px;">Fundamental Group</div>
+        <div style="background:#1e2540;border-radius:10px;padding:20px 22px;font-size:14px;line-height:1.8;color:#e4e2da;margin-bottom:20px;">Let f be a loop and [f] its homotopy equivalence class. π₁(X,x) is the set of equivalence classes of loops based at x — the <strong style="color:#fff;">fundamental group</strong> of X.</div>
+        <div style="font-size:10px;color:#8b91a8;margin-bottom:8px;">this node in the map</div>
+        <svg width="492" height="130" viewBox="0 0 492 130" style="background:#181e33;border-radius:10px;">
+          <line x1="70" y1="30" x2="180" y2="65" stroke="#3a4166" stroke-width="1.5"/>
+          <line x1="70" y1="100" x2="180" y2="65" stroke="#3a4166" stroke-width="1.5"/>
+          <line x1="180" y1="65" x2="300" y2="30" stroke="#3a4166" stroke-width="1.5"/>
+          <line x1="180" y1="65" x2="300" y2="100" stroke="#3a4166" stroke-width="1.5"/>
+          <circle cx="70" cy="30" r="5" fill="#8b91a8"/>
+          <circle cx="70" cy="100" r="5" fill="#8b91a8"/>
+          <circle cx="180" cy="65" r="9" fill="#d9a441" stroke="#f2efe8" stroke-width="2"/>
+          <circle cx="300" cy="30" r="5" fill="#6bbf8a"/>
+          <circle cx="300" cy="100" r="5" fill="#6bbf8a"/>
+          <text x="85" y="24" fill="#8b91a8" font-size="10" font-family="Inter">Loops</text>
+          <text x="82" y="118" fill="#8b91a8" font-size="10" font-family="Inter">Homotopy</text>
+          <text x="308" y="24" fill="#6bbf8a" font-size="10" font-family="Inter">Base pt.</text>
+          <text x="308" y="94" fill="#6bbf8a" font-size="10" font-family="Inter">Axiom check</text>
+        </svg>
+      </div>
+    </div>
+
+  </div>
+  <p class="dv-next">Try next: "more like <a class="dv-oid" href="#1b">1b</a> but warmer" · "combine <a class="dv-oid" href="#1a">1a</a>'s tone with <a class="dv-oid" href="#1c">1c</a>'s graph" · "build out 1b as the real thing"</p>
+</section>
+</x-dc>
+</body>
+</html>

@@ -11,7 +11,7 @@ A personal math knowledge base that turns LaTeX notes into a browsable static we
 
 ## Notes format
 
-Each `.tex` file should declare its mathematical area at the top:
+One `.tex` file per note (or a small cluster of 2–3 closely related ones), grouped into per-area subfolders under `notes/`. The folder is purely organizational — the area comes from a `% area:` comment inside each file:
 
 ```tex
 % area: Representation Theory
@@ -33,6 +33,8 @@ Let $(\rho, V)$ and $(\sigma, W)$ be irreducible representations
 ```
 
 Proofs are automatically attached to the nearest preceding theorem/lemma/corollary/proposition and do not appear as separate pages.
+
+Scaffold a new note with `scripts/new-note.sh "Area Name" note-slug`. Keep filenames unique across the whole `notes/` tree — object IDs are derived from `(filename + type + title)`.
 
 ## Usage
 
@@ -58,10 +60,12 @@ Output is written to `docs/` by default. Open `docs/index.html` in a browser to 
 
 | Page | Description |
 |---|---|
-| `index.html` | Overview and stats |
-| `objects.html` | All objects, filterable by type and area |
-| `courses.html` | Objects grouped by area |
-| `objects/<id>.html` | Individual object with rendered LaTeX, proof, and dependency links |
+| `index.html` | Hero, top 5 areas, and the 10 most recent notes |
+| `objects.html` | All notes — type-filter chips + live search |
+| `areas.html` | Every area, with description and note count |
+| `areas/<slug>.html` | An area's notes plus a static dependency sketch |
+| `objects/<id>.html` | A note: rendered LaTeX, optional plain-language note, collapsible proof, dependency sketch |
+| `glossary.html` | All notes alphabetized |
 
 ## Dependencies
 
@@ -73,15 +77,17 @@ Output is written to `docs/` by default. Open `docs/index.html` in a browser to 
 ## Project structure
 
 ```
-notes/          LaTeX source files
+notes/<area>/   LaTeX source files, one per note, grouped by area
 data/
   objects.edn   Parsed + hand-editable structured data
+scripts/
+  new-note.sh   Scaffold a new note file
 src/mathatlas/
   model.clj     Object schema and ID generation
   parser.clj    LaTeX → object maps
   graph.clj     Dependency graph construction
   edn_io.clj    EDN read/write
-  site.clj      Static site generation (Hiccup)
+  site.clj      Static site generation (Hiccup), CSS, margin sketches
   core.clj      Entry point
-docs/           Generated static site (deployed to GitHub Pages)
+docs/           Generated static site (gitignored, built by CI on push to main)
 ```

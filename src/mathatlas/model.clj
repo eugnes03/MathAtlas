@@ -24,4 +24,5 @@
    :concepts    []
    :depends-on  []
    :tags        []
+   :note        nil
    :created-at  (str (java.time.LocalDate/now))})

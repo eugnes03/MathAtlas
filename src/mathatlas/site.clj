@@ -9,36 +9,30 @@
 ;; ---------------------------------------------------------------------------
 
 (def type-colors
-  {:theorem     "#3B82F6"
-   :lemma       "#8B5CF6"
-   :definition  "#10B981"
-   :problem     "#EF4444"
-   :example     "#F59E0B"
-   :remark      "#6B7280"
-   :proof       "#14B8A6"
-   :corollary   "#EC4899"
-   :proposition "#6366F1"})
+  {:theorem     "#6b7d8f"
+   :lemma       "#8a6d9e"
+   :definition  "#b5533c"
+   :problem     "#a34a3a"
+   :example     "#c9a04a"
+   :remark      "#9c9080"
+   :proof       "#5e8f7c"
+   :corollary   "#b06a8f"
+   :proposition "#5f7a9e"})
 
 (def area-meta
-  {"Category Theory"       {:color "#7C3AED"
-                             :desc  "Functors, natural transformations, limits, adjunctions, and universal properties."}
-   "Topology"              {:color "#2563EB"
-                             :desc  "Open sets, continuity, compactness, connectedness, and fundamental groups."}
-   "Representation Theory" {:color "#6366F1"
-                             :desc  "Group actions on vector spaces, characters, modules, and Schur functors."}
-   "Neural Networks"       {:color "#059669"
-                             :desc  "Architectures, optimization, generalization, and learning theory."}
-   "Probability Theory"    {:color "#D97706"
-                             :desc  "Measure-theoretic probability, distributions, and stochastic processes."}
-   "Algebraic Topology"     {:color "#F54927"
-                             :desc "Homotopy theory, Fundamental group, homology"}})
+  {"Category Theory"       {:desc "Functors, natural transformations, limits, adjunctions, and universal properties."}
+   "Topology"              {:desc "Open sets, continuity, compactness, connectedness, and fundamental groups."}
+   "Representation Theory" {:desc "Group actions on vector spaces, characters, modules, and Schur functors."}
+   "Neural Networks"       {:desc "Architectures, optimization, generalization, and learning theory."}
+   "Probability Theory"    {:desc "Measure-theoretic probability, distributions, and stochastic processes."}
+   "Algebraic Topology"    {:desc "Homotopy theory, fundamental group, homology"}})
 
 ;; ---------------------------------------------------------------------------
 ;; Helpers
 ;; ---------------------------------------------------------------------------
 
 (defn obj-color [obj]
-  (get type-colors (:type obj) "#888"))
+  (get type-colors (:type obj) "#8a7f6d"))
 
 (defn type-label [t]
   (-> t name str/capitalize))
@@ -49,8 +43,13 @@
 (defn area-slug [area]
   (-> area str/lower-case (str/replace #"\s+" "-") (str/replace #"[^a-z0-9-]" "")))
 
-(defn area-color [area]
-  (get-in area-meta [area :color] "#6b7280"))
+(defn- attr-escape
+  "Escape a string for safe use inside an HTML attribute value."
+  [s]
+  (-> (or s "")
+      (str/replace "&" "&amp;")
+      (str/replace "\"" "&quot;")
+      (str/replace "<" "&lt;")))
 
 (defn strip-text-commands
   "Remove LaTeX text-mode command wrappers, keeping their content.
@@ -93,6 +92,15 @@
                           (str/replace items #"\\item\s*" "<li>")
                           "</ul>")))))
 
+(defn- preview-text [obj]
+  (truncate (strip-text-commands (:latex obj)) 170))
+
+(defn- search-blob [obj]
+  (-> (str (:title obj) " " (:area obj) " " (name (:type obj)) " "
+           (strip-text-commands (:latex obj)))
+      str/lower-case
+      attr-escape))
+
 ;; ---------------------------------------------------------------------------
 ;; KaTeX
 ;; ---------------------------------------------------------------------------
@@ -118,21 +126,87 @@
 });"])
 
 ;; ---------------------------------------------------------------------------
+;; Read-progress (localStorage) — shared across every page
+;; ---------------------------------------------------------------------------
+
+(defn- read-progress-script []
+  [:script
+   "(function(){
+  function getReadIds(){
+    try { return JSON.parse(localStorage.getItem('mathatlas_read_ids') || '{}'); }
+    catch (e) { return {}; }
+  }
+  function paintReadDots(){
+    var ids = getReadIds();
+    document.querySelectorAll('.read-dot').forEach(function(el){
+      el.classList.toggle('is-read', !!ids[el.dataset.objectId]);
+    });
+  }
+  function initMarkRead(){
+    var btn = document.querySelector('.mark-read');
+    if (!btn) return;
+    var id = btn.dataset.objectId;
+    function render(){
+      var ids = getReadIds();
+      btn.textContent = ids[id] ? '\\u2713 Marked as read' : 'Mark as read';
+    }
+    render();
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      var ids = getReadIds();
+      if (ids[id]) delete ids[id]; else ids[id] = true;
+      localStorage.setItem('mathatlas_read_ids', JSON.stringify(ids));
+      render();
+      paintReadDots();
+    });
+  }
+  document.addEventListener('DOMContentLoaded', function(){
+    paintReadDots();
+    initMarkRead();
+  });
+})();"])
+
+;; ---------------------------------------------------------------------------
+;; Header / search
+;; ---------------------------------------------------------------------------
+
+(defn- header-search-script [root]
+  [:script
+   (str "(function(){
+  var input = document.getElementById('global-search');
+  if (!input) return;
+  input.addEventListener('input', function(){
+    if (typeof window.MATHATLAS_APPLY_FILTER === 'function') window.MATHATLAS_APPLY_FILTER();
+  });
+  input.addEventListener('keydown', function(e){
+    if (e.key !== 'Enter') return;
+    e.preventDefault();
+    if (typeof window.MATHATLAS_APPLY_FILTER === 'function') return;
+    window.location.href = '" root "objects.html?q=' + encodeURIComponent(input.value);
+  });
+})();")])
+
+(defn- nav-link [root href label active?]
+  [:a.nav-link {:href (str root href) :class (when active? "active")} label])
+
+(defn header [root active-nav]
+  [:header.site-header
+   [:a.brand {:href (str root "index.html")} "MathAtlas"]
+   [:div.search-box
+    [:input#global-search {:type "text" :placeholder "Search theorems, definitions…"}]]
+   [:div.spacer]
+   [:nav.nav
+    (nav-link root "areas.html"    "Areas"     (= active-nav :areas))
+    (nav-link root "objects.html"  "All Notes" (= active-nav :objects))
+    (nav-link root "glossary.html" "Index"     (= active-nav :glossary))]])
+
+;; ---------------------------------------------------------------------------
 ;; Layout shell
 ;; ---------------------------------------------------------------------------
 
-(defn nav-bar [root]
-  [:nav
-   [:a.brand {:href (str root "index.html")} "Math" [:span "Atlas"]]
-   [:div {:style "flex:1"}]
-   [:div.nav-links
-    [:a {:href (str root "objects.html")} "Objects"]
-    [:a {:href (str root "areas.html")} "Areas"]
-    [:a {:href (str root "graph.html")} "Graph"]]])
-
 (defn page-shell
-  "Wrap `body` forms in a full HTML5 page with nav, KaTeX, and stylesheet."
-  [title root & body]
+  "Wrap `body` forms in a full HTML5 page with header, KaTeX, and stylesheet."
+  [title root active-nav & body]
   (html5
     [:head
      [:meta {:charset "UTF-8"}]
@@ -142,236 +216,239 @@
              :href "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"}]
      [:link {:rel "stylesheet" :href (str root "style.css")}]]
     [:body
-     (nav-bar root)
+     (header root active-nav)
      [:main.container body]
      [:script {:src "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"}]
      [:script {:src "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"}]
      (katex-script)
-     [:script {:src "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"}]
-     [:script "mermaid.initialize({startOnLoad:true, theme:'neutral', securityLevel:'loose'});"]
-     [:script {:src "https://cdn.jsdelivr.net/npm/dagre@0.8.5/dist/dagre.min.js"}]
-     [:script {:src "https://cdn.jsdelivr.net/npm/cytoscape@3/dist/cytoscape.min.js"}]
-     [:script {:src "https://cdn.jsdelivr.net/npm/cytoscape-dagre@2/cytoscape-dagre.js"}]]))
+     (read-progress-script)
+     (header-search-script root)]))
 
 ;; ---------------------------------------------------------------------------
-;; Shared components
+;; Shared row components
 ;; ---------------------------------------------------------------------------
 
-(defn obj-card
-  "Summary card used on index, objects, and courses pages."
-  [obj root]
-  (let [color (obj-color obj)
-        title (not-empty (:title obj))]
-    [:div.card {:data-type (name (:type obj))
-                :style     (str "border-left-color:" color)}
-     [:a {:href (str root "objects/" (:id obj) ".html")}
-      [:div.card-header
-       [:span.type-badge {:style (str "background:" color)}
-        (type-label (:type obj))]
-       (when title [:span.card-title title])]
-      [:div.card-meta
-       [:a.area-link {:href (str root "areas/" (area-slug (:area obj)) ".html")}
-        (:area obj)]
-       " · " (:source-file obj)]
-      [:div.card-body (truncate (strip-text-commands (:latex obj)) 220)]]]))
+(defn- read-dot [obj]
+  [:span.read-dot {:data-object-id (:id obj)}])
+
+(defn- note-row
+  "Flat list row used on home, all-notes, area detail, and glossary pages.
+   `opts` may include :show-area? and :show-preview?"
+  [obj root {:keys [show-area? show-preview?] :or {show-area? true show-preview? false}}]
+  (let [title (or (not-empty (:title obj)) (type-label (:type obj)))]
+    [:a.note-row {:href           (str root "objects/" (:id obj) ".html")
+                  :data-type      (name (:type obj))
+                  :data-search    (search-blob obj)}
+     [:div.note-row-top
+      (read-dot obj)
+      [:span.note-row-title title]
+      [:span.type-label {:style (str "color:" (obj-color obj))} (type-label (:type obj))]
+      (when show-area? [:span.note-row-area (:area obj)])]
+     (when show-preview?
+       [:div.note-row-preview (preview-text obj)])]))
+
+;; ---------------------------------------------------------------------------
+;; Margin sketches (computed at build time, rendered as inline SVG)
+;; ---------------------------------------------------------------------------
+
+(defn- area-sketch
+  "Small dots-and-lines diagram: one dot per object on an ellipse, connected
+   by lines for every :depends-on edge within the area."
+  [objs]
+  (let [width 170 height 190 cx 85 cy 95 rx 60 ry 75
+        n     (max (count objs) 1)
+        pts   (mapv (fn [i]
+                       (let [angle (- (* (/ (double i) n) 2 Math/PI) (/ Math/PI 2))]
+                         {:x (+ cx (* rx (Math/cos angle)))
+                          :y (+ cy (* ry (Math/sin angle)))}))
+                     (range (count objs)))
+        idx-by-id (into {} (map-indexed (fn [i o] [(:id o) i]) objs))
+        lines (for [[i obj] (map-indexed vector objs)
+                    dep-id  (:depends-on obj)
+                    :let    [j (idx-by-id dep-id)]
+                    :when   j]
+                {:x1 (:x (pts i)) :y1 (:y (pts i))
+                 :x2 (:x (pts j)) :y2 (:y (pts j))})
+        nodes (map-indexed (fn [i o] {:cx (:x (pts i)) :cy (:y (pts i)) :fill (obj-color o)})
+                            objs)]
+    {:width width :height height :lines lines :nodes nodes}))
+
+(defn- area-sketch-panel [objs]
+  (when (seq objs)
+    (let [{:keys [width height lines nodes]} (area-sketch objs)]
+      [:div.sketch-panel
+       [:div.sketch-label "sketch of this area"]
+       [:svg {:width width :height height :viewBox (str "0 0 " width " " height)}
+        (map (fn [{:keys [x1 y1 x2 y2]}]
+               [:line {:x1 x1 :y1 y1 :x2 x2 :y2 y2 :stroke "#c9a876" :stroke-width "1.2"}])
+             lines)
+        (map (fn [{:keys [cx cy fill]}]
+               [:circle {:cx cx :cy cy :r 4 :fill fill :fill-opacity "0.75"}])
+             nodes)]])))
+
+(defn- object-sketch
+  "Left \u2192 center \u2192 right diagram: dependencies on the left, this
+   object centered and enlarged, dependents on the right."
+  [obj deps dependents root]
+  (let [width  210 cx 105 left-x 18 right-x 192
+        left-n  (count deps)
+        right-n (count dependents)
+        rows    (max left-n right-n 1)
+        height  (max 110 (+ 30 (* rows 42)))
+        mid-y   (/ height 2)
+        side-y  (fn [n i] (if (= n 1) mid-y (+ (- mid-y (/ (* (dec n) 42) 2)) (* i 42))))
+        side    (fn [items x align]
+                   (map-indexed
+                     (fn [i item]
+                       (let [y (side-y (count items) i)]
+                         {:node  {:cx x :cy y :fill (obj-color item)
+                                  :href (str root "objects/" (:id item) ".html")}
+                          :line  {:x1 x :y1 y :x2 cx :y2 mid-y}
+                          :label {:text  (truncate (or (not-empty (:title item)) (type-label (:type item))) 15)
+                                  :href  (str root "objects/" (:id item) ".html")
+                                  :align align
+                                  :top   (- y 15)
+                                  :side  (if (= align "left") (+ x 10) (+ (- width x) 10))}}))
+                     items))
+        left-parts  (side deps left-x "left")
+        right-parts (side dependents right-x "right")]
+    {:width  width
+     :height height
+     :center {:cx cx :cy mid-y :fill "#b5533c"}
+     :lines  (map :line (concat left-parts right-parts))
+     :nodes  (map :node (concat left-parts right-parts))
+     :labels (map :label (concat left-parts right-parts))}))
+
+(defn- object-sketch-panel [obj deps dependents cross-areas root]
+  (when (or (seq deps) (seq dependents))
+    (let [{:keys [width height center lines nodes labels]} (object-sketch obj deps dependents root)]
+      [:div.nearby-panel
+       [:div.sketch-label "nearby ideas"]
+       [:div.sketch-wrap
+        [:svg {:width width :height height :viewBox (str "0 0 " width " " height)}
+         (map (fn [{:keys [x1 y1 x2 y2]}]
+                [:line {:x1 x1 :y1 y1 :x2 x2 :y2 y2 :stroke "#c9a876" :stroke-width "1.3"}])
+              lines)
+         (map (fn [{:keys [cx cy fill href]}]
+                [:a {:href href} [:circle {:cx cx :cy cy :r 5 :fill fill}]])
+              nodes)
+         [:circle {:cx (:cx center) :cy (:cy center) :r 8 :fill (:fill center)}]]
+        (map (fn [{:keys [text href align top side]}]
+               [:a.sketch-node-label
+                {:href href
+                 :style (str "top:" top "px;" (if (= align "left") "left:" "right:") side "px;text-align:" align ";")}
+                text])
+             labels)]
+       (when (seq cross-areas)
+         [:div.cross-areas
+          "Also connects to"
+          (map (fn [a] (list " · " [:a {:href (str root "areas/" (area-slug a) ".html")} a]))
+               cross-areas)])])))
 
 ;; ---------------------------------------------------------------------------
 ;; Pages
 ;; ---------------------------------------------------------------------------
 
 (defn index-page [objects root]
-  (let [by-type (group-by :type objects)
-        by-area (group-by :area objects)]
-    (page-shell "Home" root
-      [:h1 "MathAtlas"]
-      [:p.subtitle "A structured knowledge base of mathematical objects."]
-      [:div.stats
-       [:div.stat [:div.stat-num (count objects)]  [:div.stat-label "Objects"]]
-       [:div.stat [:div.stat-num (count by-type)]  [:div.stat-label "Types"]]
-       [:div.stat [:div.stat-num (count by-area)]  [:div.stat-label "Areas"]]]
-      [:h2 "Recent Objects"]
-      (map #(obj-card % root) (take 10 objects))
-      [:p.view-all
-       [:a {:href (str root "objects.html")} "View all objects →"]])))
-
-(defn objects-page [objects root]
-  (let [types (distinct (map :type objects))]
-    (page-shell "All Objects" root
-      [:h1 "All Objects"]
-      [:p.subtitle (str (count objects) " objects across all areas")]
-      [:div.filters
-       [:button.filter-btn.active
-        {:data-type "all" :data-color "#1c1c2e" :onclick "filterCards('all')"}
-        "All"]
-       (map (fn [t]
-              [:button.filter-btn
-               {:data-type  (name t)
-                :data-color (get type-colors t "#888")
-                :onclick    (str "filterCards('" (name t) "')")}
-               (type-label t)])
-            types)]
-      (map #(obj-card % root) objects)
-      [:script
-       "function filterCards(type) {
-  document.querySelectorAll('.card').forEach(function (c) {
-    c.style.display = (type === 'all' || c.dataset.type === type) ? '' : 'none';
-  });
-  document.querySelectorAll('.filter-btn').forEach(function (b) {
-    var active = b.dataset.type === type;
-    b.classList.toggle('active', active);
-    b.style.background  = active ? (b.dataset.color || '#1c1c2e') : '';
-    b.style.borderColor = active ? (b.dataset.color || '#1c1c2e') : '';
-    b.style.color       = active ? 'white' : '';
-  });
-}"])))
+  (let [by-area   (group-by :area objects)
+        all-areas (distinct (concat (keys area-meta) (keys by-area)))
+        home-areas (take 5 all-areas)
+        lately     (take 10 objects)]
+    (page-shell "Home" root :home
+      [:div.hero
+       [:div.hero-title "A map of the math I've learned."]
+       [:div.hero-sub "Definitions, theorems and proofs, written down as I go — organized by area, and open for anyone else studying the same things to wander through."]]
+      [:div.section-label "Areas"]
+      (map (fn [area]
+             (let [n (count (get by-area area []))]
+               [:a.area-row {:href (str root "areas/" (area-slug area) ".html")}
+                [:span.area-row-name area]
+                [:span.area-row-count (str n (if (= n 1) " note" " notes"))]]))
+           home-areas)
+      [:p.browse-link [:a {:href (str root "areas.html")} "Browse all areas →"]]
+      [:div.section-label {:style "margin-top:36px"} "Lately"]
+      (map #(note-row % root {:show-area? false :show-preview? true}) lately))))
 
 (defn areas-index-page [objects root]
   (let [by-area   (group-by :area objects)
         all-areas (distinct (concat (keys area-meta) (keys by-area)))]
-    (page-shell "Areas" root
-      [:h1 "Areas"]
-      [:p.subtitle "Choose a mathematical area to explore."]
-      [:div.areas-grid
-       (map (fn [area]
-              (let [n     (count (get by-area area []))
-                    color (area-color area)
-                    desc  (get-in area-meta [area :desc] "")]
-                [:a.area-card {:href  (str root "areas/" (area-slug area) ".html")
-                               :style (str "--accent:" color)}
-                 [:div.area-card-body
-                  [:div.area-card-name area]
-                  (when (not-empty desc) [:div.area-card-desc desc])
-                  [:div.area-card-count
-                   (str n " object" (when (not= 1 n) "s"))]]]))
-            all-areas)])))
+    (page-shell "Areas" root :areas
+      [:div.page-title "Areas"]
+      (map (fn [area]
+             (let [n    (count (get by-area area []))
+                   desc (get-in area-meta [area :desc] "")]
+               [:a.area-row.area-row-tall {:href (str root "areas/" (area-slug area) ".html")}
+                [:div.area-row-line
+                 [:span.area-row-name.area-row-name-lg area]
+                 [:span.area-row-count (str n (if (= n 1) " note" " notes"))]]
+                (when (not-empty desc) [:div.area-row-desc desc])]))
+           all-areas))))
 
-(defn- json-str [s]
-  (-> (or s "")
-      (str/replace "\\" "\\\\")
-      (str/replace "\"" "\\\"")
-      (str/replace "\n" "\\n")
-      (str/replace "\r" "")))
-
-(defn- area-graph [area-objects gr root]
-  (when (seq area-objects)
-    (let [area-ids (set (map :id area-objects))
-          nodes-js (str/join ","
-                    (map (fn [obj]
-                           (str "{\"id\":\"" (:id obj)
-                                "\",\"label\":\"" (json-str (or (not-empty (:title obj)) (type-label (:type obj))))
-                                "\",\"type\":\"" (name (:type obj))
-                                "\",\"color\":\"" (get type-colors (:type obj) "#888")
-                                "\",\"href\":\"" root "objects/" (:id obj) ".html\"}"))
-                         area-objects))
-          edges-js (str/join ","
-                    (map (fn [{:keys [from to]}]
-                           (str "{\"source\":\"" to "\",\"target\":\"" from "\"}"))
-                         (filter (fn [{:keys [from to]}]
-                                   (and (area-ids from) (area-ids to)))
-                                 (:edges gr))))
-          present-types (->> area-objects (map :type) distinct
-                             (filter #(contains? type-colors %)))]
-      [:div.area-graph-section
-       [:div.area-graph-label "Knowledge Graph"]
-       [:div#area-graph]
-       [:div#graph-tooltip]
-       [:div.graph-legend
-        (map (fn [t]
-               [:span.legend-item
-                {:style (str "--dot:" (get type-colors t))}
-                (type-label t)])
-             present-types)]
-       [:script
-        (str "(function(){
-  var nodes=[" nodes-js "];
-  var edges=[" edges-js "];
-  function init(){
-    if(typeof cytoscape==='undefined'||typeof cytoscapeDagre==='undefined'){setTimeout(init,100);return;}
-    cytoscape.use(cytoscapeDagre);
-    var cy=cytoscape({
-      container:document.getElementById('area-graph'),
-      elements:{
-        nodes:nodes.map(function(n){return{data:n};}),
-        edges:edges.map(function(e){return{data:e};})
-      },
-      layout:{name:'dagre',rankDir:'LR',nodeSep:60,rankSep:100,padding:40,edgeSep:20},
-      style:[
-        {selector:'node',style:{
-          'background-color':'data(color)',
-          'width':20,'height':20,
-          'border-width':2,'border-color':'data(color)','border-opacity':0.3
-        }},
-        {selector:'edge',style:{
-          'width':1.5,'line-color':'#d1d5db',
-          'target-arrow-color':'#d1d5db','target-arrow-shape':'triangle',
-          'curve-style':'bezier','arrow-scale':0.8,'opacity':0.8
-        }},
-        {selector:'edge:hover',style:{
-          'line-color':'#9ca3af','target-arrow-color':'#9ca3af','width':2.5,'opacity':1
-        }}
-      ]
+(defn objects-page [objects root]
+  (let [types (distinct (map :type objects))]
+    (page-shell "All Notes" root :objects
+      [:div.page-title "All Notes"]
+      [:div#notes-count.count-label (str (count objects) (if (= 1 (count objects)) " note" " notes"))]
+      [:div.filters
+       [:button.filter-chip.active {:data-type "all"} "All"]
+       (map (fn [t]
+              [:button.filter-chip
+               {:data-type (name t) :style (str "--chip-color:" (get type-colors t "#8a7f6d"))}
+               (type-label t)])
+            types)]
+      (map #(note-row % root {:show-area? true :show-preview? true}) objects)
+      [:div#empty-state.empty-state {:style "display:none"}
+       "No notes match \"" [:span#empty-query] "\"."]
+      [:script
+       "(function(){
+  var typeFilter = 'all';
+  function applyFilter(){
+    var q = (document.getElementById('global-search').value || '').trim().toLowerCase();
+    var count = 0;
+    document.querySelectorAll('.note-row').forEach(function(row){
+      var matchesType = typeFilter === 'all' || row.dataset.type === typeFilter;
+      var matchesQuery = !q || row.dataset.search.indexOf(q) !== -1;
+      var show = matchesType && matchesQuery;
+      row.style.display = show ? '' : 'none';
+      if (show) count++;
     });
-    var tooltip=document.getElementById('graph-tooltip');
-    cy.on('mouseover','node',function(e){
-      var d=e.target.data();
-      tooltip.innerHTML='<span class=\"gtt-type\">'+d.type+'</span>'+d.label;
-      tooltip.style.display='block';
-      e.target.animate({'style':{'width':28,'height':28,'border-opacity':1}},{duration:120});
-    });
-    cy.on('mousemove','node',function(e){
-      var oe=e.originalEvent;
-      tooltip.style.left=(oe.clientX+14)+'px';
-      tooltip.style.top=(oe.clientY-12)+'px';
-    });
-    cy.on('mouseout','node',function(e){
-      tooltip.style.display='none';
-      e.target.animate({'style':{'width':20,'height':20,'border-opacity':0.3}},{duration:120});
-    });
-    cy.on('tap','node',function(e){window.location.href=e.target.data('href');});
+    document.getElementById('notes-count').textContent =
+      count + (count === 1 ? ' note' : ' notes') + (q ? ' matching \"' + q + '\"' : '');
+    document.getElementById('empty-state').style.display = count === 0 ? '' : 'none';
+    document.getElementById('empty-query').textContent = q;
   }
-  init();
-})();")]])))
+  window.MATHATLAS_APPLY_FILTER = applyFilter;
+  document.querySelectorAll('.filter-chip').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      typeFilter = btn.dataset.type;
+      document.querySelectorAll('.filter-chip').forEach(function(b){
+        var active = b === btn;
+        b.classList.toggle('active', active);
+        b.style.background  = active ? (b.dataset.type === 'all' ? '#2b2620' : b.style.getPropertyValue('--chip-color')) : '';
+        b.style.borderColor = active ? (b.dataset.type === 'all' ? '#2b2620' : b.style.getPropertyValue('--chip-color')) : '';
+        b.style.color       = active ? '#fff' : '';
+      });
+      applyFilter();
+    });
+  });
+  var params = new URLSearchParams(window.location.search);
+  var q = params.get('q');
+  if (q) document.getElementById('global-search').value = q;
+  applyFilter();
+})();"])))
 
-(defn area-detail-page [area objects gr root]
-  (let [color (area-color area)
-        desc  (get-in area-meta [area :desc] "")]
-    (page-shell area root
-      [:a.back {:href (str root "areas.html")} "← Areas"]
-      [:div.area-detail-header {:style (str "border-top-color:" color)}
-       [:h1 area]
-       (when (not-empty desc) [:p.subtitle desc])
-       [:p.area-detail-count {:style (str "color:" color)}
-        (str (count objects) " object" (when (not= 1 (count objects)) "s"))]]
-      (if (empty? objects)
-        [:p.empty-state "No objects in this area yet."]
-        (list
-          (area-graph objects gr root)
-          [:h2 "Objects"]
-          (map #(obj-card % root) objects))))))
-
-(defn- mermaid-safe [s]
-  (str/replace (or s "") #"\"" "'"))
-
-(defn- mermaid-graph [obj deps dependents root]
-  (when (or (seq deps) (seq dependents))
-    (let [nid      #(str "n" (:id %))
-          nlabel   #(str (nid %) "[\"" (mermaid-safe (or (not-empty (:title %)) (type-label (:type %)))) "\"]")
-          all-nodes (->> (concat deps [obj] dependents)
-                         (group-by :id) vals (map first))
-          lines (concat
-                  (map #(str "  " (nlabel %) (when (= (:id %) (:id obj)) ":::current")) all-nodes)
-                  (map #(str "  " (nid %) " --> " (nid obj)) deps)
-                  (map #(str "  " (nid obj) " --> " (nid %)) dependents)
-                  (keep #(when-not (= (:id %) (:id obj))
-                           (str "  click " (nid %) " \"" root "objects/" (:id %) ".html\" \"_self\""))
-                        all-nodes))
-          diagram (str/join "\n"
-                    (concat ["flowchart LR"
-                             "  classDef current fill:#6366f1,color:#fff,stroke:#4f46e5"]
-                            lines))]
-      [:div.dep-graph
-       [:div.relation-label "Dependency Graph"]
-       [:div.mermaid diagram]])))
+(defn area-detail-page [area objects root]
+  (let [desc (get-in area-meta [area :desc] "")]
+    (page-shell area root :areas
+      [:a.back-link {:href (str root "areas.html")} "← Areas"]
+      [:div.area-detail-layout
+       [:div.area-main
+        [:div.page-title {:style "margin-bottom:6px"} area]
+        (when (not-empty desc) [:p.area-detail-desc desc])
+        (if (empty? objects)
+          [:p.empty-state "No notes in this area yet."]
+          (map #(note-row % root {:show-area? false :show-preview? false}) objects))]
+       (area-sketch-panel objects)])))
 
 (defn- resolve-refs
   "Replace \\ref{label} with the title of the referenced object, or strip if not found."
@@ -385,552 +462,479 @@
                      (or (not-empty (:title obj)) (type-label (:type obj)))
                      "")))))
 
-(defn- relation-list [label items root]
-  (when (seq items)
-    [:div.relation-section
-     [:div.relation-label label]
-     [:ul.relation-list
-      (map (fn [obj]
-             [:li [:a {:href (str root "objects/" (:id obj) ".html")}
-                   (or (not-empty (:title obj)) (type-label (:type obj)))]])
-           items)]]))
+(defn- back-link-script
+  "A generated object page has one fixed URL but many possible entry points
+   (home, an area, all-notes, the index). Since there's no server to carry
+   that context, infer it client-side from document.referrer and relabel
+   the otherwise-default 'Area' back link accordingly."
+  [root]
+  [:script
+   (str "(function(){
+  var back = document.querySelector('.back-link');
+  if (!back) return;
+  var ref = document.referrer || '';
+  function set(href, label){ back.href = href; back.textContent = '\\u2190 ' + label; }
+  if (/index\\.html(?:[?#]|$)/.test(ref)) set('" root "index.html', 'Home');
+  else if (/glossary\\.html/.test(ref)) set('" root "glossary.html', 'Index');
+  else if (/objects\\.html/.test(ref)) set('" root "objects.html', 'All Notes');
+})();")])
 
-(defn object-page [obj gr objects-by-id root]
-  (let [color      (obj-color obj)
-        title      (not-empty (:title obj))
-        deps       (keep objects-by-id (graph/find-dependencies gr (:id obj)))
-        dependents (keep objects-by-id (graph/find-dependents   gr (:id obj)))
-        ph         "___MATHATLAS_BODY___"
-        ph2        "___MATHATLAS_PROOF___"
-        shell      (page-shell (or title (type-label (:type obj))) root
-                    [:a.back {:href (str root "objects.html")} "← All Objects"]
-                    [:div.obj-header
-                     [:div.obj-type {:style (str "color:" color)} (type-label (:type obj))]
-                     (when title [:h1.obj-title title])
-                     [:div.obj-meta (:area obj) " · " (:source-file obj)]]
-                    [:div.obj-body ph]
-                    (when (:proof-latex obj)
-                      [:div.proof-section
-                       [:div.proof-label "Proof"]
-                       [:div.obj-body ph2]])
-                    (relation-list "Depends on" deps       root)
-                    (relation-list "Used in"    dependents root)
-                    (mermaid-graph obj deps dependents root))]
+(defn object-page
+  "Render an object's detail page. The back link defaults to the object's
+   own area and is relabeled client-side based on document.referrer (see
+   back-link-script) since a static page has no server-side notion of
+   'where the reader came from'."
+  [obj gr objects-by-id root]
+  (let [color       (obj-color obj)
+        title       (not-empty (:title obj))
+        deps        (keep objects-by-id (graph/find-dependencies gr (:id obj)))
+        dependents  (keep objects-by-id (graph/find-dependents   gr (:id obj)))
+        next-obj    (first dependents)
+        cross-areas (->> (concat deps dependents)
+                         (map :area)
+                         (remove #(= % (:area obj)))
+                         distinct)
+        back-href   (str root "areas/" (area-slug (:area obj)) ".html")
+        ph          "___MATHATLAS_BODY___"
+        ph2         "___MATHATLAS_PROOF___"
+        ph3         "___MATHATLAS_NOTE___"
+        shell       (page-shell (or title (type-label (:type obj))) root nil
+                     [:div.obj-topline
+                      [:a.back-link {:href back-href} "← Area"]
+                      [:button.mark-read {:data-object-id (:id obj)} "Mark as read"]]
+                     [:div.obj-detail-layout
+                      [:div.obj-main
+                       [:div.obj-meta (:area obj) " · "
+                        [:span {:style (str "color:" color)} (type-label (:type obj))]]
+                       (when title [:h1.obj-title title])
+                       (when (:note obj)
+                         [:div.note-card
+                          [:div.note-card-label "In plain terms"]
+                          [:div.note-card-body ph3]])
+                       [:div.obj-body ph]
+                       (when (:proof-latex obj)
+                         [:details.proof-details
+                          [:summary.proof-summary "Show proof"]
+                          [:div.proof-body ph2]])
+                       (when next-obj
+                         [:div.continue-section
+                          [:div.continue-label "Continue to"]
+                          [:a.continue-link {:href (str root "objects/" (:id next-obj) ".html")}
+                           (or (not-empty (:title next-obj)) (type-label (:type next-obj))) " →"]])]
+                      (object-sketch-panel obj deps dependents cross-areas root)]
+                     (back-link-script root))]
     (-> shell
         (str/replace ph  (render-body (resolve-refs (:latex obj) objects-by-id)))
-        (str/replace ph2 (render-body (resolve-refs (or (:proof-latex obj) "") objects-by-id))))))
+        (str/replace ph2 (render-body (resolve-refs (or (:proof-latex obj) "") objects-by-id)))
+        (str/replace ph3 (render-body (resolve-refs (or (:note obj) "") objects-by-id))))))
+
+(defn glossary-page [objects root]
+  (let [sorted (sort-by (fn [o] (str/lower-case (or (not-empty (:title o)) (type-label (:type o))))) objects)
+        groups (group-by (fn [o] (str/upper-case (subs (or (not-empty (:title o)) (type-label (:type o))) 0 1)))
+                          sorted)]
+    (page-shell "Index" root :glossary
+      [:div.page-title "Index"]
+      (map (fn [letter]
+             [:div.glossary-group
+              [:div.glossary-letter letter]
+              (map #(note-row % root {:show-area? true :show-preview? false}) (get groups letter))])
+           (sort (keys groups))))))
 
 ;; ---------------------------------------------------------------------------
-;; CSS
+;; CSS ("Marginalia")
 ;; ---------------------------------------------------------------------------
 
 (def stylesheet
-  "/* ===== MathAtlas ===== */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+  "/* ===== MathAtlas — Marginalia ===== */
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --paper: #f6f1e8;
+  --card: #fbf7ee;
+  --inset: #efe6d3;
+  --ink: #2b2620;
+  --secondary: #7a6e5a;
+  --muted: #a89a80;
+  --muted-2: #8a7f6d;
+  --muted-3: #9c8a68;
+  --hairline: #e6ddc9;
+  --border: #ddd0b3;
+  --accent: #b5533c;
+  --accent-2: #8a7256;
+  --sketch-line: #c9a876;
+}
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: #f0f2f5;
-  color: #111827;
+  font-family: 'Lora', serif;
+  background: var(--paper);
+  color: var(--ink);
   line-height: 1.6;
-  font-size: 15px;
+  font-size: 16px;
 }
 
-/* --- Nav --- */
-nav {
-  background: #fff;
-  border-bottom: 1px solid #e5e7eb;
-  padding: 0 2rem;
-  height: 56px;
-  display: flex;
-  align-items: center;
+a { color: inherit; }
+
+/* --- Header --- */
+.site-header {
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  background: var(--paper);
+  border-bottom: 1px solid var(--hairline);
+  padding: 0 2rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
 }
 .brand {
-  color: #111827;
-  font-size: 1rem;
-  font-weight: 700;
-  text-decoration: none;
-  letter-spacing: -0.01em;
-}
-.brand span { color: #6366f1; }
-.nav-links { display: flex; gap: 0.25rem; }
-.nav-links a {
-  color: #6b7280;
-  text-decoration: none;
-  font-size: 0.875rem;
-  font-weight: 500;
-  padding: 0.4rem 0.75rem;
-  border-radius: 6px;
-  transition: background 0.1s, color 0.1s;
-}
-.nav-links a:hover { background: #f3f4f6; color: #111827; }
-
-/* --- Layout --- */
-.container { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem; }
-
-h1 {
-  font-size: 1.6rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin-bottom: 0.3rem;
-}
-h2 {
-  font-size: 0.75rem;
+  font-family: 'Lora', serif;
+  font-style: italic;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #9ca3af;
-  margin: 2rem 0 0.75rem;
-}
-
-.subtitle { color: #6b7280; font-size: 0.9rem; margin-bottom: 2rem; }
-.view-all { margin-top: 1.25rem; }
-.view-all a {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #6366f1;
+  font-size: 1.2rem;
+  color: var(--ink);
   text-decoration: none;
-}
-.view-all a:hover { text-decoration: underline; }
-a { color: #6366f1; }
-a:hover { color: #4f46e5; }
-
-/* --- Stats --- */
-.stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
-  margin-bottom: 2.5rem;
-  max-width: 420px;
-}
-.stat {
-  background: #fff;
-  border-radius: 12px;
-  padding: 1.25rem 1rem;
-  text-align: center;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
-}
-.stat-num {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #6366f1;
-  line-height: 1;
-  letter-spacing: -0.03em;
-}
-.stat-label {
-  font-size: 0.7rem;
-  color: #9ca3af;
-  margin-top: 0.3rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-}
-
-/* --- Cards --- */
-.card {
-  background: #fff;
-  border-radius: 10px;
-  padding: 1rem 1.25rem;
-  margin-bottom: 0.6rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
-  transition: box-shadow 0.15s, transform 0.1s;
-  border-top: 3px solid transparent;
-}
-.card:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-  transform: translateY(-1px);
-}
-.card > a { text-decoration: none; color: inherit; display: block; }
-
-.card-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem; }
-.type-badge {
-  font-size: 0.65rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #fff;
-  padding: 0.15rem 0.5rem;
-  border-radius: 20px;
   white-space: nowrap;
 }
-.card-title { font-size: 0.95rem; font-weight: 600; color: #111827; }
-.card-meta { font-size: 0.75rem; color: #9ca3af; margin-bottom: 0.4rem; }
-.card-body { font-size: 0.83rem; color: #6b7280; line-height: 1.5; }
+.search-box {
+  flex: 1;
+  max-width: 360px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 8px 16px;
+  background: var(--card);
+}
+.search-box input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--ink);
+  width: 100%;
+}
+.spacer { flex: 1; }
+.nav { display: flex; gap: 6px; font-family: 'Inter', sans-serif; }
+.nav-link {
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: var(--muted);
+}
+.nav-link:hover { color: var(--ink); }
+.nav-link.active { color: var(--ink); background: var(--inset); }
+
+/* --- Layout --- */
+.container { max-width: 720px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+.page-title {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 26px;
+  color: var(--ink);
+  margin-bottom: 26px;
+}
+
+.hero { margin-bottom: 40px; }
+.hero-title {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 34px;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.hero-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 14.5px;
+  color: var(--secondary);
+  max-width: 520px;
+}
+
+.section-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+/* --- Area rows --- */
+.area-row {
+  display: block;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--hairline);
+  text-decoration: none;
+  cursor: pointer;
+}
+.area-row-tall { padding: 16px 0; }
+.area-row-line, .area-row:not(.area-row-tall) {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.area-row-name { font-size: 17px; color: var(--ink); }
+.area-row-name-lg { font-size: 19px; }
+.area-row-count {
+  font-size: 12px;
+  color: var(--accent);
+  font-family: 'Inter', sans-serif;
+}
+.area-row-desc {
+  font-size: 13px;
+  color: var(--muted-2);
+  font-family: 'Inter', sans-serif;
+  margin-top: 4px;
+  max-width: 520px;
+}
+.browse-link { margin-top: 14px; }
+.browse-link a {
+  font-size: 13px;
+  color: var(--accent);
+  font-family: 'Inter', sans-serif;
+  text-decoration: none;
+}
+.browse-link a:hover { text-decoration: underline; }
+
+/* --- Note rows (flat list, no cards) --- */
+.note-row {
+  display: block;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--hairline);
+  text-decoration: none;
+  cursor: pointer;
+}
+.note-row-top { display: flex; align-items: baseline; gap: 8px; margin-bottom: 3px; }
+.note-row-title { font-size: 16px; color: var(--ink); }
+.type-label {
+  font-size: 10.5px;
+  font-family: 'Inter', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.note-row-area {
+  font-size: 11px;
+  color: #c2b191;
+  font-family: 'Inter', sans-serif;
+}
+.note-row-preview {
+  font-size: 13px;
+  color: var(--muted-2);
+  font-family: 'Inter', sans-serif;
+}
+
+/* --- Read progress dot --- */
+.read-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: transparent;
+}
+.read-dot.is-read { background: var(--accent); border-color: var(--accent); }
 
 /* --- Filters --- */
-.filters { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; }
-.filter-btn {
-  font-size: 0.78rem;
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; font-family: 'Inter', sans-serif; }
+.filter-chip {
+  font-size: 12px;
   font-weight: 500;
-  padding: 0.3rem 0.8rem;
-  border: 1.5px solid #e5e7eb;
-  border-radius: 20px;
-  background: #fff;
+  padding: 5px 12px;
+  border-radius: 16px;
   cursor: pointer;
-  color: #6b7280;
-  transition: all 0.15s;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--secondary);
 }
-.filter-btn:hover { border-color: #6366f1; color: #6366f1; }
-.filter-btn.active { background: #6366f1; color: #fff; border-color: #6366f1; }
-
-/* --- Object detail page --- */
-.back {
-  font-size: 0.82rem;
-  font-weight: 500;
-  color: #9ca3af;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  margin-bottom: 1.75rem;
-  transition: color 0.1s;
-}
-.back:hover { color: #111827; }
-
-.obj-header {
-  background: #fff;
-  border-radius: 12px;
-  padding: 1.5rem 1.75rem;
-  margin-bottom: 1.25rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.07);
-  border-top: 4px solid #6366f1;
-}
-.obj-type {
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-  margin-bottom: 0.4rem;
-}
-.obj-title { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
-.obj-meta { font-size: 0.78rem; color: #9ca3af; }
-
-.obj-body {
-  background: #f9fafb;
-  border-radius: 12px;
-  padding: 1.5rem 1.75rem;
-  font-family: ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
-  font-size: 0.84rem;
-  line-height: 1.9;
-  white-space: pre-wrap;
-  overflow-x: auto;
-  color: #374151;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.07);
-  border: 1px solid #e5e7eb;
-}
-
-/* --- Lists --- */
-.latex-list { padding-left: 1.75rem; margin: 0.5rem 0; }
-.latex-list li { margin-bottom: 0.4rem; }
-
-/* --- Proof section --- */
-.proof-section { margin-top: 1rem; }
-.proof-label {
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-  color: #14B8A6;
-  margin-bottom: 0.4rem;
-}
-
-/* --- Dependency graph --- */
-.dep-graph {
-  background: #fff;
-  border-radius: 12px;
-  padding: 1.25rem 1.75rem;
-  margin-top: 1rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.07);
-  border: 1px solid #e5e7eb;
-  overflow-x: auto;
-}
-.dep-graph .mermaid { margin-top: 0.75rem; }
-
-/* --- Relations (depends-on / used-in) --- */
-.relation-section { margin-top: 1rem; }
-.relation-label {
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-  color: #9ca3af;
-  margin-bottom: 0.4rem;
-}
-.relation-list { list-style: none; padding: 0; }
-.relation-list li { margin-bottom: 0.3rem; }
-.relation-list a {
-  font-size: 0.88rem;
-  color: #6366f1;
-  text-decoration: none;
-}
-.relation-list a:hover { text-decoration: underline; }
-.relation-list li::before { content: \"→ \"; color: #d1d5db; }
-
-/* --- Areas index grid --- */
-.areas-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1rem;
-  margin-top: 0.5rem;
-}
-.area-card {
-  display: block;
-  background: #fff;
-  border-radius: 12px;
-  border-top: 4px solid var(--accent, #6b7280);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.07);
-  text-decoration: none;
-  color: inherit;
-  transition: box-shadow 0.15s, transform 0.1s;
-}
-.area-card:hover {
-  box-shadow: 0 6px 24px rgba(0,0,0,0.11);
-  transform: translateY(-2px);
-}
-.area-card-body { padding: 1.25rem 1.5rem; }
-.area-card-name {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #111827;
-  margin-bottom: 0.4rem;
-}
-.area-card-desc {
-  font-size: 0.8rem;
-  color: #6b7280;
-  line-height: 1.55;
-  margin-bottom: 0.85rem;
-}
-.area-card-count {
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--accent, #6b7280);
-  font-family: ui-monospace, monospace;
-}
-.area-link {
-  color: #9ca3af;
-  text-decoration: none;
-  font-size: inherit;
-}
-.area-link:hover { color: #374151; text-decoration: underline; }
-
-/* --- Area detail page --- */
-.area-detail-header {
-  background: #fff;
-  border-radius: 12px;
-  border-top: 4px solid #6b7280;
-  padding: 1.5rem 1.75rem;
-  margin-bottom: 1.25rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.07);
-}
-.area-detail-count {
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  font-family: ui-monospace, monospace;
-  margin-top: 0.5rem;
+.filter-chip.active { background: var(--ink); border-color: var(--ink); color: #fff; }
+.count-label {
+  font-size: 13px;
+  color: var(--muted-2);
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 20px;
 }
 .empty-state {
-  text-align: center;
-  color: #9ca3af;
-  padding: 3rem;
+  padding: 40px 0;
+  color: var(--muted);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
   font-style: italic;
 }
 
-/* --- Area knowledge graph --- */
-.area-graph-section { margin-bottom: 1.5rem; }
-.area-graph-label {
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-  color: #9ca3af;
-  margin-bottom: 0.5rem;
+/* --- Area detail --- */
+.back-link {
+  font-size: 12px;
+  color: var(--muted);
+  font-family: 'Inter', sans-serif;
+  text-decoration: none;
 }
-#area-graph, #global-graph {
-  width: 100%;
-  height: 480px;
-  background: #fff;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+.back-link:hover { color: var(--ink); }
+.area-detail-layout { display: flex; gap: 28px; margin-top: 16px; }
+.area-main { flex: 1; min-width: 0; }
+.area-detail-desc {
+  font-size: 13px;
+  color: var(--muted-2);
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 22px;
+  max-width: 440px;
+}
+
+/* --- Sketch panels --- */
+.sketch-panel {
+  width: 180px;
+  flex: none;
+  background: var(--inset);
+  border-radius: 10px;
+  padding: 16px;
+  align-self: flex-start;
+}
+.sketch-label {
+  font-size: 9px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted-3);
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 10px;
+}
+.nearby-panel { width: 190px; flex: none; }
+.sketch-wrap { position: relative; }
+.sketch-node-label {
+  position: absolute;
+  font-size: 9px;
+  color: var(--muted-3);
+  font-family: 'Inter', sans-serif;
+  text-decoration: none;
   cursor: pointer;
-}
-#global-graph { height: 70vh; }
-#graph-tooltip {
-  position: fixed;
-  background: #111827;
-  color: #fff;
-  font-size: 0.78rem;
-  font-family: 'Inter', system-ui, sans-serif;
-  padding: 0.35rem 0.75rem;
-  border-radius: 6px;
-  pointer-events: none;
-  display: none;
-  z-index: 1000;
   white-space: nowrap;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+  line-height: 1.2;
 }
-.gtt-type {
-  font-size: 0.6rem;
-  font-weight: 700;
+.cross-areas {
+  margin-top: 14px;
+  font-size: 11.5px;
+  color: var(--muted-3);
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+}
+.cross-areas a { color: var(--accent); text-decoration: none; }
+
+/* --- Object detail --- */
+.obj-topline { display: flex; justify-content: space-between; align-items: baseline; }
+.obj-detail-layout { display: flex; gap: 28px; margin-top: 16px; }
+.obj-main { flex: 1; min-width: 0; }
+.mark-read {
+  font-size: 12px;
+  font-family: 'Inter', sans-serif;
+  color: var(--accent-2);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+.obj-meta {
+  font-size: 11px;
+  color: var(--muted);
+  font-family: 'Inter', sans-serif;
+  margin: 16px 0 8px;
+}
+.obj-title {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 28px;
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+
+.note-card {
+  background: var(--inset);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+}
+.note-card-label {
+  font-size: 10px;
+  letter-spacing: .08em;
   text-transform: uppercase;
-  letter-spacing: 0.07em;
-  opacity: 0.65;
-  margin-right: 0.35rem;
+  color: var(--muted-3);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  margin-bottom: 6px;
 }
-.gtt-area {
-  display: block;
-  font-size: 0.6rem;
-  opacity: 0.5;
-  margin-top: 0.1rem;
+.note-card-body {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: #4a4130;
+  font-family: 'Inter', sans-serif;
+  font-style: italic;
 }
-.graph-legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-top: 0.6rem;
-  margin-bottom: 0.25rem;
+
+.obj-body { font-size: 16px; line-height: 1.85; color: #3a3327; margin-bottom: 20px; }
+.latex-list { padding-left: 1.6rem; margin: 0.5rem 0; }
+.latex-list li { margin-bottom: 0.4rem; }
+
+.proof-details { margin-bottom: 20px; }
+.proof-summary {
+  font-size: 12.5px;
+  color: var(--accent-2);
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  list-style: none;
 }
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  font-size: 0.72rem;
-  color: #6b7280;
-  font-weight: 500;
+.proof-summary::-webkit-details-marker { display: none; }
+.proof-summary::before { content: '▸ '; }
+.proof-details[open] .proof-summary::before { content: '▾ '; }
+.proof-body {
+  background: var(--inset);
+  border-left: 3px solid var(--accent-2);
+  padding: 14px 18px;
+  margin-top: 10px;
+  font-size: 14.5px;
+  line-height: 1.8;
+  color: #4a4130;
 }
-.legend-item::before {
-  content: '';
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--dot, #888);
+
+.continue-section {
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid var(--hairline);
+}
+.continue-label {
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 6px;
+}
+.continue-link {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 16px;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/* --- Glossary --- */
+.glossary-group { margin-bottom: 18px; }
+.glossary-letter {
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: var(--accent);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  margin-bottom: 4px;
 }
 ")
 
 ;; ---------------------------------------------------------------------------
 ;; Site generation
-;; ---------------------------------------------------------------------------
-
-(defn- generate-global-graph-page [objects gr root]
-  (let [nodes-js (str/join ","
-                  (map (fn [obj]
-                         (str "{\"id\":\"" (:id obj)
-                              "\",\"label\":\"" (json-str (or (not-empty (:title obj)) (type-label (:type obj))))
-                              "\",\"type\":\"" (name (:type obj))
-                              "\",\"color\":\"" (get type-colors (:type obj) "#888")
-                              "\",\"area\":\"" (json-str (or (:area obj) ""))
-                              "\",\"href\":\"" root "objects/" (:id obj) ".html\"}"))
-                       objects))
-        edges-js (str/join ","
-                  (map (fn [{:keys [from to]}]
-                         (str "{\"source\":\"" to "\",\"target\":\"" from "\"}"))
-                       (:edges gr)))
-        present-types (->> objects (map :type) distinct
-                           (filter #(contains? type-colors %)))
-        areas         (->> objects (map :area) (remove nil?) distinct sort)]
-    (page-shell "Graph Explorer" root
-      [:h1 "Knowledge Graph"]
-      [:p.subtitle (str (count objects) " objects · " (count (:edges gr)) " dependencies")]
-      [:div.filters
-       [:button.filter-btn.active
-        {:data-area "all" :data-color "#1c1c2e" :onclick "filterGraph('all',this)"}
-        "All Areas"]
-       (map (fn [a]
-              [:button.filter-btn
-               {:data-area  a
-                :data-color (area-color a)
-                :onclick    (str "filterGraph('" (str/replace a "'" "\\'") "',this)")}
-               a])
-            areas)]
-      [:div#global-graph]
-      [:div#graph-tooltip]
-      [:div.graph-legend
-       (map (fn [t]
-              [:span.legend-item
-               {:style (str "--dot:" (get type-colors t))}
-               (type-label t)])
-            present-types)]
-      [:script
-       (str "(function(){
-  var nodes=[" nodes-js "];
-  var edges=[" edges-js "];
-  function init(){
-    if(typeof cytoscape==='undefined'||typeof cytoscapeDagre==='undefined'){setTimeout(init,100);return;}
-    cytoscape.use(cytoscapeDagre);
-    var cy=cytoscape({
-      container:document.getElementById('global-graph'),
-      elements:{
-        nodes:nodes.map(function(n){return{data:n};}),
-        edges:edges.map(function(e){return{data:e};})
-      },
-      layout:{name:'dagre',rankDir:'LR',nodeSep:60,rankSep:120,padding:40,edgeSep:20},
-      style:[
-        {selector:'node',style:{
-          'background-color':'data(color)',
-          'width':20,'height':20,
-          'border-width':2,'border-color':'data(color)','border-opacity':0.3
-        }},
-        {selector:'edge',style:{
-          'width':1.5,'line-color':'#d1d5db',
-          'target-arrow-color':'#d1d5db','target-arrow-shape':'triangle',
-          'curve-style':'bezier','arrow-scale':0.8,'opacity':0.8
-        }},
-        {selector:'edge:hover',style:{
-          'line-color':'#9ca3af','target-arrow-color':'#9ca3af','width':2.5,'opacity':1
-        }}
-      ]
-    });
-    var tooltip=document.getElementById('graph-tooltip');
-    cy.on('mouseover','node',function(e){
-      var d=e.target.data();
-      tooltip.innerHTML='<span class=\"gtt-type\">'+d.type+'</span>'+d.label+'<span class=\"gtt-area\">'+d.area+'</span>';
-      tooltip.style.display='block';
-      e.target.animate({'style':{'width':28,'height':28,'border-opacity':1}},{duration:120});
-    });
-    cy.on('mousemove','node',function(e){
-      var oe=e.originalEvent;
-      tooltip.style.left=(oe.clientX+14)+'px';
-      tooltip.style.top=(oe.clientY-12)+'px';
-    });
-    cy.on('mouseout','node',function(e){
-      tooltip.style.display='none';
-      e.target.animate({'style':{'width':20,'height':20,'border-opacity':0.3}},{duration:120});
-    });
-    window.filterGraph=function(area,btn){
-      if(area==='all'){
-        cy.elements().show();
-      } else {
-        cy.nodes().forEach(function(n){
-          if(n.data('area')===area) n.show(); else n.hide();
-        });
-        cy.edges().forEach(function(e){
-          if(e.source().hidden()||e.target().hidden()) e.hide(); else e.show();
-        });
-      }
-      document.querySelectorAll('.filter-btn').forEach(function(b){
-        var active=b.dataset.area===area;
-        b.classList.toggle('active',active);
-        b.style.background =active?(b.dataset.color||'#1c1c2e'):'';
-        b.style.borderColor=active?(b.dataset.color||'#1c1c2e'):'';
-        b.style.color      =active?'white':'';
-      });
-    };
-    cy.on('tap','node',function(e){window.location.href=e.target.data('href');});
-  }
-  init();
-})();")])))
-
 ;; ---------------------------------------------------------------------------
 
 (defn- write-page [path content]
@@ -939,18 +943,18 @@ a:hover { color: #4f46e5; }
     (spit f content)))
 
 (defn generate-site [objects gr output-dir]
-  (let [by-area      (group-by :area objects)
-        all-areas    (distinct (concat (keys area-meta) (keys by-area)))
+  (let [by-area       (group-by :area objects)
+        all-areas     (distinct (concat (keys area-meta) (keys by-area)))
         objects-by-id (into {} (map (juxt :id identity) objects))]
-    (write-page (str output-dir "/style.css")    stylesheet)
-    (write-page (str output-dir "/index.html")   (index-page        objects ""))
-    (write-page (str output-dir "/objects.html") (objects-page      objects ""))
-    (write-page (str output-dir "/areas.html")   (areas-index-page  objects ""))
-    (write-page (str output-dir "/graph.html")   (generate-global-graph-page objects gr ""))
+    (write-page (str output-dir "/style.css")     stylesheet)
+    (write-page (str output-dir "/index.html")    (index-page       objects ""))
+    (write-page (str output-dir "/objects.html")  (objects-page     objects ""))
+    (write-page (str output-dir "/areas.html")    (areas-index-page objects ""))
+    (write-page (str output-dir "/glossary.html") (glossary-page    objects ""))
     (doseq [area all-areas]
       (write-page (str output-dir "/areas/" (area-slug area) ".html")
-                  (area-detail-page area (get by-area area []) gr "../")))
+                  (area-detail-page area (get by-area area []) "../")))
     (doseq [obj objects]
       (write-page (str output-dir "/objects/" (:id obj) ".html")
                   (object-page obj gr objects-by-id "../")))
-    (println (str "  Wrote " (+ 4 (count all-areas) (count objects) 1) " files."))))
+    (println (str "  Wrote " (+ 4 (count all-areas) (count objects)) " files."))))
