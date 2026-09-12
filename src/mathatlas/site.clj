@@ -67,30 +67,60 @@
       (str/replace #"\\label\{[^}]*\}"           "")
       (str/replace #"\\(?:ref|eqref|autoref|cref)\{[^}]*\}" "")))
 
+(def ^:private tikzcd-pattern #"(?s)\\begin\{tikzcd\}.*?\\end\{tikzcd\}")
+
+(defn- extract-tikzcd
+  "Pull out \\begin{tikzcd}...\\end{tikzcd} blocks before HTML-escaping,
+   since tikzcd uses raw '&' as its column separator and would otherwise
+   be mangled by the '&' -> '&amp;' escape below. Returns
+   [latex-with-placeholders blocks]."
+  [latex]
+  (let [blocks (atom [])
+        placeholder (fn [block]
+                      (swap! blocks conj block)
+                      (str "\u0000TIKZCD" (dec (count @blocks)) "\u0000"))]
+    [(str/replace latex tikzcd-pattern placeholder) @blocks]))
+
+(defn- restore-tikzcd
+  "Re-insert extracted tikzcd blocks as <script type=\"text/tikz\"> tags for
+   TikZJax to render client-side into SVG."
+  [html blocks]
+  (reduce (fn [acc idx]
+            (str/replace acc (str "\u0000TIKZCD" idx "\u0000")
+                         (str "<div class=\"tikz-diagram\">"
+                              "<script type=\"text/tikz\">\\usetikzlibrary{cd}\n"
+                              (nth blocks idx)
+                              "\n</script></div>")))
+          html
+          (range (count blocks))))
+
 (defn render-body
   "HTML-escape raw LaTeX then convert common text-mode commands to HTML.
-   Returns a plain HTML string; math delimiters are left intact for KaTeX."
+   Returns a plain HTML string; math delimiters are left intact for KaTeX,
+   and tikzcd diagrams are left intact for TikZJax."
   [latex]
-  (-> latex
-      (str/replace "&"   "&amp;")
-      (str/replace "<"   "&lt;")
-      (str/replace ">"   "&gt;")
-      (str/replace #"\\textbf\{([^}]*)\}"  "<strong>$1</strong>")
-      (str/replace #"\\textit\{([^}]*)\}"  "<em>$1</em>")
-      (str/replace #"\\emph\{([^}]*)\}"    "<em>$1</em>")
-      (str/replace #"\\texttt\{([^}]*)\}"  "<code>$1</code>")
-      (str/replace #"\\text\{([^}]*)\}"    "$1")
-      (str/replace #"\\label\{[^}]*\}" "")
-      (str/replace #"(?s)\\begin\{enumerate\}(.*?)\\end\{enumerate\}"
-                   (fn [[_ items]]
-                     (str "<ol class=\"latex-list\">"
-                          (str/replace items #"\\item\s*" "<li>")
-                          "</ol>")))
-      (str/replace #"(?s)\\begin\{itemize\}(.*?)\\end\{itemize\}"
-                   (fn [[_ items]]
-                     (str "<ul class=\"latex-list\">"
-                          (str/replace items #"\\item\s*" "<li>")
-                          "</ul>")))))
+  (let [[stripped tikz-blocks] (extract-tikzcd latex)]
+    (-> stripped
+        (str/replace "&"   "&amp;")
+        (str/replace "<"   "&lt;")
+        (str/replace ">"   "&gt;")
+        (str/replace #"\\textbf\{([^}]*)\}"  "<strong>$1</strong>")
+        (str/replace #"\\textit\{([^}]*)\}"  "<em>$1</em>")
+        (str/replace #"\\emph\{([^}]*)\}"    "<em>$1</em>")
+        (str/replace #"\\texttt\{([^}]*)\}"  "<code>$1</code>")
+        (str/replace #"\\text\{([^}]*)\}"    "$1")
+        (str/replace #"\\label\{[^}]*\}" "")
+        (str/replace #"(?s)\\begin\{enumerate\}(.*?)\\end\{enumerate\}"
+                     (fn [[_ items]]
+                       (str "<ol class=\"latex-list\">"
+                            (str/replace items #"\\item\s*" "<li>")
+                            "</ol>")))
+        (str/replace #"(?s)\\begin\{itemize\}(.*?)\\end\{itemize\}"
+                     (fn [[_ items]]
+                       (str "<ul class=\"latex-list\">"
+                            (str/replace items #"\\item\s*" "<li>")
+                            "</ul>")))
+        (restore-tikzcd tikz-blocks))))
 
 (defn- preview-text [obj]
   (truncate (strip-text-commands (:latex obj)) 170))
@@ -128,6 +158,27 @@
 ;; ---------------------------------------------------------------------------
 ;; Read-progress (localStorage) — shared across every page
 ;; ---------------------------------------------------------------------------
+
+(defn- dev-reload-script
+  "In dev mode (MATHATLAS_DEV env var set), poll /__build_id and reload the
+   page when it changes so the browser tracks the file watcher's rebuilds.
+   Uses a server-root-relative path so it works from any page depth.
+   Absent in normal builds, so it never ships to the deployed site."
+  []
+  (when (System/getenv "MATHATLAS_DEV")
+    [:script
+     "(function(){
+  var last = null;
+  setInterval(function(){
+    fetch('/__build_id', {cache: 'no-store'})
+      .then(function(r){ return r.text(); })
+      .then(function(id){
+        if (last !== null && id !== last) location.reload();
+        last = id;
+      })
+      .catch(function(){});
+  }, 500);
+})();"]))
 
 (defn- read-progress-script []
   [:script
@@ -214,15 +265,18 @@
      [:title (str title " — MathAtlas")]
      [:link {:rel "stylesheet"
              :href "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"}]
+     [:link {:rel "stylesheet" :type "text/css" :href "https://tikzjax.com/v1/fonts.css"}]
      [:link {:rel "stylesheet" :href (str root "style.css")}]]
     [:body
      (header root active-nav)
      [:main.container body]
      [:script {:src "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"}]
      [:script {:src "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"}]
+     [:script {:src "https://tikzjax.com/v1/tikzjax.js"}]
      (katex-script)
      (read-progress-script)
-     (header-search-script root)]))
+     (header-search-script root)
+     (dev-reload-script)]))
 
 ;; ---------------------------------------------------------------------------
 ;; Shared row components
@@ -879,6 +933,13 @@ a { color: inherit; }
 .latex-list { padding-left: 1.6rem; margin: 0.5rem 0; }
 .latex-list li { margin-bottom: 0.4rem; }
 
+.tikz-diagram {
+  overflow-x: auto;
+  text-align: center;
+  margin: 1.25rem 0;
+}
+.tikz-diagram svg { max-width: 100%; }
+
 .proof-details { margin-bottom: 20px; }
 .proof-summary {
   font-size: 12.5px;
@@ -957,4 +1018,6 @@ a { color: inherit; }
     (doseq [obj objects]
       (write-page (str output-dir "/objects/" (:id obj) ".html")
                   (object-page obj gr objects-by-id "../")))
+    (when (System/getenv "MATHATLAS_DEV")
+      (write-page (str output-dir "/__build_id") (str (System/currentTimeMillis))))
     (println (str "  Wrote " (+ 4 (count all-areas) (count objects)) " files."))))
